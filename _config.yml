@@ -14,7 +14,7 @@ discus-identifier:  XXX
 # Author settings
 author:
   name: aria fatah
-  bio: Hoby Belajar IT <br> Programming and web development <br> Networking and IT security <br> DevOps and automation
+  bio: Hoby Belajar IT <br> web development <br> Networking & IT security <br> DevOps & automation
   picture: assets/images/profile.png
   github: ariafatah0711 # github username
   # twitter:  # twitter username
@@ -23,6 +23,7 @@ author:
   # youtube: https://www.youtube.com/channel/# youtube username
   linkedin: ariafatah
   email: calhounsgt07@gmail.com
+  discord: https://s.id/ariaf.my.id
 
 
 # URL settings

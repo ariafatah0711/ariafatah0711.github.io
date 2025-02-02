@@ -1,7 +1,13 @@
 {% include header.html %}
 <div class="container">
 	<div class="profile">
-		<a href="{{ site.url }}"><img src="{{site.author.picture}}" class="profile-image"></a>
+		<!-- <a href="{{ site.url }}"><img src="{{site.author.picture}}" class="profile-image"></a> -->
+		<div class="profile-header">
+			<a href="{{ site.url }}">
+				<img src="{{ site.author.picture }}" class="profile-image">
+			</a>	
+			<span id="status">Memeriksa status...</span>
+		</div>
 		<div class="profile-about">
 			<h2 style="margin-bottom: 0; font-weight: 700;">{{site.author.name}}</h2>
 			{% if site.author.facebook %}
@@ -22,6 +28,9 @@
 			{% if site.author.linkedin %}
 				<a href="https://linkedin.com/in/{{site.author.linkedin}}" target="_blank"><img src="assets/images/icon/linkedin.svg" class="social-icon"></a>
 			{% endif %}
+			{% if site.author.discord %}
+			<a href="{{site.author.linkedin}}" target="_blank"><img src="assets/images/icon/discord.svg" class="social-icon"></a>
+			{% endif %}
 			<a href="about"><img src="assets/images/icon/me.svg" class="social-icon"></a>
 			<br>
 			{{ site.author.bio }}
@@ -37,7 +46,7 @@
 
 	{{ content }}
 	<div class="footer">
-		<span>Made with <font color="red">♥</font> on Earth, a minimalist Jekyll Theme by <a href="https://hakan.io"><b>Hakan</b></a></span>
+		<span>Made with <font color="red">♥</font> on Earth, a minimalist Jekyll Theme by <a href="https://ariaf.my.id"><b>ariaf</b></a></span>
 	</div>
 </div>
 {% include footer.html %}

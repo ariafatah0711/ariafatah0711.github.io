@@ -5,5 +5,5 @@ author: ariaf.my.id
 layout: link
 url_to_redirect: "./container_aria"
 categories: repo
-tags: [repo, link]
+tags: [link]
 ---

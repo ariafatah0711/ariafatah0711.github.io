@@ -4,7 +4,9 @@ title: Repositories
 ---
 
 {% for user in site.data.repository %}
-    <p style="display: flex; width: 100%;"><strong>{{ user.github }}</strong></p>
+    <p style="display: flex; width: 100%;"><strong>
+        <a href="https://github.com/{{ user.github }}">{{ user.github }}</a>
+    </strong></p>
 
     {% for repo in user.repos %}
         <div class="post-list">
