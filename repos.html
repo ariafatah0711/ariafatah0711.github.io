@@ -1,0 +1,14 @@
+---
+layout: default
+title: Repositories
+---
+
+{% for user in site.data.repository %}
+    <p style="display: flex; width: 100%;"><strong>{{ user.github }}</strong></p>
+
+    {% for repo in user.repos %}
+        <div class="post-list">
+            <a class="post-title" href="https://github.com/{{ user.github }}/{{ repo }}" target="_blank">{{ repo }}</a>
+        </div>
+    {% endfor %}
+{% endfor %}
