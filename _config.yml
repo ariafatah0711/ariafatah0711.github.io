@@ -6,7 +6,7 @@ description: >-
   test
 lang: en-US
 timezone: Asia/Jakarta
-repo: https://github.com/ariafatah0711/log # site repo [optional]
+repo: https://github.com/ariafatah0711/ariafatah0711.github.io # site repo [optional]
 google_verify:      XXX # Put your Google Verification here
 google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
 discus-identifier:  XXX
@@ -26,7 +26,7 @@ author:
 
 
 # URL settings
-url: "ariaf.my.id"
+url: "https://ariaf.my.id"
 # url: "http://127.0.0.1:4000" # Domain Name of host. [username].github.io for github pages
 # url: "http://192.168.1.5:4000" # Domain Name of host. [username].github.io for github pages
 permalink: pretty
