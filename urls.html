@@ -1,0 +1,17 @@
+---
+layout: default
+title: Urls
+permalink: /urls/
+---
+
+<div class="post-container">
+    {% for post in site.posts %}
+        {% if post.layout == "link" %}
+            <div class="post-list">
+                <a class="post-title" href="{{ site.url }}{{ post.url }}">-> {{ post.title }}</a>
+                <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
+            </div>
+        {% else %}
+        {% endif %}
+    {% endfor %}
+</div>

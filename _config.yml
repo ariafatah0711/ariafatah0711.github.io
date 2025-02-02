@@ -1,0 +1,84 @@
+# Site settings
+site: arif.my.id
+title: ariaf.my.id
+keywords: ariaf blog
+description: >-
+  test
+lang: en-US
+timezone: Asia/Jakarta
+repo: https://github.com/ariafatah0711/log # site repo [optional]
+google_verify:      XXX # Put your Google Verification here
+google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
+discus-identifier:  XXX
+
+# Author settings
+author:
+  name: aria fatah
+  bio: Computer Engineer @pardinus <br> Founder @zaqa <br> Open Source /#linux
+  picture: assets/images/profile.jpg 
+  github: ariafatah0711 # github username
+  # twitter:  # twitter username
+  # facebook:  # facebook username
+  instagram: ariaf.my.id # instagram username
+  # youtube: https://www.youtube.com/channel/# youtube username
+  linkedin: ariafatah
+  email: calhounsgt07@gmail.com
+
+
+# URL settings
+url: "http://127.0.0.1:4000" # Domain Name of host. [username].github.io for github pages
+# url: "http://192.168.1.5:4000" # Domain Name of host. [username].github.io for github pages
+permalink: pretty
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+
+exclude:
+  - .jekyll-cache
+  - .obsidian
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE.md
+  - README.md
+  - CONTRIBUTING.md
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-relative-links
+paginate: 20
+paginate_path: "/page/:num"
+
+collections:
+  pages:
+    output: true
+    permalink: /:name
+  posts:
+    output: true
+    permalink: /:slug
+  
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+relative_links:
+  enabled:     true
+  collections: false
