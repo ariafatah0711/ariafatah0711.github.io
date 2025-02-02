@@ -3,7 +3,7 @@ site: arif.my.id
 title: ariaf.my.id
 keywords: ariaf blog
 description: >-
-  test
+  Portfolio and blog showcasing projects and academic achievements.
 lang: en-US
 timezone: Asia/Jakarta
 repo: https://github.com/ariafatah0711/ariafatah0711.github.io # site repo [optional]
@@ -14,8 +14,8 @@ discus-identifier:  XXX
 # Author settings
 author:
   name: aria fatah
-  bio: Computer Engineer @pardinus <br> Founder @zaqa <br> Open Source /#linux
-  picture: assets/images/profile.jpg 
+  bio: Hoby Belajar IT <br> Programming and web development <br> Networking and IT security <br> DevOps and automation
+  picture: assets/images/profile.png
   github: ariafatah0711 # github username
   # twitter:  # twitter username
   # facebook:  # facebook username
@@ -28,7 +28,6 @@ author:
 # URL settings
 url: "https://ariaf.my.id"
 # url: "http://127.0.0.1:4000" # Domain Name of host. [username].github.io for github pages
-# url: "http://192.168.1.5:4000" # Domain Name of host. [username].github.io for github pages
 permalink: pretty
 
 markdown: kramdown
