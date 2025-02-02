@@ -1,4 +1,20 @@
-@import url('https://fonts.googleapis.com/css?family=Catamaran:400,500,600,700&subset=latin-ext');
+/* @import url('https://fonts.googleapis.com/css?family=Catamaran:400,500,600,700&subset=latin-ext'); */
+
+@font-face {
+  font-family: 'Catamaran';
+  src: url('/assets/fonts/Catamaran-Regular.woff2') format('woff2'),
+    url('/assets/fonts/Catamaran-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Catamaran';
+  src: url('/assets/fonts/Catamaran-Bold.woff2') format('woff2'),
+    url('/assets/fonts/Catamaran-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
 
 :root {
   --bg-color: #fafafa;
@@ -293,6 +309,7 @@ pre {
 
 .social-icon {
   height: 24px;
+  width: 27px;
 }
 
 @media (min-width: 1200px) {
