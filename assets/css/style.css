@@ -6,6 +6,7 @@
     url('/assets/fonts/Catamaran-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -14,6 +15,7 @@
     url('/assets/fonts/Catamaran-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 :root {
@@ -510,4 +512,27 @@ pre {
 .info-footer {
   display: flex;
   margin-bottom: 25px;
+}
+
+/* song */
+#music-switcher {
+  transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+#music-switcher:hover {
+  transform: scale(1.1);
+  /* Membesarkan ikon saat hover */
+  opacity: 0.8;
+  /* Memberikan efek transparansi */
+}
+
+#music-icon svg {
+  transition: fill 0.3s ease, transform 0.2s ease;
+}
+
+#music-switcher:hover #music-icon svg {
+  fill: #ff4081;
+  /* Ganti warna ikon saat hover */
+  transform: rotate(15deg);
+  /* Putar ikon sedikit saat hover */
 }
