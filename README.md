@@ -38,8 +38,8 @@ Author [Hakan Torun](https://hakan.io).
 Run local server:
 
 ```bash
-$ git clone https://github.com/onepase/Ephesus.git
-$ cd Ephesus
+$ git clone https://github.com/ariafatah0711/ariafatah0711.github.io
+$ cd ariafatah0711.github.io
 $ bundle install
 $ bundle exec jekyll build
 $ bundle exec jekyll serve
