@@ -376,12 +376,35 @@ pre {
     text-align: center;
   }
 
+  .hide480 {
+    display: none
+  }
+
+  .mode {
+    /* left */
+    margin-left: auto !important;
+    background-color: red;
+  }
+
   .profile-about {
     width: 100%;
     text-align: center;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    /* -webkit-line-clamp: 1;
+    line-clamp: 1; */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+
+  }
+
+  .profile-bio {
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -476,4 +499,8 @@ pre {
 .reset-btn:active {
   transform: scale(0.95);
   /* Efek klik jadi kecil sebentar */
+}
+
+.info-footer {
+  display: flex;
 }

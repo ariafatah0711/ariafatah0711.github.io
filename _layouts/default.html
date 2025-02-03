@@ -40,11 +40,13 @@
 				<a href="{{site.author.discord}}" target="_blank"><img src="assets/images/icon/discord.svg" height="24px" width="27px" class="social-icon" alt="discord"></a>
 			{% endif %}
 			<!-- <a href="about"><img src="assets/images/icon/me.svg" height="24px" width="27px" class="social-icon" alt="me"></a> -->
-			<br>
-			{{ site.author.bio }}
-			<br>
+			<!-- <br> -->
+			<div class="profile-bio">
+				{{ site.author.bio }}
+			</div>
+			<!-- <br> -->
 
-			<div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+			<div class="mode hide480" id="mode-switcher" onclick="toggleNightMode();">
 				<span></span>
 			</div>
 

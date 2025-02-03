@@ -1,19 +1,19 @@
 <div style="display: flex; margin-bottom: 20px; height: 100%;">
-    {% for item in site.app.navbar %}
-      {% if item == 'about' %}
-        <a href="{{ site.baseurl }}/about" style="margin-right: 20px;">About</a>
-      {% elsif item == 'blogs' %}
-        <a href="{{ site.baseurl }}/blogs" style="margin-right: 20px;">Blog</a>
-      {% elsif item == 'urls' %}
-        <a href="{{ site.baseurl }}/urls" style="margin-right: 20px;">Url</a>
-      {% elsif item == 'repos' %}
-        <a href="{{ site.baseurl }}/repos" style="margin-right: 20px;">Repo</a>
-      {% elsif item == 'tags' %}
-        <a href="{{ site.baseurl }}/tags" style="margin-right: 20px;">Tags</a>
-      {% elsif item == 'info' %}
-      <a href="{{ site.baseurl }}/info" style="margin-right: 20px;">Info</a>
-      {% endif %}
-    {% endfor %}
+        {% for item in site.app.navbar %}
+          {% if item == 'about' %}
+            <a href="{{ site.baseurl }}/about" style="margin-right: 20px;">About</a>
+          {% elsif item == 'blogs' %}
+            <a href="{{ site.baseurl }}/blogs" style="margin-right: 20px;">Blog</a>
+          {% elsif item == 'urls' %}
+            <a href="{{ site.baseurl }}/urls" style="margin-right: 20px;">Url</a>
+          {% elsif item == 'repos' %}
+            <a href="{{ site.baseurl }}/repos" style="margin-right: 20px;">Repo</a>
+          {% elsif item == 'tags' %}
+            <a href="{{ site.baseurl }}/tags" style="margin-right: 20px;">Tags</a>
+          {% elsif item == 'info' %}
+          <a href="{{ site.baseurl }}/info" style="margin-right: 20px;">Info</a>
+          {% endif %}
+        {% endfor %}
 </div>
 
 <!-- <div style="display: flex; margin-bottom: 20px; height: 100%;">
