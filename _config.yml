@@ -33,7 +33,7 @@ app:
     - about
     - blogs
     - urls
-    - repos
+    # - repos
     - tags
     - info
   show_discord:
@@ -41,7 +41,7 @@ app:
     discord_id: 879547455941779456
     discord_key: aria123
   toggle_song:
-    active: True
+    active: False
     song: assets/song/song.m4a
 
 # URL settings

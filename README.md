@@ -28,10 +28,13 @@ Author [Hakan Torun](https://hakan.io).
 ## Screenshots
 
 #### Light
-![light-theme](https://github.com/onepase/Ephesus/blob/master/light.png)
+<!-- ![light-theme](https://github.com/onepase/Ephesus/blob/master/light.png) -->
+![light-theme](.github//image/light.png)
+
 
 #### Dark
-![dark-theme](https://github.com/onepase/Ephesus/blob/master/dark.png)
+<!-- ![dark-theme](https://github.com/onepase/Ephesus/blob/master/dark.png) -->
+![light-theme](.github//image/dark.png)
 
 ## Installation
 
@@ -59,4 +62,4 @@ Please feel free to contribute. Do not hesitate to open a pull request and fix i
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE.md).
+This project is open source and available under the [MIT License](LICENSE).
