@@ -250,6 +250,10 @@ span#status {
   width: 40%;
 }
 
+.profile-header {
+  max-width: 128px;
+}
+
 .profile-image {
   width: 128px;
   height: 128px;
@@ -367,6 +371,10 @@ pre {
 }
 
 @media only screen and (max-width: 480px) {
+  .profile {
+    flex-direction: column;
+  }
+
   .profile-header {
     width: 100%;
     display: flex;
@@ -382,7 +390,8 @@ pre {
 
   .mode {
     /* left */
-    margin-left: auto !important;
+    /* margin-left: auto !important; */
+
     background-color: red;
   }
 
@@ -396,7 +405,6 @@ pre {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
-
   }
 
   .profile-bio {
@@ -475,8 +483,6 @@ pre {
   color: white;
   border: none;
   padding: 12px 24px;
-  /* Tambah padding agar lebih nyaman diklik */
-  margin-bottom: 25px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
@@ -503,4 +509,5 @@ pre {
 
 .info-footer {
   display: flex;
+  margin-bottom: 25px;
 }
