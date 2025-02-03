@@ -7,9 +7,11 @@ description: >-
 lang: en-US
 timezone: Asia/Jakarta
 repo: https://github.com/ariafatah0711/ariafatah0711.github.io # site repo [optional]
-google_verify:      XXX # Put your Google Verification here
-google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
-discus-identifier:  XXX
+# google_verify:      XXX # Put your Google Verification here
+# google_analytics:   UA-XXXXXXXX-00 # Put your Google Analytics code
+# google_verify:      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+# google_analytics:   UA-XXXXXXXX-00
+discus-identifier:  ariafatah0711
 
 # Author settings
 author:
@@ -24,6 +26,23 @@ author:
   linkedin: ariafatah
   email: calhounsgt07@gmail.com
   discord: https://s.id/dev-universe
+
+app:
+  theme: white
+  navbar:
+    - about
+    - blogs
+    - urls
+    - repos
+    - tags
+    - info
+  show_discord:
+    active: True
+    discord_id: 879547455941779456
+    discord_key: aria123
+  toggle_song:
+    active: True
+    song: assets/song/song.m4a
 
 # URL settings
 url: "https://ariaf.my.id"

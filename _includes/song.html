@@ -1,0 +1,19 @@
+<div class="mode_music" id="music-switcher" onclick="toggleMusic();" style="display: inline; cursor: pointer;">
+    <span id="music-icon">
+    <!-- Default: Ikon Play -->
+    <svg id="play-icon" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M8 5v14l11-7z"></path>
+    </svg>
+
+    <!-- Ikon Pause (disembunyikan dulu) -->
+    <svg id="pause-icon" viewBox="0 0 24 24" width="24" height="24" style="display: none;">
+        <path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z"></path>
+    </svg>
+    </span>
+
+    <!-- audio -->
+    <audio id="music-player" loop>
+    <source src="{{ site.app.toggle_song.song }}" type="audio/mp3">
+    Your browser does not support the audio element.
+    </audio>
+</div>

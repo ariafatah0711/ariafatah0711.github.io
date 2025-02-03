@@ -5,8 +5,16 @@
 		<div class="profile-header">
 			<a href="{{ site.url }}">
 				<img src="{{ site.author.picture }}" class="profile-image" alt="profile-image" height="200px" width="200px">
-			</a>	
-			<span id="status">Memeriksa status...</span>
+			</a>
+			{% if site.app.show_discord.active %}
+				<script>
+					document.addEventListener("DOMContentLoaded", () => {
+						// checkDiscordStatusDummy();
+						checkDiscordStatus("{{ site.app.show_discord.discord_id }}", "{{ site.app.show_discord.discord_key }}");
+					});
+				</script>
+				<span id="status">Memeriksa status...</span>
+			{% endif %}
 		</div>
 		<div class="profile-about">
 			<h2 style="margin-bottom: 0; font-weight: 700;">{{site.author.name}}</h2>
@@ -31,7 +39,7 @@
 			{% if site.author.discord %}
 				<a href="{{site.author.discord}}" target="_blank"><img src="assets/images/icon/discord.svg" height="24px" width="27px" class="social-icon" alt="discord"></a>
 			{% endif %}
-			<a href="about"><img src="assets/images/icon/me.svg" height="24px" width="27px" class="social-icon" alt="me"></a>
+			<!-- <a href="about"><img src="assets/images/icon/me.svg" height="24px" width="27px" class="social-icon" alt="me"></a> -->
 			<br>
 			{{ site.author.bio }}
 			<br>
@@ -39,6 +47,10 @@
 			<div class="mode" id="mode-switcher" onclick="toggleNightMode();">
 				<span></span>
 			</div>
+
+			{% if site.app.toggle_song.active %}
+			{% include song.html %}
+			{% endif %}
 		</div>
 	</div>
 
@@ -46,7 +58,8 @@
 
 	{{ content }}
 	<div class="footer">
-		<span>Made with <font color="red">♥</font> on Earth, a minimalist Jekyll Theme by <a href="https://github.com/ariafatah0711/ariafatah0711.github.io"><b>ariaf</b></a></span>
+		<!-- <span>Made with <font color="red">♥</font> on Earth, a minimalist Jekyll Theme by <a href="https://github.com/ariafatah0711/ariafatah0711.github.io"><b>ariaf</b></a></span> -->
+		<span>Made with <font color="red">♥</font> on Earth, a minimalist Jekyll Theme by <a href="{{ site.baseurl }}/info"><b>ariaf</b></a></span>
 	</div>
 </div>
 {% include footer.html %}

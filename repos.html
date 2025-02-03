@@ -3,14 +3,16 @@ layout: default
 title: Repositories
 ---
 
-{% for user in site.data.repository %}
-    <p style="display: flex; width: 100%;"><strong>
-        <a href="https://github.com/{{ user.github }}">{{ user.github }}</a>
-    </strong></p>
+<div class="w-100">
+    {% for user in site.data.repository %}
+        <h2 style="display: flex; width: 100%;"><strong>
+            <a href="https://github.com/{{ user.github }}">{{ user.github }}</a>
+        </strong></h2>
 
-    {% for repo in user.repos %}
-        <div class="post-list">
-            <a class="post-title" href="https://github.com/{{ user.github }}/{{ repo }}" target="_blank">{{ repo }}</a>
-        </div>
+        {% for repo in user.repos %}
+            <div class="post-list">
+                <a class="post-title" href="https://github.com/{{ user.github }}/{{ repo }}" target="_blank">-> {{ repo }}</a>
+            </div>
+        {% endfor %}
     {% endfor %}
-{% endfor %}
+</div>

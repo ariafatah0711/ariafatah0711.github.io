@@ -1,7 +1,8 @@
-async function checkDiscordStatus() {
-  const DISCORD_ID = "879547455941779456";
+async function checkDiscordStatus(DISCORD_ID, LYNARD_TOKEN) {
+  // const DISCORD_ID = "879547455941779456";
+  // LYNARD_TOKEN = "aria123";
+
   const CACHE_KEY = "discordStatusCache";
-  LYNARD_TOKEN = "aria123";
 
   try {
     const cachedData = localStorage.getItem(CACHE_KEY);
@@ -55,54 +56,47 @@ async function checkDiscordStatus() {
   }
 }
 
-async function checkDiscordStatusDummy() {
-  const DISCORD_ID = "879547455941779456"; // Ganti dengan ID Discord milikmu
+// async function checkDiscordStatusDummy() {
+//   const DISCORD_ID = "879547455941779456"; // Ganti dengan ID Discord milikmu
 
-  try {
-    // Data dummy (tanpa mengambil data dari API)
-    const data = {
-      success: true,
-      data: {
-        discord_status: "online", // Status dummy
-        listening_to_spotify: true, // Status dummy mendengarkan Spotify
-        spotify: {
-          song: "Shape of You", // Nama lagu dummy
-          artist: "Ed Sheeran", // Nama artis dummy
-        },
-      },
-    };
+//   try {
+//     // Data dummy (tanpa mengambil data dari API)
+//     const data = {
+//       success: true,
+//       data: {
+//         discord_status: "online", // Status dummy
+//         listening_to_spotify: true, // Status dummy mendengarkan Spotify
+//         spotify: {
+//           song: "Shape of You", // Nama lagu dummy
+//           artist: "Ed Sheeran", // Nama artis dummy
+//         },
+//       },
+//     };
 
-    if (data.success) {
-      const status = data.data.discord_status;
-      const statusText = {
-        online: "🟢 Online",
-        idle: "🟡 Idle",
-        dnd: "🔴 Do Not Disturb",
-        offline: "⚫ Offline",
-      };
+//     if (data.success) {
+//       const status = data.data.discord_status;
+//       const statusText = {
+//         online: "🟢 Online",
+//         idle: "🟡 Idle",
+//         dnd: "🔴 Do Not Disturb",
+//         offline: "⚫ Offline",
+//       };
 
-      let statusMessage = statusText[status] || "Unknown";
+//       let statusMessage = statusText[status] || "Unknown";
 
-      // Cek apakah sedang mendengarkan Spotify
-      if (data.data.listening_to_spotify) {
-        const song = data.data.spotify.song;
-        const artist = data.data.spotify.artist;
-        statusMessage += `<br> 🎵 <strong>${song}</strong> - ${artist}`;
-      }
+//       // Cek apakah sedang mendengarkan Spotify
+//       if (data.data.listening_to_spotify) {
+//         const song = data.data.spotify.song;
+//         const artist = data.data.spotify.artist;
+//         statusMessage += `<br> 🎵 <strong>${song}</strong> - ${artist}`;
+//       }
 
-      // Perbarui elemen status di dalam <a>
-      document.getElementById("status").innerHTML = statusMessage;
-    } else {
-      document.getElementById("status").innerText = "Gagal mendapatkan status.";
-    }
-  } catch (error) {
-    document.getElementById("status").innerText = "Error saat mengambil data.";
-  }
-}
-
-// Panggil fungsi saat halaman dimuat
-// checkDiscordStatusDummy();
-document.addEventListener("DOMContentLoaded", () => {
-  // checkDiscordStatusDummy();
-  checkDiscordStatus();
-});
+//       // Perbarui elemen status di dalam <a>
+//       document.getElementById("status").innerHTML = statusMessage;
+//     } else {
+//       document.getElementById("status").innerText = "Gagal mendapatkan status.";
+//     }
+//   } catch (error) {
+//     document.getElementById("status").innerText = "Error saat mengambil data.";
+//   }
+// }

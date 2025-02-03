@@ -1,6 +1,14 @@
-	<script src="assets/js/ephesus.js"></script>
+	<!-- app -->
+	<script src="assets/js/main.js"></script>
+	{% if site.app.show_discord.active %}
+	<script src="assets/js/discord-lanyard.js"></script>
+	{% endif %}
+	{% if site.app.toggle_song.active %}
+	<script src="assets/js/song.js"></script>
+	{% endif %}
+	<!-- ### -->
 	<script type="text/javascript">
-		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: {{ site.app.theme }})').matches)) {
 			document.documentElement.setAttribute('data-theme', 'dark');
 			document.getElementById('mode-switcher').classList.add('active');
 		}

@@ -7,7 +7,7 @@
     - ctf_aria
     - PFwsl
 
-# - mame: 
-  # github: 
-  # repos:
-    # - 
+- mame: MuzakyGood
+  github: MuzakyGood
+  repos:
+    - SkyboxLib

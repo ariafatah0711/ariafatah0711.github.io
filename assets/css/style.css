@@ -236,7 +236,15 @@ body {
   margin-bottom: 20px;
 }
 
-.profile-header {}
+span#status {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 250px;
+}
 
 .profile-image-container {
   width: 40%;
@@ -290,6 +298,10 @@ a:hover {
 a {
   color: var(--primary-font-color);
   text-decoration: none;
+}
+
+.link_color {
+  color: red;
 }
 
 img {
@@ -369,6 +381,7 @@ pre {
     text-align: center;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -389,6 +402,9 @@ pre {
   background: #F1F2F4;
   border-radius: 20px;
   cursor: pointer;
+
+  /* left */
+  margin-left: 10px;
 }
 
 .mode:after {
@@ -428,4 +444,36 @@ pre {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transform: translateX(20px);
   transition: all 0.4s ease;
+}
+
+/* reset */
+.reset-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  /* Tambah padding agar lebih nyaman diklik */
+  margin-bottom: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  /* Biar lebih smooth */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  /* Tambah shadow biar lebih elegan */
+  display: inline-block;
+}
+
+.reset-btn:hover {
+  background-color: #cc0000;
+  transform: translateY(-2px);
+  /* Hover naik sedikit */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  /* Tambah efek glow */
+}
+
+.reset-btn:active {
+  transform: scale(0.95);
+  /* Efek klik jadi kecil sebentar */
 }
