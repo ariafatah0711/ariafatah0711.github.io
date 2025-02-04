@@ -1,4 +1,4 @@
-I"n'<p>apa sih overthewire itu, overthewire merupakan platform untuk belajar ctf, dan overthewire bandit merupakan platform untuk kita bermain ctf hanya saja dengan type general/basic linux. jika masih bingung kita akan langsung praktek saja biar kalian paham.</p>
+I"Á'<p>apa sih overthewire itu, overthewire merupakan platform untuk belajar ctf, dan overthewire bandit merupakan platform untuk kita bermain ctf hanya saja dengan type general/basic linux. jika masih bingung kita akan langsung praktek saja biar kalian paham.</p>
 
 <p>oke pertama-tama kalian kunjungi website <a href="https://overthewire.org/wargames/bandit/">overthewire/bandit</a> terlebih dahulu.</p>
 
@@ -42,8 +42,8 @@ The password you are looking <span class="k">for </span>is: ZjLjTmM6FvvyRnrb2rfN
 
 <p>password dari user bandit0 adalah password yang digunakan untuk login ke user bandit1</p>
 
-<h2 id="level1-2">Level 1 to 2</h2>
-<p>untuk level selanjutnya saya tidak akan mencoba untuk menampilkan cara melakukan remote lagi, karena untuk level selanjutnya saya hanya akan memberitahukan bagaimana cara untuk berhasil mendapatkan flag</p>
+<p><span id="level"></span>
+untuk level selanjutnya saya tidak akan mencoba untuk menampilkan cara melakukan remote lagi, karena untuk level selanjutnya saya hanya akan memberitahukan bagaimana cara untuk berhasil mendapatkan flag</p>
 
 <style>
   /* Style untuk grid layout */
@@ -61,6 +61,7 @@ The password you are looking <span class="k">for </span>is: ZjLjTmM6FvvyRnrb2rfN
 </style>
 
 <ul class="level-list">
+  <li><a href="/blog/bandit1#level1-2">Level 1 to 2</a></li>
   <li><a href="/blog/bandit1#level2-3">Level 2 to 3</a></li>
   <li><a href="/blog/bandit1#level3-4">Level 3 to 4</a></li>
   <li><a href="/blog/bandit1#level4-5">Level 4 to 5</a></li>
@@ -81,6 +82,9 @@ The password you are looking <span class="k">for </span>is: ZjLjTmM6FvvyRnrb2rfN
   <li><a href="/blog/bandit1#level19-20">Level 19 to 20</a></li>
 </ul>
 
+<h2 id="level1-2">Level 1 to 2</h2>
+<p><a href="/blog/bandit1#level">back_top</a></p>
+
 <h3 id="soal">soal:</h3>
 <p>Password untuk level selanjutnya disimpan dalam sebuah file yang bernama - yang terletak di direktori home pengguna.</p>
 
@@ -99,7 +103,7 @@ The password you are looking <span class="k">for </span>is: ZjLjTmM6FvvyRnrb2rfN
 Metode ini memungkinkan kita untuk mengakses dan membaca file dengan nama yang tidak biasa atau menggunakan karakter spesial di Linux.</p>
 
 <h2 id="level2-3">Level 2 to 3</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h3 id="soal-1">soal:</h3>
 <p>Password untuk level berikutnya disimpan dalam sebuah file yang bernama spaces in this filename, yang terletak di direktori home pengguna.</p>
@@ -120,53 +124,53 @@ Metode ini memungkinkan kita untuk mengakses dan membaca file dengan nama yang t
 </code></pre></div></div>
 
 <h2 id="level3-4">Level 3 to 4</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level4-5">Level 4 to 5</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level5-6">Level 5 to 6</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level6-7">Level 6 to 7</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level7-8">Level 7 to 8</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level8-9">Level 8 to 9</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level9-10">Level 9 to 10</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level10-11">Level 10 to 11</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level11-12">Level 11 to 12</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level12-13">Level 12 to 13</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level13-14">Level 13 to 14</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level14-15">Level 14 to 15</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level15-16">Level 15 to 16</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level16-17">Level 16 to 17</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level17-18">Level 17 to 18</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level18-19">Level 18 to 19</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 
 <h2 id="level19-20">Level 19 to 20</h2>
-<p><a href="/blog/bandit1#level1-2">back_top</a></p>
+<p><a href="/blog/bandit1#level">back_top</a></p>
 :ET

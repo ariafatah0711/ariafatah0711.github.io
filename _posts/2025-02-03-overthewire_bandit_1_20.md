@@ -57,7 +57,7 @@ The password you are looking for is: ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
 
 password dari user bandit0 adalah password yang digunakan untuk login ke user bandit1
 
-## Level 1 to 2 {#level1-2}
+<span id="level"></span>
 untuk level selanjutnya saya tidak akan mencoba untuk menampilkan cara melakukan remote lagi, karena untuk level selanjutnya saya hanya akan memberitahukan bagaimana cara untuk berhasil mendapatkan flag
 
 <style>
@@ -77,6 +77,7 @@ untuk level selanjutnya saya tidak akan mencoba untuk menampilkan cara melakukan
 
 
 <ul class="level-list">
+  <li><a href="{{ page.url }}#level1-2">Level 1 to 2</a></li>
   <li><a href="{{ page.url }}#level2-3">Level 2 to 3</a></li>
   <li><a href="{{ page.url }}#level3-4">Level 3 to 4</a></li>
   <li><a href="{{ page.url }}#level4-5">Level 4 to 5</a></li>
@@ -96,6 +97,9 @@ untuk level selanjutnya saya tidak akan mencoba untuk menampilkan cara melakukan
   <li><a href="{{ page.url }}#level18-19">Level 18 to 19</a></li>
   <li><a href="{{ page.url }}#level19-20">Level 19 to 20</a></li>
 </ul>
+
+## Level 1 to 2 {#level1-2}
+[back_top]({{ page.url }}#level)
 
 ### soal:
 Password untuk level selanjutnya disimpan dalam sebuah file yang bernama - yang terletak di direktori home pengguna.
@@ -117,7 +121,7 @@ Dengan menambahkan ./ di depan nama file, kita memberi tahu sistem untuk membaca
 Metode ini memungkinkan kita untuk mengakses dan membaca file dengan nama yang tidak biasa atau menggunakan karakter spesial di Linux.
 
 ## Level 2 to 3 {#level2-3}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ### soal:
 Password untuk level berikutnya disimpan dalam sebuah file yang bernama spaces in this filename, yang terletak di direktori home pengguna.
@@ -141,52 +145,52 @@ cat ./spaces\ in\ this\ filename
 ```
 
 ## Level 3 to 4 {#level3-4}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 4 to 5 {#level4-5}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 5 to 6 {#level5-6}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 6 to 7 {#level6-7}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 7 to 8 {#level7-8}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 8 to 9 {#level8-9}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 9 to 10 {#level9-10}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 10 to 11 {#level10-11}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 11 to 12 {#level11-12}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 12 to 13 {#level12-13}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 13 to 14 {#level13-14}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 14 to 15 {#level14-15}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 15 to 16 {#level15-16}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 16 to 17 {#level16-17}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 17 to 18 {#level17-18}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 18 to 19 {#level18-19}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
 
 ## Level 19 to 20 {#level19-20}
-[back_top]({{ page.url }}#level1-2)
+[back_top]({{ page.url }}#level)
