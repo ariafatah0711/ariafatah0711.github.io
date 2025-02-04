@@ -46,6 +46,7 @@ $ cd ariafatah0711.github.io
 $ bundle install
 $ bundle exec jekyll build
 $ bundle exec jekyll serve
+$ jekyll clean
 ```
 
 Navigate to `127.0.0.1:4000`.
