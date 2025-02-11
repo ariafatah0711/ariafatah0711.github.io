@@ -29,8 +29,8 @@ async function checkDiscordStatus(DISCORD_ID, LYNARD_TOKEN) {
     if (data.success) {
       const status = data.data.discord_status;
       const statusText = {
-        online: "🟢 Online",
-        idle: "🟡 Idle",
+        online: "💚 Online",
+        idle: "🌙 Idle",
         dnd: "🔴 Do Not Disturb",
         offline: "⚫ Offline",
       };
@@ -76,8 +76,8 @@ async function checkDiscordStatus(DISCORD_ID, LYNARD_TOKEN) {
 //     if (data.success) {
 //       const status = data.data.discord_status;
 //       const statusText = {
-//         online: "🟢 Online",
-//         idle: "🟡 Idle",
+//         online: "💚 Online",
+//         idle: "🌙 Idle",
 //         dnd: "🔴 Do Not Disturb",
 //         offline: "⚫ Offline",
 //       };
