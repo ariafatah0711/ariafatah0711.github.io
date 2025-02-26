@@ -34,6 +34,10 @@
   --border-color: #6a6a6a;
 }
 
+html {
+  scrollbar-gutter: stable !important;
+}
+
 body {
   font-family: 'Catamaran', sans-serif;
   font-weight: 300;
