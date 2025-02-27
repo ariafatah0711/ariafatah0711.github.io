@@ -43,10 +43,19 @@ Run local server:
 ```bash
 $ git clone https://github.com/ariafatah0711/ariafatah0711.github.io
 $ cd ariafatah0711.github.io
+$ gem install bundler -v 2.2.22
+$ bundle config set --local path '~/.gem/ruby/3.3.0'
 $ bundle install
 $ bundle exec jekyll build
 $ bundle exec jekyll serve
 $ jekyll clean
+```
+
+## opsional if error install
+```bash
+gem update --system     
+gem install bundler
+bundle update
 ```
 
 Navigate to `127.0.0.1:4000`.
