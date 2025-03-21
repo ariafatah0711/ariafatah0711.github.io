@@ -31,8 +31,9 @@ app:
   theme: white
   navbar:
     - about
-    - blogs
-    - urls
+    # - blogs
+    # - urls
+    - cv
     # - repos
     - tags
     - info
