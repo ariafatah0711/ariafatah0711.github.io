@@ -1,5 +1,5 @@
 ---
-title: "portofolio v1"
+title: "portofolio v2"
 date: 2023-12-26T00:00:00+00:00
 author: ariaf.my.id
 layout: link
