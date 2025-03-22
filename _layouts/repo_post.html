@@ -1,0 +1,51 @@
+---
+layout: post
+---
+
+<style>
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .demo {
+      background: #000;
+    }
+    
+    .source {
+      background: #24292e;
+    }
+
+    .jt {
+      /* background: #24292e; */
+      background: #ff9800;
+    }
+    
+    .button:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    }
+</style>
+
+{% if page.repo.preview contains ".png" or page.repo.preview contains ".jpg" or page.repo.preview contains ".jpeg" %}
+<p align="center">  
+    <img src="{{ page.repo.preview }}" alt="Preview">
+</p>
+{% elsif page.repo.preview contains "youtube.com/embed" %}
+<p align="center">
+    <iframe width="560" height="315" src="{{ page.repo.preview }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</p>
+{% endif %}
+
+<p align="center">
+    <a href="{{ page.repo.demo }}" class="button demo">🚀 Demo</a>
+    <a href="{{ page.repo.source }}" class="button source">💻 Source Code</a>
+    <a href="{{ page.repo.jt }}" class="button jt">🎨 Jekyll Theme</a>
+</p>
