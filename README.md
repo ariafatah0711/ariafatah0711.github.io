@@ -41,14 +41,14 @@ Author [Hakan Torun](https://hakan.io).
 Run local server:
 
 ```bash
-$ git clone https://github.com/ariafatah0711/ariafatah0711.github.io
-$ cd ariafatah0711.github.io
-$ gem install bundler -v 2.2.22
-$ bundle config set --local path '~/.gem/ruby/3.3.0'
-$ bundle install
-$ bundle exec jekyll build
-$ bundle exec jekyll serve
-$ jekyll clean
+git clone https://github.com/ariafatah0711/ariafatah0711.github.io
+cd ariafatah0711.github.io
+gem install bundler -v 2.2.22
+bundle config set --local path '~/.gem/ruby/3.3.0'
+bundle install
+bundle exec jekyll build
+bundle exec jekyll serve --host 0.0.0.0 --port 4000
+jekyll clean
 ```
 
 ## opsional if error install

@@ -69,7 +69,7 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-relative-links
-paginate: 20
+paginate: 10
 paginate_path: "/page/:num"
 
 collections:
