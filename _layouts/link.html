@@ -1,4 +1,34 @@
-<!DOCTYPE html>
+---
+layout: default
+---
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const hash = window.location.hash;
+        const nextPage = "{{ page.next.url | relative_url }}#next";
+        const prevPage = "{{ page.previous.url | relative_url }}#prev";
+        const redirectPage = "{{ page.url_to_redirect }}";
+
+        if (hash === "#no-redirect") {
+            console.log("Redirect dibatalkan.");
+        } else if (hash === "#next" && nextPage !== "") {
+            window.location.href = nextPage;
+        } else if (hash === "#prev" && prevPage !== "") {
+            window.location.href = prevPage;
+        } else if (redirectPage !== "") {
+            window.location.href = redirectPage;
+        }
+    });
+</script>
+
+<!-- <script>
+    // Jika URL mengandung #no-redirect, jangan redirect
+    if (window.location.hash !== "#no-redirect") {
+        window.location.href = "{{ page.url_to_redirect }}";
+    }
+</script> -->
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,4 +39,4 @@
 <body>
     Auto Redirect
 </body>
-</html>
+</html> -->
