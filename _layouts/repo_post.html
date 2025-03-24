@@ -103,6 +103,21 @@ layout: post
         margin: 5px; /* Kurangi margin antar tombol */
     }
   }
+
+  .clickable-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer !important;
+  }
+
+  .clickable-image:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
 </style>
 
 {% if page.repo.preview contains ".png" or page.repo.preview contains ".jpg" or page.repo.preview contains ".jpeg" %}
