@@ -35,5 +35,14 @@
 		{% if site.google_verify %}
 		<meta name="google-site-verification" content="{{site.google_verify}}" />
 		{% endif %}
+		<link rel="manifest" href="/manifest.json">
+		<script>
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('/service-worker.js')
+			.then(reg => console.log('Service Worker Registered!', reg))
+			.catch(err => console.error('Service Worker Failed!', err));
+			navigator.serviceWorker.controller.postMessage({ type: "SKIP_WAITING" });
+		}
+		</script>
 	</head>
 <body>

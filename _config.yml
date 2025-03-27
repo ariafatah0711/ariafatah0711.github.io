@@ -16,8 +16,8 @@ discus-identifier:  ariafatah0711
 # Author settings
 author:
   name: aria fatah
-  # bio: Hoby Belajar IT <br> web development <br> Networking & IT security <br> DevOps & automation
-  bio: Hoby Belajar IT web development ppppppppppppppppppppp ddddddddddddddddddddd  12312 4234 342423 42422 dancokkkk kk kk kk
+  bio: Hoby Belajar IT <br> web development <br> Networking & IT security <br> DevOps & automation
+  # bio: Hoby Belajar IT web development ppppppppppppppppppppp ddddddddddddddddddddd  12312 4234 342423 42422 dancokkkk kk kk kk
   picture: assets/images/profile-128.avif
   github: ariafatah0711 # github username
   # twitter:  # twitter username
@@ -57,6 +57,21 @@ app:
     active: False
     song: assets/song/song.m4a
 
+# pwa (opsional)
+# pwa:
+#   enabled: true
+#   sw_src_filepath: service-worker.js # Optional
+#   sw_dest_filename: service-worker.js # Optional
+#   dest_js_directory: assets/js # Required
+#   precache_recent_posts_num: 5 # Optional
+#   precache_glob_directory: / # Optional
+#   precache_glob_patterns:
+#     - "{js,css,fonts,img}/**/*.{js,css,eot,svg,ttf,woff,png,avif,jpg,jpeg,gif,webp}"
+#     - index.html
+#   precache_glob_ignores: # Optional
+#     - sw-register.js
+#     - "fonts/**/*"
+
 # URL settings
 url: "https://ariaf.my.id"
 # url: "http://127.0.0.1:4000" # Domain Name of host. [username].github.io for github pages
@@ -80,6 +95,8 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-relative-links
+  # - jekyll-pwa-plugin
+
 paginate: 10
 paginate_path: "/page/:num"
 

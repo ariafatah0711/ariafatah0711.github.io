@@ -11,4 +11,4 @@ gem 'wdm', '>= 0.1.0'
 # update ruby version
 gem 'webrick'
 
-# gem 'jekyll-pwa-plugin'
+# gem 'jekyll-pwa-plugin', "= 2.2.3"
