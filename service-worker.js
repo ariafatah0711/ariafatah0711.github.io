@@ -153,13 +153,13 @@ workbox.routing.registerRoute(
 );
 
 // Cache API Lanyard (Stale While Revalidate)
-workbox.routing.registerRoute(
-  ({ url }) => url.origin === "https://api.lanyard.rest",
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName: CACHE_CONFIG.lanyardAPI.name,
-    plugins: [new workbox.expiration.ExpirationPlugin(CACHE_CONFIG.lanyardAPI)],
-  })
-);
+// workbox.routing.registerRoute(
+//   ({ url }) => url.origin === "https://api.lanyard.rest",
+//   new workbox.strategies.StaleWhileRevalidate({
+//     cacheName: CACHE_CONFIG.lanyardAPI.name,
+//     plugins: [new workbox.expiration.ExpirationPlugin(CACHE_CONFIG.lanyardAPI)],
+//   })
+// );
 
 // Cache gambar dari GitHub raw (Cache First)
 workbox.routing.registerRoute(
