@@ -18,6 +18,10 @@
   font-display: swap;
 }
 
+/* * {
+  border: 1px solid gray;
+} */
+
 :root {
   --bg-color: #fafafa;
   --bg-hover-color: #ececec;
@@ -36,6 +40,7 @@
 
 html {
   scrollbar-gutter: stable !important;
+  overflow-x: hidden !important;
 }
 
 body {
@@ -231,33 +236,19 @@ body {
   padding: 5px 10px;
 }
 
+/* profile */
 .profile {
   width: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-between;
-  align-items: center;
-  padding: 5px 10px;
-  margin-bottom: 20px;
-}
-
-span#status {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 250px;
-}
-
-.profile-image-container {
-  width: 40%;
+  padding: 15px 10px;
 }
 
 .profile-header {
-  max-width: 128px;
+  width: 65%;
+  flex-grow: 1;
 }
 
 .profile-image {
@@ -267,13 +258,43 @@ span#status {
   transition: transform .2s;
 }
 
+.profile-about {
+  width: 35%;
+  text-align: right;
+}
+
+/* status */
+#status {
+  display: block;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-image-container {
+  width: 40%;
+}
+
 .profile-image:hover {
   transform: scale(1.05);
 }
 
-.profile-about {
-  /* width: 60%; */
+.profile-bio {
+  width: 100%;
   text-align: right;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+h1,
+h2 h3 {
+  margin: 0;
 }
 
 .font-2 {
@@ -332,6 +353,12 @@ pre {
 .social-icon {
   height: 24px;
   width: 27px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.2);
+  opacity: 0.8;
 }
 
 @media (min-width: 1200px) {
@@ -379,13 +406,14 @@ pre {
 @media only screen and (max-width: 480px) {
   .profile {
     flex-direction: column;
+    align-items: center;
   }
 
   .profile-header {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     flex-direction: column;
     text-align: center;
   }
@@ -414,15 +442,9 @@ pre {
   }
 
   .profile-bio {
-    width: 100%;
     text-align: center;
-    display: -webkit-box;
     -webkit-line-clamp: 1;
     line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
   }
 }
 
@@ -539,4 +561,37 @@ pre {
   /* Ganti warna ikon saat hover */
   transform: rotate(15deg);
   /* Putar ikon sedikit saat hover */
+}
+
+/* menghilangkan efek biru pada mobile */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* blockir select element tertentu */
+button,
+a,
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+
+/* effect select teks */
+::-moz-selection {
+  background: #ffcc00;
+  color: black;
+}
+
+::selection {
+  background: #ffcc00;
+  color: black;
 }

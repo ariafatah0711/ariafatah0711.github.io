@@ -21,3 +21,8 @@ function toggleResetData() {
   sessionStorage.clear();
   location.reload();
 }
+
+// mencegah drag image
+document.addEventListener("dragstart", function (event) {
+  event.preventDefault();
+});

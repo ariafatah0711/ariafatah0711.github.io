@@ -1,4 +1,10 @@
 <div style="display: flex; margin-bottom: 20px; height: 100%;">
+  {% for item in site.app.navbar %}
+    <a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
+  {% endfor %}
+</div>
+
+<!-- <div style="display: flex; margin-bottom: 20px; height: 100%;">
         {% for item in site.app.navbar %}
           {% if item == 'about' %}
             <a href="{{ site.baseurl }}/about" style="margin-right: 20px;">About</a>
@@ -16,7 +22,7 @@
           <a href="{{ site.baseurl }}/info" style="margin-right: 20px;">Info</a>
           {% endif %}
         {% endfor %}
-</div>
+</div> -->
 
 <!-- <div style="display: flex; margin-bottom: 20px; height: 100%;">
     <a href="{{ site.baseurl }}/about" style="margin-right: 20px;">About</a>

@@ -16,7 +16,8 @@ discus-identifier:  ariafatah0711
 # Author settings
 author:
   name: aria fatah
-  bio: Hoby Belajar IT <br> web development <br> Networking & IT security <br> DevOps & automation
+  # bio: Hoby Belajar IT <br> web development <br> Networking & IT security <br> DevOps & automation
+  bio: Hoby Belajar IT web development ppppppppppppppppppppp ddddddddddddddddddddd  12312 4234 342423 42422 dancokkkk kk kk kk
   picture: assets/images/profile-128.avif
   github: ariafatah0711 # github username
   # twitter:  # twitter username
@@ -30,17 +31,28 @@ author:
 app:
   theme: white
   navbar:
-    - about
-    # - blogs
-    # - urls
-    - cv
-    # - repos
-    - tags
-    - info
+    - name: about
+      url: /about
+    - name: cv
+      url: /cv
+    # - name: blogs
+      # url: /blogs
+    # - name: urls
+      # url: /urls
+    - name: tags
+      url: /tags
+    # - name: repos
+      # url: repos
+    - name: notes
+      url: /notes
+    - name: info
+      url: /info
+    # - name: /external
+    #   url: https://docs.ariaf.my.id
   show_discord:
     active: True
     discord_id: 879547455941779456
-    discord_key: aria123
+    cacheTime: 30000
   toggle_song:
     active: False
     song: assets/song/song.m4a
@@ -54,7 +66,6 @@ markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
-
 
 exclude:
   - .jekyll-cache
