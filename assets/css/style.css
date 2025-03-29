@@ -44,6 +44,7 @@ html {
 }
 
 body {
+  height: 100vh;
   font-family: 'Catamaran', sans-serif;
   font-weight: 300;
   background: var(--body-bg);
