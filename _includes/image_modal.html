@@ -35,6 +35,10 @@
         cursor: pointer;
         z-index: 1100;
     }
+
+    body.modal-open {
+        overflow: hidden;
+    }
 </style>
 
 <script>
@@ -47,15 +51,18 @@
         img.onclick = function() {
             modal.style.display = "flex";
             modalImg.src = this.src;
+            document.body.classList.add("modal-open");
         };
     });
 
     document.querySelector(".close").onclick = function() {
         modal.style.display = "none";
+        document.body.classList.remove("modal-open")
     };
 
     modal.onclick = function() {
         modal.style.display = "none";
+        document.body.classList.remove("modal-open")
     };
     });
 </script>

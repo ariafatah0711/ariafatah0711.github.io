@@ -1,33 +1,169 @@
+<!-- <pre>{{ site.app.linktree | jsonify }}</pre> -->
 <div style="display: flex; margin-bottom: 20px; height: 100%;">
   {% for item in site.app.navbar %}
     <a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
   {% endfor %}
+  
+  {% if site.app.linktree.active %}
+    <!-- <a href="{{ page.url }}#link">link</a> -->
+    <a href="#" onclick="openLinktree(); return false;">link</a>
+  {% endif %}
+
+  <div id="linktreeBox" class="linktree-box" style="display: none;">
+    <div class="linktree-inner">
+      <span class="close-btn" onclick="toggleLinktree(event)">&times;</span>
+      
+      {% for group in site.app.linktree.groups %}
+      <div class="linktree-group">
+        <h3>{{ group.title }}</h3>
+        <ul>
+          {% for item in group.items %}
+            <li><a href="{{ item.url }}" target="_blank">{{ item.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% if forloop.last == false %}
+        <div class="linktree-divider"></div>
+      {% endif %}
+    {% endfor %}
+      
+    </div>
+  </div>  
 </div>
 
-<!-- <div style="display: flex; margin-bottom: 20px; height: 100%;">
-        {% for item in site.app.navbar %}
-          {% if item == 'about' %}
-            <a href="{{ site.baseurl }}/about" style="margin-right: 20px;">About</a>
-          {% elsif item == 'blogs' %}
-            <a href="{{ site.baseurl }}/blogs" style="margin-right: 20px;">Blog</a>
-          {% elsif item == 'urls' %}
-            <a href="{{ site.baseurl }}/urls" style="margin-right: 20px;">Url</a>
-          {% elsif item == 'cv' %}
-            <a href="{{ site.baseurl }}/cv/" style="margin-right: 20px;">CV</a>
-          {% elsif item == 'repos' %}
-            <a href="{{ site.baseurl }}/repos" style="margin-right: 20px;">Repo</a>
-          {% elsif item == 'tags' %}
-            <a href="{{ site.baseurl }}/tags" style="margin-right: 20px;">Tags</a>
-          {% elsif item == 'info' %}
-          <a href="{{ site.baseurl }}/info" style="margin-right: 20px;">Info</a>
-          {% endif %}
-        {% endfor %}
-</div> -->
+<script>
+function toggleLinktree(event, forceShow = null) {
+  if (event) event.preventDefault();
 
-<!-- <div style="display: flex; margin-bottom: 20px; height: 100%;">
-    <a href="{{ site.baseurl }}/about" style="margin-right: 20px;">About</a>
-    <a href="{{ site.baseurl }}/blogs" style="margin-right: 20px;">Blog</a>
-    <a href="{{ site.baseurl }}/urls" style="margin-right: 20px;">Url</a>
-    <a href="{{ site.baseurl }}/repos" style="margin-right: 20px;">Repo</a>
-    <a href="{{ site.baseurl }}/tags" style="margin-right: 20px;">Tags</a>
-</div> -->
+  const box = document.getElementById("linktreeBox");
+  const show = forceShow !== null ? forceShow : box.style.display !== "flex";
+
+  box.style.display = show ? "flex" : "none";
+  document.body.style.overflow = show ? "hidden" : "auto";
+
+  if (!show) {
+    // hanya hapus hash saat popup ditutup
+    history.replaceState(null, null, location.pathname + location.search);
+    console.log("Popup closed — hash removed");
+  } else {
+    console.log("Popup opened — hash preserved");
+  }
+}
+
+  function openLinktree() {
+    location.hash = "link"; // ini bakal kelihatan di URL
+  }
+
+  function handleHashChange() {
+    if (window.location.hash === "#link") {
+      toggleLinktree(null, true);
+    } else {
+      // toggleLinktree(null, false);
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    handleHashChange();
+
+    const box = document.getElementById("linktreeBox");
+    const inner = document.querySelector(".linktree-inner");
+
+    // Close popup if clicked outside of the box
+    box.addEventListener("click", (e) => {
+      if (!inner.contains(e.target)) {
+        toggleLinktree(null, false);
+        // history.replaceState(null, null, " "); // Optional: remove #link
+      }
+    });
+  });
+
+  window.addEventListener("hashchange", handleHashChange);
+</script>
+
+
+
+<style>
+  .linktree-box {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .linktree-inner {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+  }
+
+  .linktree-divider {
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+    margin: 20px 0;
+    opacity: 0.5;
+  }
+
+  .linktree-divider {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .linktree-inner ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .linktree-inner li {
+    margin: 10px 0;
+  }
+
+  .linktree-inner a {
+    position: relative;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    display: inline-block;
+    transition: color 0.3s ease;
+  }
+
+  .linktree-inner a::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #0070f3;
+    transition: width 0.3s ease;
+  }
+
+  .linktree-inner a:hover {
+    color: #0070f3;
+  }
+
+  .linktree-inner a:hover::after {
+    width: 100%;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+  }
+</style>

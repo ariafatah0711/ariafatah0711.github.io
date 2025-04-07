@@ -35,20 +35,37 @@ app:
       url: /about
     - name: cv
       url: /cv
+    # - name: notes
+    #   url: /notes
     # - name: blogs
-      # url: /blogs
+    #   url: /blogs
     # - name: urls
-      # url: /urls
+    #   url: /urls
     - name: tags
       url: /tags
     # - name: repos
       # url: repos
-    - name: notes
-      url: /notes
     - name: info
       url: /info
     # - name: /external
     #   url: https://docs.ariaf.my.id
+  linktree:
+    active: true
+    groups:
+      - title: Linktree
+        items:
+          - name: WhatsApp
+            url: https://wa.me/+6289509221496
+          # - name: GitHub
+          #   url: https://github.com/ariafatah0711
+      - title: My Web
+        items:
+          - name: ctf.ariaf.my.id
+            url: https://ctf.ariaf.my.id
+          - name: notes
+            url: https://ariaf.my.id/notes
+          - name: files
+            url: https://ariaf.my.id/files
   show_discord:
     active: True
     discord_id: 879547455941779456
