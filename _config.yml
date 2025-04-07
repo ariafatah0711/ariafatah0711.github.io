@@ -60,12 +60,12 @@ app:
           #   url: https://github.com/ariafatah0711
       - title: My Web
         items:
-          - name: ctf.ariaf.my.id
-            url: https://ctf.ariaf.my.id
           - name: notes
             url: https://ariaf.my.id/notes
           - name: files
             url: https://ariaf.my.id/files
+          - name: ctf
+            url: https://ctf.ariaf.my.id
   show_discord:
     active: True
     discord_id: 879547455941779456

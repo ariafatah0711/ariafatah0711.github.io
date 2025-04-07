@@ -5,7 +5,6 @@
   {% endfor %}
   
   {% if site.app.linktree.active %}
-    <!-- <a href="{{ page.url }}#link">link</a> -->
     <a href="#" onclick="openLinktree(); return false;">link</a>
   {% endif %}
 
@@ -14,48 +13,47 @@
       <span class="close-btn" onclick="toggleLinktree(event)">&times;</span>
       
       {% for group in site.app.linktree.groups %}
-      <div class="linktree-group">
-        <h3>{{ group.title }}</h3>
-        <ul>
-          {% for item in group.items %}
-            <li><a href="{{ item.url }}" target="_blank">{{ item.name }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% if forloop.last == false %}
-        <div class="linktree-divider"></div>
-      {% endif %}
-    {% endfor %}
-      
+        <div class="linktree-group">
+          <h3>{{ group.title }}</h3>
+          <ul>
+            {% for item in group.items %}
+              <li><a href="{{ item.url }}" target="_blank">{{ item.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% if forloop.last == false %}
+          <div class="linktree-divider"></div>
+        {% endif %}
+      {% endfor %}
     </div>
   </div>  
 </div>
 
 <script>
-function toggleLinktree(event, forceShow = null) {
-  if (event) event.preventDefault();
+  function toggleLinktree(event, forceShow = null) {
+    if (event) event.preventDefault();
 
-  const box = document.getElementById("linktreeBox");
-  const show = forceShow !== null ? forceShow : box.style.display !== "flex";
+    const box = document.getElementById("linktreeBox");
+    const show = forceShow !== null ? forceShow : box.style.display !== "flex";
 
-  box.style.display = show ? "flex" : "none";
-  document.body.style.overflow = show ? "hidden" : "auto";
+    box.style.display = show ? "flex" : "none";
 
-  if (!show) {
-    // hanya hapus hash saat popup ditutup
-    history.replaceState(null, null, location.pathname + location.search);
-    console.log("Popup closed — hash removed");
-  } else {
-    console.log("Popup opened — hash preserved");
+    if (show) {
+      document.body.classList.add("linktree-lock-scroll");
+      console.log("Popup opened — hash preserved");
+    } else {
+      document.body.classList.remove("linktree-lock-scroll");
+      history.replaceState(null, null, location.pathname + location.search);
+      console.log("Popup closed — hash removed");
+    }
   }
-}
 
   function openLinktree() {
-    location.hash = "link"; // ini bakal kelihatan di URL
+    location.hash = "show_link"; // ini bakal kelihatan di URL
   }
 
   function handleHashChange() {
-    if (window.location.hash === "#link") {
+    if (window.location.hash === "#show_link") {
       toggleLinktree(null, true);
     } else {
       // toggleLinktree(null, false);
@@ -88,8 +86,8 @@ function toggleLinktree(event, forceShow = null) {
     z-index: 9999;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     backdrop-filter: blur(5px);
     background: rgba(0,0,0,0.5);
     display: flex;
@@ -165,5 +163,11 @@ function toggleLinktree(event, forceShow = null) {
     font-weight: bold;
     color: #888;
     cursor: pointer;
+  }
+
+  body.linktree-lock-scroll {
+    overflow: hidden !important;
+    height: 100vh;
+    touch-action: none;
   }
 </style>
