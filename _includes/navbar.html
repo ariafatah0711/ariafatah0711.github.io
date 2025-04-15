@@ -49,11 +49,11 @@
   }
 
   function openLinktree() {
-    location.hash = "show_link"; // ini bakal kelihatan di URL
+    location.hash = "linktree"; // ini bakal kelihatan di URL
   }
 
   function handleHashChange() {
-    if (window.location.hash === "#show_link") {
+    if (window.location.hash === "#linktree") {
       toggleLinktree(null, true);
     } else {
       // toggleLinktree(null, false);
@@ -73,12 +73,24 @@
         // history.replaceState(null, null, " "); // Optional: remove #link
       }
     });
-  });
 
+    document.addEventListener("keydown", function (event) {
+      const box = document.getElementById("linktreeBox");
+
+      // ESC untuk close popup
+      if (event.key === "Escape" && box.style.display === "flex") {
+        toggleLinktree(null, false);
+      }
+
+      // Ctrl + L untuk buka popup
+      if (event.ctrlKey && event.key.toLowerCase() === "l") {
+        event.preventDefault(); // Biar gak ke-clear address bar browser
+        openLinktree()
+      }
+    });
+  });
   window.addEventListener("hashchange", handleHashChange);
 </script>
-
-
 
 <style>
   .linktree-box {

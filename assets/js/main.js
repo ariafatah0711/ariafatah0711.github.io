@@ -16,31 +16,6 @@ function toggleNightMode() {
   }
 }
 
-function toggleResetData() {
-  localStorage.clear();
-  sessionStorage.clear();
-  location.reload();
-  clearCacheAndReload();
-}
-
-function clearCacheAndReload() {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      for (let registration of registrations) {
-        registration.unregister();
-      }
-    });
-  }
-  caches.keys().then((names) => {
-    for (let name of names) {
-      caches.delete(name);
-    }
-  });
-  localStorage.clear();
-  sessionStorage.clear();
-  location.reload();
-}
-
 // mencegah drag image
 document.addEventListener("dragstart", function (event) {
   event.preventDefault();

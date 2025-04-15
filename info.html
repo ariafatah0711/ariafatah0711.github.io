@@ -18,9 +18,78 @@ title: Information
 
 <div class="text-center info-footer">
     <button onclick="toggleResetData();" class="reset-btn">
-        🔄 Reset Data
+      🔄 Reset Data
+    </button>
+    <button onclick="clearCacheAndReload();" class="reset-btn">
+      ♻️ Reset Cache
     </button>
     <div class="mode" id="mode-switcher-info" onclick="toggleNightMode();">
-        <span></span>
+      <span></span>
     </div>
 </div>
+
+<script>
+function toggleResetData() {
+  localStorage.clear();
+  sessionStorage.clear();
+  location.reload();
+  // clearCacheAndReload();
+}
+
+function clearCacheAndReload() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+  caches.keys().then((names) => {
+    for (let name of names) {
+      caches.delete(name);
+    }
+  });
+  localStorage.clear();
+  sessionStorage.clear();
+  location.reload();
+}
+</script>
+
+<style>
+    .info-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+  
+    .reset-btn {
+      background-color: #f44336;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 0.85rem; /* Agak besar biar lebih enak dilihat */
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+  
+    .reset-btn:hover {
+      background-color: #d32f2f;
+      transform: scale(1.05);
+    }
+  
+    .reset-btn:active {
+      transform: scale(0.98);
+    }
+  
+    .mode {
+      cursor: pointer;
+    }
+  </style>

@@ -1,0 +1,17 @@
+Frontend:
+  - name: HTML
+    icon: html.svg
+  - name: CSS
+    icon: css.svg
+  - name: Tailwind
+    icon: tailwind.svg
+  - name: React
+    icon: react.svg
+  - name: Next.js
+    icon: nextjs.svg
+
+Backend:
+  - name: Node.js
+    icon: nodejs.svg
+  - name: Docker
+    icon: docker.svg
