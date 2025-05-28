@@ -1,4 +1,5 @@
 <!-- <pre>{{ site.app.linktree | jsonify }}</pre> -->
+{% if page.hidden_navbar != true %}
 <div style="display: flex; margin-bottom: 20px; height: 100%;">
   {% for item in site.app.navbar %}
     <a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
@@ -183,3 +184,4 @@
     touch-action: none;
   }
 </style>
+{% endif %}

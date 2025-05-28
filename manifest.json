@@ -1,6 +1,6 @@
 {
     "name": "ariaf.my.id",
-    "short_name": "JekyllPWA",
+    "short_name": "ariaf.my.id",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",

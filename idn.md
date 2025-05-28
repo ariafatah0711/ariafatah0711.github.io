@@ -1,5 +1,8 @@
-<!-- ---
+---
 layout: default
+title: Blogs
+# permalink: /idn
+hidden_navbar: true
 ---
 {% assign include_tags_string = "" %}
 {% assign exclude_tags_string = "idn" %}
@@ -44,35 +47,4 @@ layout: default
   {% endfor %}
 </div>
 
-{% include pagination.html %} -->
-
-
----
-layout: default
----
-<div class="post-container">
-	{% for post in paginator.posts %}
-        <div class="post-list">
-            {% if post.tags contains "link" %}
-                <a class="post-title" href="{{ post.url_to_redirect }}">{{ post.title }}</a>
-            {% else %}
-                <a class="post-title" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>  
-            {% endif %}          
-            <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
-        </div>
-    {% endfor %}
-</div>
 {% include pagination.html %}
-
-<!-- ---
-layout: default
----
-<div class="post-container">
-	{% for post in paginator.posts %}
-        <div class="post-list">
-            <a class="post-title" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
-            <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
-        </div>
-    {% endfor %}
-</div>
-{% include pagination.html %} -->
