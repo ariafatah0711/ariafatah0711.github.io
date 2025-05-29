@@ -32,7 +32,7 @@ app:
   theme: white
   navbar:
     - name: about
-      url: /about
+      url: https://me.ariaf.my.id
     - name: cv
       url: /cv
     # - name: notes
@@ -41,8 +41,8 @@ app:
     #   url: /blogs
     # - name: urls
     #   url: /urls
-    - name: tags
-      url: /tags
+    # - name: tags
+      # url: /tags
     # - name: repos
       # url: repos
     - name: info
