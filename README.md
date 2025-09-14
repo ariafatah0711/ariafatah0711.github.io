@@ -41,21 +41,45 @@ Author [Hakan Torun](https://hakan.io).
 Run local server:
 
 ```bash
+sudo apt update
+sudo apt install ruby-dev ruby-full build-essential zlib1g-dev -y
+
+echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
+echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+````bash
 git clone https://github.com/ariafatah0711/ariafatah0711.github.io
 cd ariafatah0711.github.io
-gem install bundler -v 2.2.22
-bundle config set --local path '~/.gem/ruby/3.3.0'
+
+gem install bundler
+# gem install bundler -v 2.2.22
+# bundle config set --local path '~/.gem/ruby/3.3.0'
+
+rm Gemfile.lock
 bundle install
+
 bundle exec jekyll build
-bundle exec jekyll serve --host 0.0.0.0 --port 4000
+# bundle exec jekyll serve --host 0.0.0.0 --port 4000
+bundle exec jekyll serve --host 192.168.1.11 --port 4000
+
+bundle exec jekyll serve --host 0.0.0.0 --port 4000 --livereload
+bundle exec jekyll serve --host 192.168.1.11 --port 4000 --livereload
+
 jekyll clean
 ```
 
-## opsional if error install
+### docker (msh gagal di path ip), kalo localhost aman
 ```bash
-gem update --system     
-gem install bundler
-bundle update
+# ubah _config.dev.yml
+
+docker compose up -d
+
+docker compose logs -f jekyll
+
+docker compose down --volumes
+rm -rf _site .jekyll-cache .sass-cache
 ```
 
 Navigate to `127.0.0.1:4000`.

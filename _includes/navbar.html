@@ -4,7 +4,7 @@
   {% for item in site.app.navbar %}
     <a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
   {% endfor %}
-  
+
   {% if site.app.linktree.active %}
     <a href="#" onclick="openLinktree(); return false;">link</a>
   {% endif %}
@@ -12,7 +12,7 @@
   <div id="linktreeBox" class="linktree-box" style="display: none;">
     <div class="linktree-inner">
       <span class="close-btn" onclick="toggleLinktree(event)">&times;</span>
-      
+
       {% for group in site.app.linktree.groups %}
         <div class="linktree-group">
           <h3>{{ group.title }}</h3>
@@ -27,7 +27,7 @@
         {% endif %}
       {% endfor %}
     </div>
-  </div>  
+  </div>
 </div>
 
 <script>
@@ -83,10 +83,10 @@
         toggleLinktree(null, false);
       }
 
-      // Ctrl + L untuk buka popup
-      if (event.ctrlKey && event.key.toLowerCase() === "l") {
-        event.preventDefault(); // Biar gak ke-clear address bar browser
-        openLinktree()
+      // Tekan L untuk buka popup
+      if (!event.ctrlKey && event.key.toLowerCase() === "l") {
+        event.preventDefault(); // biar gak scroll ke bawah (default shortcut "L" di browser)
+        openLinktree();
       }
     });
   });

@@ -1,22 +1,30 @@
-FROM ruby:3.2
+# FROM ruby:3.2
 
-# Install dependencies
-RUN apt-get update -qq && apt-get install -y build-essential libvips
+# # Install dependencies
+# RUN apt-get update -qq && apt-get install -y build-essential libvips
 
-# Set workdir
-WORKDIR /site
+# # Set workdir
+# WORKDIR /site
 
-# Copy Gemfile & Gemfile.lock
-COPY Gemfile Gemfile.lock ./
+# # Copy Gemfile & Gemfile.lock
+# COPY Gemfile Gemfile.lock ./
 
-# Install gems
-RUN bundle install
+# # Install gems
+# RUN bundle install
 
-# Copy the rest of your site
+# # Copy the rest of your site
+# COPY . .
+
+# # Expose port 4000
+# EXPOSE 4000
+
+# # Default command
+# CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
+
+# ----------------------------------------------
+
+FROM jekyll/jekyll
+WORKDIR /srv/jekyll
 COPY . .
-
-# Expose port 4000
 EXPOSE 4000
-
-# Default command
-CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]
+CMD ["jekyll", "serve", "--host", "0.0.0.0", "--port", "4000"]

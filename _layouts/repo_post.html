@@ -14,12 +14,12 @@ layout: post
       border-radius: 8px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
+
     .demo {
       /* background: #000; */
       background: #24292e;
     }
-    
+
     .source {
       background: #24292e;
     }
@@ -29,7 +29,7 @@ layout: post
       background: #24292e;
       /* background: #ff9800; */
     }
-    
+
     .button:hover {
       transform: scale(1.1);
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
@@ -121,18 +121,41 @@ layout: post
   }
 </style>
 
-{% if page.repo.preview contains ".png" or page.repo.preview contains ".jpg" or page.repo.preview contains ".jpeg" %}
+<!-- {% if page.repo.preview contains ".png" or page.repo.preview contains ".jpg" or page.repo.preview contains ".jpeg" %}
 {% include image_modal.html %}
-<p align="center">  
+<p align="center">
   <img src="{{ page.repo.preview }}" alt="Preview" class="clickable-image">
-</p>
-<!-- <p align="center">  
+</p> -->
+<!-- <p align="center">
     <img src="{{ page.repo.preview }}" alt="Preview">
 </p> -->
-{% elsif page.repo.preview contains "youtube.com/embed" %}
+<!-- {% elsif page.repo.preview contains "youtube.com/embed" %}
 <div class="video-container">
-  <iframe src="{{ page.repo.preview }}" title="YouTube video player" frameborder="0" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+  <iframe src="{{ page.repo.preview }}" title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+  </iframe>
+</div>
+{% endif %} -->
+
+{% if page.repo.preview_type == "image" or page.repo.preview contains ".png" or page.repo.preview contains ".jpg" or page.repo.preview contains ".jpeg" %}
+{% include image_modal.html %}
+<p align="center">
+  <img src="{{ page.repo.preview }}" alt="Preview" class="clickable-image">
+</p>
+
+{% elsif page.repo.preview_type == "video" or page.repo.preview contains ".mp4" or page.repo.preview contains ".webm" or page.repo.preview contains ".mov" or page.repo.preview contains "user-attachments/assets" %}
+<p align="center">
+  <video controls class="video-player" style="max-width:100%; border-radius: 12px;">
+    <source src="{{ page.repo.preview }}">
+    Browser kamu tidak mendukung video tag.
+  </video>
+</p>
+
+{% elsif page.repo.preview_type == "youtube" or page.repo.preview contains "youtube.com/embed" %}
+<div class="video-container">
+  <iframe src="{{ page.repo.preview }}" title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
   </iframe>
 </div>

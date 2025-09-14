@@ -18,7 +18,8 @@ author:
   name: aria fatah
   bio: Hoby Belajar IT <br> web development <br> Networking & IT security <br> DevOps & automation
   # bio: Hoby Belajar IT web development ppppppppppppppppppppp ddddddddddddddddddddd  12312 4234 342423 42422 dancokkkk kk kk kk
-  picture: assets/images/profile-128.avif
+  # picture: assets/images/profile-128.avif
+  picture: assets/images/profile2-128.avif
   github: ariafatah0711 # github username
   # twitter:  # twitter username
   # facebook:  # facebook username
@@ -32,7 +33,8 @@ app:
   theme: white
   navbar:
     - name: about
-      url: https://me.ariaf.my.id
+      # url: https://me.ariaf.my.id
+      url: /about
     - name: cv
       url: /cv
     # - name: notes
@@ -124,7 +126,7 @@ collections:
   posts:
     output: true
     permalink: /:slug
-  
+
 defaults:
   -
     scope:
