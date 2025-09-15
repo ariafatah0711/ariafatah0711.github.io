@@ -1,6 +1,13 @@
 <div id="imageModal" class="modal">
     <span class="close">&times;</span>
+    <div class="modal-nav prev" id="prevBtn">&#10094;</div>
+    <div class="modal-nav next" id="nextBtn">&#10095;</div>
     <img class="modal-content" id="modalImg">
+    <div class="modal-info" id="modalInfo">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-description" id="modalDescription"></div>
+        <div class="modal-counter" id="modalCounter"></div>
+    </div>
 </div>
 
 <style>
@@ -19,10 +26,11 @@
 
     .modal-content {
         max-width: 90%;
-        max-height: 90%;
+        max-height: 80%;
         display: block;
         margin: auto;
         border-radius: 8px;
+        object-fit: contain;
     }
 
     .close {
@@ -34,6 +42,100 @@
         font-weight: bold;
         cursor: pointer;
         z-index: 1100;
+        transition: opacity 0.3s ease;
+    }
+
+    .close:hover {
+        opacity: 0.7;
+    }
+
+    .modal-nav {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1100;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        user-select: none;
+    }
+
+    .modal-nav:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .modal-nav.prev {
+        left: 30px;
+    }
+
+    .modal-nav.next {
+        right: 30px;
+    }
+
+    .modal-info {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 80%;
+        z-index: 1100;
+    }
+
+    .modal-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .modal-description {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-bottom: 5px;
+    }
+
+    .modal-counter {
+        font-size: 0.8rem;
+        opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+        .modal-nav {
+            font-size: 30px;
+            padding: 15px;
+        }
+        
+        .modal-nav.prev {
+            left: 15px;
+        }
+        
+        .modal-nav.next {
+            right: 15px;
+        }
+        
+        .modal-info {
+            bottom: 10px;
+            padding: 10px 15px;
+            max-width: 90%;
+        }
+        
+        .modal-title {
+            font-size: 1rem;
+        }
+        
+        .modal-description {
+            font-size: 0.8rem;
+        }
     }
 
     body.modal-open {
@@ -49,31 +151,104 @@
     document.addEventListener("DOMContentLoaded", function() {
     var modal = document.getElementById("imageModal");
     var modalImg = document.getElementById("modalImg");
+    var modalTitle = document.getElementById("modalTitle");
+    var modalDescription = document.getElementById("modalDescription");
+    var modalCounter = document.getElementById("modalCounter");
+    var prevBtn = document.getElementById("prevBtn");
+    var nextBtn = document.getElementById("nextBtn");
     var scrollPosition = 0;
+    
+    // Array untuk menyimpan data gambar
+    var imageData = [];
+    var currentIndex = 0;
+    var isGalleryMode = false;
 
-    // Event delegation untuk gallery items (termasuk overlay description/title)
+    // Event delegation untuk gallery items dan repo post images
     document.addEventListener('click', function(event) {
-        // Cek apakah yang diklik adalah gallery item atau elemen di dalamnya
+        // Cek apakah yang diklik adalah gallery item
         var galleryItem = event.target.closest('.gallery-item');
         if (galleryItem) {
-            // Cari gambar di dalam gallery item
             var img = galleryItem.querySelector('.clickable-image');
             if (img) {
-                openModal(img.src);
+                // Setup gallery mode dulu untuk mendapatkan data yang benar
+                setupGalleryMode();
+                // Cari index berdasarkan urutan yang terlihat saja
+                var visibleItems = document.querySelectorAll('.gallery-item:not([style*="display: none"])');
+                var index = Array.from(visibleItems).indexOf(galleryItem);
+                openModal(index, true);
             }
+        }
+        // Cek apakah yang diklik adalah gambar di repo post
+        else if (event.target.classList.contains('clickable-image') && !event.target.closest('.gallery-item')) {
+            setupRepoMode(event.target);
+            openModal(0, false);
         }
     });
 
-    function openModal(imageSrc) {
-        // Simpan posisi scroll saat ini
+    function setupGalleryMode() {
+        isGalleryMode = true;
+        imageData = [];
+        // Hanya ambil gallery items yang sedang visible (tidak tersembunyi oleh filter)
+        var galleryItems = document.querySelectorAll('.gallery-item:not([style*="display: none"])');
+        
+        galleryItems.forEach(function(item) {
+            var img = item.querySelector('.clickable-image');
+            var title = item.querySelector('.gallery-title');
+            var description = item.querySelector('.gallery-description');
+            
+            if (img) {
+                imageData.push({
+                    src: img.src,
+                    title: title ? title.textContent : '',
+                    description: description ? description.textContent : ''
+                });
+            }
+        });
+    }
+
+    function setupRepoMode(img) {
+        isGalleryMode = false;
+        imageData = [{
+            src: img.src,
+            title: img.alt || 'Preview',
+            description: ''
+        }];
+    }
+
+    function openModal(index, showNav) {
+        if (imageData.length === 0) return;
+        
+        currentIndex = index;
         scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         
         modal.style.display = "flex";
-        modalImg.src = imageSrc;
-        document.body.classList.add("modal-open");
+        updateModalContent();
         
-        // Set body position untuk mencegah scroll jump
+        // Tampilkan/sembunyikan navigasi berdasarkan mode
+        if (showNav && imageData.length > 1) {
+            prevBtn.style.display = "block";
+            nextBtn.style.display = "block";
+        } else {
+            prevBtn.style.display = "none";
+            nextBtn.style.display = "none";
+        }
+        
+        document.body.classList.add("modal-open");
         document.body.style.top = -scrollPosition + 'px';
+    }
+
+    function updateModalContent() {
+        if (imageData[currentIndex]) {
+            modalImg.src = imageData[currentIndex].src;
+            modalTitle.textContent = imageData[currentIndex].title;
+            modalDescription.textContent = imageData[currentIndex].description;
+            
+            if (isGalleryMode && imageData.length > 1) {
+                modalCounter.textContent = (currentIndex + 1) + ' / ' + imageData.length;
+            } else {
+                modalCounter.textContent = '';
+            }
+        }
     }
 
     function closeModal() {
@@ -81,25 +256,67 @@
         document.body.classList.remove("modal-open");
         document.body.style.top = '';
         
-        // Kembalikan scroll position dengan requestAnimationFrame untuk smooth
         requestAnimationFrame(function() {
             window.scrollTo(0, scrollPosition);
         });
     }
 
+    function showPrev() {
+        if (isGalleryMode && imageData.length > 1) {
+            currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
+            updateModalContent();
+        }
+    }
+
+    function showNext() {
+        if (isGalleryMode && imageData.length > 1) {
+            currentIndex = (currentIndex + 1) % imageData.length;
+            updateModalContent();
+        }
+    }
+
+    // Event listeners
     document.querySelector(".close").onclick = closeModal;
+    prevBtn.onclick = showPrev;
+    nextBtn.onclick = showNext;
 
     modal.onclick = function(event) {
-        // Hanya tutup jika klik di background (bukan di gambar)
         if (event.target === modal) {
             closeModal();
         }
     };
 
-    // Tambahkan support untuk tombol Escape
+    // Keyboard navigation
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && modal.style.display === 'flex') {
-            closeModal();
+        if (modal.style.display === 'flex') {
+            switch(event.key) {
+                case 'Escape':
+                    closeModal();
+                    break;
+                case 'ArrowLeft':
+                    showPrev();
+                    break;
+                case 'ArrowRight':
+                    showNext();
+                    break;
+            }
+        }
+    });
+
+    // Listen untuk perubahan filter di gallery
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('filter-btn')) {
+            // Jika modal sedang terbuka, update data gallery
+            if (modal.style.display === 'flex' && isGalleryMode) {
+                setTimeout(function() {
+                    setupGalleryMode();
+                    // Reset ke index 0 jika current index melebihi jumlah gambar yang tersedia
+                    if (currentIndex >= imageData.length) {
+                        currentIndex = 0;
+                    }
+                    updateModalContent();
+                }, 100); // Delay sedikit untuk memastikan filter sudah diterapkan
+            }
         }
     });
     });

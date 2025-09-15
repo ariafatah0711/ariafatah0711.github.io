@@ -10,8 +10,18 @@ permalink: /gallery/
   <!-- Category Filter -->
   <div class="gallery-filters">
     {% for category in site.data.gallery.categories %}
+      {% if category.slug == "all" %}
+        {% assign count = site.data.gallery.photos.size %}
+      {% else %}
+        {% assign count = 0 %}
+        {% for photo in site.data.gallery.photos %}
+          {% if photo.category == category.slug %}
+            {% assign count = count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
       <button class="filter-btn" data-category="{{ category.slug }}">
-        {{ category.name }} ({{ category.count }})
+        {{ category.name }} ({{ count }})
       </button>
     {% endfor %}
   </div>
@@ -275,8 +285,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Set "All" as default active
   filterButtons[0].classList.add('active');
-
-  // Modal functionality sudah dihandle oleh image_modal.html
-  // Tidak perlu click handler tambahan karena class "clickable-image" sudah dihandle
 });
 </script>

@@ -134,10 +134,7 @@ photos:
 categories:
   - name: "All"
     slug: "all"
-    count: 19
   - name: "Certificates"
     slug: "certificate"
-    count: 8
   - name: "Personal"
     slug: "personal"
-    count: 11
