@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  document.documentElement.style.background = "white";
+  // Don't override background color to respect dark mode
   document.documentElement.style.overflow = "hidden";
   document.documentElement.style.position = "relative";
   document.documentElement.style.height = "100%";

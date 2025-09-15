@@ -109,7 +109,8 @@
   }
 
   .linktree-inner {
-    background: white;
+    background: var(--body-bg);
+    color: var(--primary-font-color);
     padding: 30px 40px;
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
@@ -117,18 +118,15 @@
     width: 90%;
     text-align: center;
     position: relative;
+    border: 1px solid var(--border-color);
   }
 
   .linktree-divider {
     height: 1px;
     width: 100%;
-    background: #ccc;
+    background: var(--border-color);
     margin: 20px 0;
     opacity: 0.5;
-  }
-
-  .linktree-divider {
-    background: rgba(255,255,255,0.1);
   }
 
   .linktree-inner ul {
@@ -143,7 +141,7 @@
   .linktree-inner a {
     position: relative;
     text-decoration: none;
-    color: #333;
+    color: var(--primary-font-color);
     font-weight: bold;
     display: inline-block;
     transition: color 0.3s ease;
@@ -156,12 +154,13 @@
     left: 0;
     width: 0%;
     height: 2px;
-    background-color: #0070f3;
+    background-color: var(--primary-font-color);
     transition: width 0.3s ease;
   }
 
   .linktree-inner a:hover {
-    color: #0070f3;
+    color: var(--primary-font-color);
+    opacity: 0.8;
   }
 
   .linktree-inner a:hover::after {
@@ -174,8 +173,14 @@
     right: 16px;
     font-size: 22px;
     font-weight: bold;
-    color: #888;
+    color: var(--primary-font-color);
+    opacity: 0.7;
     cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .close-btn:hover {
+    opacity: 1;
   }
 
   body.linktree-lock-scroll {

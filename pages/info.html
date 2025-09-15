@@ -67,14 +67,14 @@ function clearCacheAndReload() {
     }
 
     .reset-btn {
-      background-color: #f44336;
-      color: #fff;
-      border: none;
+      background-color: var(--primary-font-color);
+      color: var(--body-bg);
+      border: 1px solid var(--border-color);
       padding: 10px 20px;
       font-size: 0.85rem; /* Agak besar biar lebih enak dilihat */
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       display: inline-flex;
       align-items: center;
@@ -82,7 +82,7 @@ function clearCacheAndReload() {
     }
 
     .reset-btn:hover {
-      background-color: #d32f2f;
+      background-color: var(--bg-hover-color);
       transform: scale(1.05);
     }
 

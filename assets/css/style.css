@@ -325,7 +325,8 @@ h2 h3 {
 
 a:hover {
   text-decoration: none;
-  color: #85a857;
+  color: var(--primary-font-color);
+  opacity: 0.8;
 }
 
 a {
@@ -460,7 +461,7 @@ pre {
   margin: auto;
   width: 42px;
   height: 22px;
-  background: #F1F2F4;
+  background: var(--bg-hover-color);
   border-radius: 20px;
   cursor: pointer;
 
@@ -481,7 +482,8 @@ pre {
 }
 
 .mode.active {
-  background: #0771ca;
+  background: var(--primary-font-color);
+  opacity: 0.8;
 }
 
 .mode.active:after {
@@ -500,7 +502,7 @@ pre {
   display: block;
   width: 18px;
   height: 18px;
-  background: white;
+  background: var(--body-bg);
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transform: translateX(20px);
@@ -509,9 +511,9 @@ pre {
 
 /* reset */
 .reset-btn {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
+  background-color: var(--primary-font-color);
+  color: var(--body-bg);
+  border: 1px solid var(--border-color);
   padding: 12px 24px;
   font-size: 16px;
   font-weight: bold;
@@ -525,7 +527,7 @@ pre {
 }
 
 .reset-btn:hover {
-  background-color: #cc0000;
+  background-color: var(--bg-hover-color);
   transform: translateY(-2px);
   /* Hover naik sedikit */
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
@@ -589,11 +591,11 @@ img {
 
 /* effect select teks */
 ::-moz-selection {
-  background: #ffcc00;
-  color: black;
+  background: var(--bg-hover-color);
+  color: var(--primary-font-color);
 }
 
 ::selection {
-  background: #ffcc00;
-  color: black;
+  background: var(--bg-hover-color);
+  color: var(--primary-font-color);
 }
