@@ -47,6 +47,10 @@ sudo apt install ruby-dev ruby-full build-essential zlib1g-dev -y
 echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
 echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
+
+echo 'export GEM_HOME="$HOME/gems"' >> ~/.zshrc
+echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
 ```
 
 ````bash
@@ -64,8 +68,8 @@ bundle exec jekyll build
 # bundle exec jekyll serve --host 0.0.0.0 --port 4000
 bundle exec jekyll serve --host 192.168.1.11 --port 4000
 
-bundle exec jekyll serve --host 0.0.0.0 --port 4000 --livereload
-bundle exec jekyll serve --host 192.168.1.11 --port 4000 --livereload
+# bundle exec jekyll serve --host 0.0.0.0 --port 4000 --livereload
+bundle exec jekyll serve --host 192.168.1.11 --port 4000 --livereload -w
 
 jekyll clean
 ```
