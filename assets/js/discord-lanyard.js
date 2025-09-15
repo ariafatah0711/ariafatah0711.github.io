@@ -1,6 +1,6 @@
 const elementHtmlStatus = document.getElementById("status");
 
-async function checkDiscordStatus(DISCORD_ID, cacheTime = 60000) {
+async function checkDiscordStatus(DISCORD_ID, cacheTime = 15000) {
   const CACHE_KEY = "discordStatusCache";
 
   try {
@@ -8,7 +8,7 @@ async function checkDiscordStatus(DISCORD_ID, cacheTime = 60000) {
     const cachedData = localStorage.getItem(CACHE_KEY);
     const cachedTime = localStorage.getItem("cacheTime");
 
-    // Jika cache masih valid (< 1 menit), gunakan cache
+    // Jika cache masih valid, gunakan cache
     if (cachedData && cachedTime && new Date().getTime() - cachedTime < cacheTime) {
       elementHtmlStatus.innerHTML = cachedData;
       return;

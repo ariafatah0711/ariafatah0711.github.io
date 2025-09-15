@@ -21,27 +21,29 @@
 		</div>
 		<div class="profile-about">
 			<h2 style="margin: 0; font-weight: 700;">{{site.author.name}}</h2>
-			{% if site.author.facebook %}
-				<a href="https://facebook.com/{{site.author.facebook}}" target="_blank"><img src="assets/images/icon/facebook.svg" height="24px" width="27px" class="social-icon" alt="facebook"></a>
-			{% endif %}
-			{% if site.author.twitter %}
-				<a href="https://twitter.com/{{site.author.twitter}}" target="_blank"><img src="assets/images/icon/twitter.svg" height="24px" width="27px" class="social-icon" alt="twitter"></a>
-			{% endif %}
-			{% if site.author.instagram %}
-				<a href="https://instagram.com/{{site.author.instagram}}" target="_blank"><img src="assets/images/icon/instagram.svg" height="24px" width="27px" class="social-icon" alt="instagram"></a>
-			{% endif %}
-			{% if site.author.youtube %}
-				<a href="{{site.author.youtube}}" target="_blank"><img src="assets/images/icon/youtube.svg" height="24px" width="27px" class="social-icon" alt="youtube"></a>
-			{% endif %}
-			{% if site.author.github %}
-				<a href="https://github.com/{{site.author.github}}" target="_blank"><img src="assets/images/icon/github.svg" height="24px" width="27px" class="social-icon" alt="github"></a>
-			{% endif %}
-			{% if site.author.linkedin %}
-				<a href="https://linkedin.com/in/{{site.author.linkedin}}" target="_blank"><img src="assets/images/icon/linkedin.svg" height="24px" width="27px" class="social-icon" alt="linkedin"></a>
-			{% endif %}
-			{% if site.author.discord %}
-				<a href="{{site.author.discord}}" target="_blank"><img src="assets/images/icon/discord.svg" height="24px" width="27px" class="social-icon" alt="discord"></a>
-			{% endif %}
+			<div class="social-icons-container">
+				{% if site.author.facebook %}
+					<a href="https://facebook.com/{{site.author.facebook}}" target="_blank"><img src="assets/images/icon/facebook.svg" height="24px" width="27px" class="social-icon" alt="facebook" loading="lazy"></a>
+				{% endif %}
+				{% if site.author.twitter %}
+					<a href="https://twitter.com/{{site.author.twitter}}" target="_blank"><img src="assets/images/icon/twitter.svg" height="24px" width="27px" class="social-icon" alt="twitter" loading="lazy"></a>
+				{% endif %}
+				{% if site.author.instagram %}
+					<a href="https://instagram.com/{{site.author.instagram}}" target="_blank"><img src="assets/images/icon/instagram.svg" height="24px" width="27px" class="social-icon" alt="instagram" loading="lazy"></a>
+				{% endif %}
+				{% if site.author.youtube %}
+					<a href="{{site.author.youtube}}" target="_blank"><img src="assets/images/icon/youtube.svg" height="24px" width="27px" class="social-icon" alt="youtube" loading="lazy"></a>
+				{% endif %}
+				{% if site.author.github %}
+					<a href="https://github.com/{{site.author.github}}" target="_blank"><img src="assets/images/icon/github.svg" height="24px" width="27px" class="social-icon" alt="github" loading="lazy"></a>
+				{% endif %}
+				{% if site.author.linkedin %}
+					<a href="https://linkedin.com/in/{{site.author.linkedin}}" target="_blank"><img src="assets/images/icon/linkedin.svg" height="24px" width="27px" class="social-icon" alt="linkedin" loading="lazy"></a>
+				{% endif %}
+				{% if site.author.discord %}
+					<a href="{{site.author.discord}}" target="_blank"><img src="assets/images/icon/discord.svg" height="24px" width="27px" class="social-icon" alt="discord" loading="lazy"></a>
+				{% endif %}
+			</div>
 			<!-- <a href="about"><img src="assets/images/icon/me.svg" height="24px" width="27px" class="social-icon" alt="me"></a> -->
 			<!-- <br> -->
 			<div class="profile-bio">
