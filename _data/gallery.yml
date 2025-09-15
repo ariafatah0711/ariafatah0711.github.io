@@ -4,131 +4,149 @@
 photos:
   # Certificates (no numbers in filename)
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/OJM.jpg"
-    title: "Olimpiade Jaringan MikroTik"
+    title: "🏆 Juara 3 - Olimpiade Jaringan MikroTik"
     size: "large"
     category: "certificate"
-    description: "Sertifikat Olimpiade Jaringan MikroTik"
+    description: "Sertifikat Olimpiade Jaringan MikroTik - Kompetisi Networking Mikrotik Tingkat Nasional"
 
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/LKSP.jpg"
-    title: "LKS Cyber Security Provinsi"
+    title: "🏆 Juara 2 - LKS Cyber Security Provinsi"
     size: "large"
     category: "certificate"
-    description: "Lomba Kompetensi Siswa Cyber Security Provinsi"
+    description: "Sertifikat Lomba Kompetensi Siswa Cyber Security Tingkat Provinsi - Bidang Cybersecurity"
 
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/LKS.jpg"
-    title: "LKS Cyber Security Kota Depok"
-    size: "large"
+    title: "🏆 Juara 1 - LKS Cyber Security Kota Depok"
+    size: "medium"
     category: "certificate"
-    description: "Lomba Kompetensi Siswa Cyber Security Kota Depok"
+    description: "Sertifikat Lomba Kompetensi Siswa Cyber Security Tingkat Kota Depok - Bidang Cybersecurity"
+
+  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/e_time.jpg"
+    title: "🏆 Juara 2 - E-Time Cisco Networking Competition"
+    size: "medium"
+    category: "certificate"
+    description: "Sertifikat Lomba Cisco Networking E-Time - Politeknik Negeri Jakarta (PNJ)"
 
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/bakrie.jpg"
-    title: "Bakrie Certificate"
-    size: "medium"
+    title: "🏆 Juara 1 - MikroTik Competition UBakrie"
+    size: "small"
     category: "certificate"
-    description: "Sertifikat Lomba Mikrotik - Universitas Bakrie"
+    description: "Sertifikat Lomba MikroTik - Universitas Bakrie - Kompetisi networking Mikrotik"
 
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/inacomp.jpg"
-    title: "INACOMP Certificate"
-    size: "medium"
+    title: "🏆 Juara 3 - INACOMP Cisco Networking"
+    size: "small"
     category: "certificate"
-    description: "Sertifikat Lomba  Networking - Universitas Negeri Jakarta"
-    
-  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/MTCNA.jpg"
-    title: "MTCNA Certificate"
-    size: "medium"
-    category: "certificate"
-    description: "MikroTik Certified Network Associate"
-    
-  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/MTCRE.jpg"
-    title: "MTCRE Certificate"
-    size: "medium"
-    category: "certificate"
-    description: "MikroTik Certified Routing Engineer"
-    
-  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/MTCTCE.jpg"
-    title: "MTCTCE Certificate"
-    size: "medium"
-    category: "certificate"
-    description: "MikroTik Certified Traffic Control Engineer"
-    
-  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/smk_harbas.jpg"
-    title: "SMK Harapan Bangsa"
-    size: "medium"
-    category: "certificate"
-    description: "Sertifikat dari SMK Harapan Bangsa"
+    description: "Sertifikat Lomba Cisco Networking INACOMP - Universitas Negeri Jakarta (UNJ)"
 
-  # Personal Photos (with numbers in filename)
+  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/MTCNA.jpg"
+    title: "MTCNA - Network Associate"
+    size: "small"
+    category: "certificate"
+    description: "MikroTik Certified Network Associate - Sertifikasi profesional di bidang jaringan"
+
+  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/MTCRE.jpg"
+    title: "MTCRE - Routing Engineer"
+    size: "small"
+    category: "certificate"
+    description: "MikroTik Certified Routing Engineer - Sertifikasi ahli routing dan switching"
+
+  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/MTCTCE.jpg"
+    title: "MTCTCE - Traffic Control Engineer"
+    size: "small"
+    category: "certificate"
+    description: "MikroTik Certified Traffic Control Engineer - Sertifikasi manajemen bandwidth dan QoS"
+
+  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/smk_harbas.jpg"
+    title: "Penghargaan Lulusan USK Terbaik dari SMK Harapan Bangsa"
+    size: "large"
+    category: "certificate"
+    description: "Sertifikat Prestasi USK dari SMK Harapan Bangsa - Sekolah Menengah Kejuruan"
+
+  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/FE_idcamp.jpg"
+    title: "Sertifikat IDCamp Dicoding - Front End (Kelas Mahir)"
+    size: "small"
+    category: "certificate"
+    description: "Sertifikat kelulusan kelas Mahir Front End pada program IDCamp Dicoding"
+
+  - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/DO_idcamp.jpg"
+    title: "Sertifikat IDCamp Dicoding - DevOps (Kelas Mahir)"
+    size: "small"
+    category: "certificate"
+    description: "Sertifikat kelulusan kelas Mahir DevOps pada program IDCamp Dicoding"
+
+# Personal Photos (with numbers in filename)
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/LKS1.jpg"
-    title: "LKS Competition Moment"
-    size: "small"
+    title: "Momen LKS Cyber Security"
+    size: "medium"
     category: "personal"
-    description: "Momen saat mengikuti LKS Cyber Security"
-    
+    description: "Dokumentasi kegiatan LKS Cyber Security tingkat kota"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/LKSP1.jpg"
-    title: "LKS Provinsi Experience"
-    size: "small"
+    title: "Pengalaman LKS Provinsi"
+    size: "medium"
     category: "personal"
-    description: "Pengalaman mengikuti LKS tingkat provinsi"
-    
+    description: "Dokumentasi kegiatan LKS Cyber Security tingkat provinsi"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/OJM1.jpg"
-    title: "OJM Competition"
-    size: "small"
+    title: "Olimpiade Jaringan MikroTik"
+    size: "medium"
     category: "personal"
-    description: "Saat mengikuti Olimpiade Jaringan MikroTik"
-    
+    description: "Dokumentasi kegiatan Olimpiade Jaringan MikroTik"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/OJM2.jpg"
-    title: "OJM Achievement"
+    title: "Momen OJM"
     size: "small"
     category: "personal"
-    description: "Pencapaian di Olimpiade Jaringan MikroTik"
-    
+    description: "Dokumentasi kegiatan Olimpiade Jaringan MikroTik"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/OJM3.jpg"
-    title: "OJM Success"
+    title: "Perjalanan OJM"
     size: "small"
     category: "personal"
-    description: "Kesuksesan di Olimpiade Jaringan MikroTik"
-    
+    description: "Dokumentasi kegiatan Olimpiade Jaringan MikroTik"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/e_time1.JPG"
-    title: "Event Time 1"
-    size: "medium"
+    title: "E-Time Cisco Networking Event"
+    size: "small"
     category: "personal"
-    description: "Momen di event atau kegiatan"
-    
+    description: "Dokumentasi kegiatan E-Time Cisco Networking Competition"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/e_time2.JPG"
-    title: "Event Time 2"
-    size: "medium"
+    title: "E-Time Cisco Competition"
+    size: "small"
     category: "personal"
-    description: "Momen di event atau kegiatan"
-    
+    description: "Dokumentasi kegiatan E-Time Cisco Networking Competition"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/e_time3.jpg"
-    title: "Event Time 3"
-    size: "medium"
+    title: "Pencapaian E-Time"
+    size: "small"
     category: "personal"
-    description: "Momen di event atau kegiatan"
-    
+    description: "Dokumentasi kegiatan E-Time Cisco Networking Competition"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/inacomp1.JPG"
-    title: "INACOMP Event 1"
+    title: "INACOMP Cisco Networking Event"
     size: "small"
     category: "personal"
-    description: "Momen di event INACOMP"
-    
+    description: "Dokumentasi kegiatan INACOMP Cisco Networking Challenge"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/inacomp2.JPG"
-    title: "INACOMP Event 2"
+    title: "INACOMP Cisco Competition"
     size: "small"
     category: "personal"
-    description: "Momen di event INACOMP"
-  
+    description: "Dokumentasi kegiatan INACOMP Cisco Networking Challenge"
+
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/bakrie1.JPG"
-    title: "compiler Ubakrie Event 2"
+    title: "Compiler UBakrie MikroTik Competition"
     size: "small"
     category: "personal"
-    description: "Momen di event compiler Ubakrie"
+    description: "Dokumentasi kegiatan MikroTik Competition di Compiler UBakrie"
 
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/bakrie2.JPG"
-    title: "compiler Ubakrie Event 2"
+    title: "Compiler UBakrie MikroTik Competition"
     size: "small"
     category: "personal"
-    description: "Momen di event compiler Ubakrie"
+    description: "Dokumentasi kegiatan MikroTik Competition di Compiler UBakrie"
 
 # Categories for filtering
 categories:

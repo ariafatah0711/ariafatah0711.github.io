@@ -67,6 +67,7 @@ bundle install
 bundle exec jekyll build
 # bundle exec jekyll serve --host 0.0.0.0 --port 4000
 bundle exec jekyll serve --host 192.168.1.11 --port 4000
+bundle exec jekyll serve --host 192.168.1.11 --port 80
 
 # bundle exec jekyll serve --host 0.0.0.0 --port 4000 --livereload
 bundle exec jekyll serve --host 192.168.1.11 --port 4000 --livereload -w
