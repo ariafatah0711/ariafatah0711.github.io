@@ -40,8 +40,8 @@ function updateStatus(data) {
   // Status utama (online, idle, dnd, offline)
   const statusText = {
     online: "🟢 Online",
-    // idle: "🟡 Idle",
-    idle: "🟢 Online",
+    idle: "🟡 Idle",
+    // idle: "🟢 Online",
     dnd: "🔴 Do Not Disturb",
     offline: "⚫ Offline",
   };
@@ -84,6 +84,7 @@ function updateStatus(data) {
 
   // Gabungkan hanya yang ada, tanpa `<br>` berlebihan
   const allMessages = [statusMessage, spotifyMessage, activityMessage].filter(Boolean).join("<br>");
+  // const allMessages = '🟢 Online<br>🎵 <strong>Let Down</strong> - Radiohead<br><img src="https://raw.githubusercontent.com/ariafatah0711/win_aria/refs/heads/main/vscode/image/2.png" alt="Activity Image" width="15" height="15" style="margin-right: 5px"><strong>Code</strong> - Editing README.md <br> a'
 
   elementHtmlStatus.innerHTML = allMessages;
   return allMessages;

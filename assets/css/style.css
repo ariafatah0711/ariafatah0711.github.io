@@ -268,7 +268,8 @@ body {
 /* status */
 #status {
   display: block;
-  font-size: 14px;
+  max-height: 80px;
+  font-size: 13px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -387,6 +388,10 @@ pre {
 }
 
 @media only screen and (max-width: 768px) {
+  #status {
+    height: auto;
+  }
+
   .container {
     width: 100%;
   }
