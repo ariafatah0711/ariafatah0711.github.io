@@ -36,8 +36,10 @@ app:
     - name: about
       # url: https://me.ariaf.my.id
       url: /about
-    - name: cv
-      url: /cv
+    # - name: cv
+      # url: /cv
+    - name: gallery
+      url: /gallery
     # - name: notes
     #   url: /notes
     # - name: blogs
