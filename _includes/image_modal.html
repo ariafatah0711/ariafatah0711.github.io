@@ -38,6 +38,10 @@
 
     body.modal-open {
         overflow: hidden;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
     }
 </style>
 
@@ -45,24 +49,58 @@
     document.addEventListener("DOMContentLoaded", function() {
     var modal = document.getElementById("imageModal");
     var modalImg = document.getElementById("modalImg");
-    var images = document.querySelectorAll(".clickable-image");
+    var scrollPosition = 0;
 
-    images.forEach(function(img) {
-        img.onclick = function() {
-            modal.style.display = "flex";
-            modalImg.src = this.src;
-            document.body.classList.add("modal-open");
-        };
+    // Event delegation untuk gallery items (termasuk overlay description/title)
+    document.addEventListener('click', function(event) {
+        // Cek apakah yang diklik adalah gallery item atau elemen di dalamnya
+        var galleryItem = event.target.closest('.gallery-item');
+        if (galleryItem) {
+            // Cari gambar di dalam gallery item
+            var img = galleryItem.querySelector('.clickable-image');
+            if (img) {
+                openModal(img.src);
+            }
+        }
     });
 
-    document.querySelector(".close").onclick = function() {
+    function openModal(imageSrc) {
+        // Simpan posisi scroll saat ini
+        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        modal.style.display = "flex";
+        modalImg.src = imageSrc;
+        document.body.classList.add("modal-open");
+        
+        // Set body position untuk mencegah scroll jump
+        document.body.style.top = -scrollPosition + 'px';
+    }
+
+    function closeModal() {
         modal.style.display = "none";
-        document.body.classList.remove("modal-open")
+        document.body.classList.remove("modal-open");
+        document.body.style.top = '';
+        
+        // Kembalikan scroll position dengan requestAnimationFrame untuk smooth
+        requestAnimationFrame(function() {
+            window.scrollTo(0, scrollPosition);
+        });
+    }
+
+    document.querySelector(".close").onclick = closeModal;
+
+    modal.onclick = function(event) {
+        // Hanya tutup jika klik di background (bukan di gambar)
+        if (event.target === modal) {
+            closeModal();
+        }
     };
 
-    modal.onclick = function() {
-        modal.style.display = "none";
-        document.body.classList.remove("modal-open")
-    };
+    // Tambahkan support untuk tombol Escape
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'flex') {
+            closeModal();
+        }
+    });
     });
 </script>
