@@ -32,8 +32,17 @@ workbox.routing.registerRoute(
   })
 );
 
-// Cache CSS & JS (Stale While Revalidate)
-workbox.routing.registerRoute(/\.(?:js|css)$/, new workbox.strategies.StaleWhileRevalidate());
+// Cache CSS (Cache First) untuk stabilitas styling, dan JS tetap SWR
+workbox.routing.registerRoute(
+  /\.css$/,
+  new workbox.strategies.CacheFirst({
+    cacheName: "css-cache",
+    plugins: [
+      new workbox.expiration.ExpirationPlugin({ maxEntries: 20, maxAgeSeconds: 30 * 24 * 60 * 60 })
+    ],
+  })
+);
+workbox.routing.registerRoute(/\.js$/, new workbox.strategies.StaleWhileRevalidate());
 
 // Cache font (Cache First)
 workbox.routing.registerRoute(
@@ -49,9 +58,9 @@ workbox.routing.registerRoute(
   })
 );
 
-// Cache gambar (Cache First)
+// Cache gambar (Cache First) termasuk webp
 workbox.routing.registerRoute(
-  /\.(?:png|avif|jpg|jpeg|svg)$/,
+  /\.(?:png|avif|jpg|jpeg|svg|webp)$/,
   new workbox.strategies.CacheFirst({
     cacheName: CACHE_CONFIG.images.name,
     plugins: [new workbox.expiration.ExpirationPlugin(CACHE_CONFIG.images)],
@@ -67,9 +76,9 @@ workbox.routing.registerRoute(
 //   })
 // );
 
-// Cache gambar dari GitHub raw (Cache First)
+// Cache gambar dari GitHub raw (Cache First) dan proxy wsrv
 workbox.routing.registerRoute(
-  ({ url }) => url.origin === "https://raw.githubusercontent.com" && url.pathname.includes("/preview.png"),
+  ({ url }) => url.origin === "https://raw.githubusercontent.com" || url.origin === "https://wsrv.nl",
   new workbox.strategies.CacheFirst({
     cacheName: CACHE_CONFIG.githubImages.name,
     plugins: [new workbox.expiration.ExpirationPlugin(CACHE_CONFIG.githubImages)],

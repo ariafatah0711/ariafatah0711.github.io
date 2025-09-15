@@ -4,6 +4,10 @@ title: Gallery
 permalink: /gallery/
 ---
 
+<!-- Preconnect untuk sumber gambar eksternal -->
+<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+<link rel="preconnect" href="https://wsrv.nl" crossorigin>
+
 {% include image_modal.html %}
 
 <div class="gallery-container">
@@ -29,7 +33,16 @@ permalink: /gallery/
   <div class="gallery-grid" id="gallery-grid">
     {% for photo in site.data.gallery.photos %}
       <div class="gallery-item {{ photo.size }}" data-category="{{ photo.category }}">
-        <img src="{{ photo.path }}" alt="{{ photo.title }}" loading="lazy" class="clickable-image">
+        <img
+          src="https://wsrv.nl/?url={{ photo.path | uri_escape }}&w=800&output=webp"
+          srcset="https://wsrv.nl/?url={{ photo.path | uri_escape }}&w=480&output=webp 480w, https://wsrv.nl/?url={{ photo.path | uri_escape }}&w=800&output=webp 800w, https://wsrv.nl/?url={{ photo.path | uri_escape }}&w=1200&output=webp 1200w"
+          sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
+          alt="{{ photo.title }}"
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
+          class="clickable-image"
+        >
         <div class="gallery-overlay">
           <span class="gallery-title">{{ photo.title }}</span>
           <span class="gallery-description">{{ photo.description }}</span>
@@ -119,6 +132,9 @@ permalink: /gallery/
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  /* Kurangi biaya rendering offscreen */
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
 }
 
 .gallery-item:hover img {

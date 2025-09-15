@@ -54,20 +54,26 @@
         top: 50%;
         transform: translateY(-50%);
         color: white;
-        font-size: 40px;
+        font-size: 52px;
         font-weight: bold;
         cursor: pointer;
         z-index: 1100;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.5);
+        /* height: 56px; */
+        /* width: 56px; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 50%;
-        transition: all 0.3s ease;
         user-select: none;
+        opacity: 0.9;
     }
 
     .modal-nav:hover {
-        background: rgba(0, 0, 0, 0.8);
-        transform: translateY(-50%) scale(1.1);
+        color: rgb(0, 0, 0, 0.7);
+    }
+
+    .modal-nav:active {
+        opacity: 1;
     }
 
     .modal-nav.prev {
@@ -111,18 +117,11 @@
 
     @media (max-width: 768px) {
         .modal-nav {
-            font-size: 30px;
-            padding: 15px;
+            font-size: 32px;
         }
-        
-        .modal-nav.prev {
-            left: 15px;
-        }
-        
-        .modal-nav.next {
-            right: 15px;
-        }
-        
+        .modal-nav.prev { left: 12px; }
+        .modal-nav.next { right: 12px; }
+
         .modal-info {
             bottom: 10px;
             padding: 10px 15px;
@@ -237,6 +236,18 @@
         document.body.style.top = -scrollPosition + 'px';
     }
 
+    function preloadAdjacent(index) {
+        if (imageData.length <= 1) return;
+        var nextIndex = (index + 1) % imageData.length;
+        var prevIndex = (index - 1 + imageData.length) % imageData.length;
+        var preloadNext = new Image();
+        var preloadPrev = new Image();
+        preloadNext.decoding = "async";
+        preloadPrev.decoding = "async";
+        preloadNext.src = imageData[nextIndex].src;
+        preloadPrev.src = imageData[prevIndex].src;
+    }
+
     function updateModalContent() {
         if (imageData[currentIndex]) {
             modalImg.src = imageData[currentIndex].src;
@@ -248,6 +259,9 @@
             } else {
                 modalCounter.textContent = '';
             }
+
+            // Preload gambar sebelumnya dan berikutnya untuk transisi mulus
+            preloadAdjacent(currentIndex);
         }
     }
 
@@ -299,6 +313,41 @@
                 case 'ArrowRight':
                     showNext();
                     break;
+            }
+        }
+    });
+
+    // Swipe gesture untuk mobile
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchMoved = false;
+    var SWIPE_THRESHOLD = 40; // px
+    modal.addEventListener('touchstart', function(e) {
+        if (!e.touches || e.touches.length !== 1) return;
+        touchMoved = false;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    modal.addEventListener('touchmove', function(e) {
+        if (!e.touches || e.touches.length !== 1) return;
+        var dx = e.touches[0].clientX - touchStartX;
+        var dy = e.touches[0].clientY - touchStartY;
+        // Jika gerakan horizontal dominan, tandai sebagai swipe dan cegah scroll
+        if (Math.abs(dx) > Math.abs(dy)) {
+            touchMoved = true;
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    modal.addEventListener('touchend', function(e) {
+        if (!touchMoved) return;
+        var dx = (e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientX : 0) - touchStartX;
+        if (Math.abs(dx) > SWIPE_THRESHOLD) {
+            if (dx < 0) {
+                showNext();
+            } else {
+                showPrev();
             }
         }
     });
