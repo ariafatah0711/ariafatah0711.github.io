@@ -27,6 +27,12 @@
 		<link rel="preload" href="assets/css/style.css" as="style">
 		<link rel="stylesheet" href="assets/css/highlight.css">
 		<link rel="stylesheet" href="assets/css/style.css" media="all">
+		{% if page.permalink == "/gallery/" %}
+		<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+		<link rel="preconnect" href="https://wsrv.nl" crossorigin>
+		<link rel="preload" href="assets/css/gallery.css" as="style">
+		<link rel="stylesheet" href="assets/css/gallery.css" media="all">
+		{% endif %}
 		<link rel="shortcut icon" href="assets/images/favicon.png" />
 		<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}/atom.xml">
 		<link rel="alternate" type="application/json" title="{{ site.title }}" href="{{ site.url }}/feed.json" />
