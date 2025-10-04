@@ -3,6 +3,8 @@
     <div class="modal-nav prev" id="prevBtn">&#10094;</div>
     <div class="modal-nav next" id="nextBtn">&#10095;</div>
     <img class="modal-content" id="modalImg">
+    <!-- video element for project/video previews -->
+    <video class="modal-content" id="modalVideo" controls style="display:none; background: black;"></video>
     <div class="modal-info" id="modalInfo">
         <div class="modal-title" id="modalTitle"></div>
         <div class="modal-description" id="modalDescription"></div>
@@ -12,9 +14,9 @@
 
 <style>
     .modal {
-        display: none; 
+        display: none;
         position: fixed;
-        z-index: 1000; 
+        z-index: 1000;
         left: 0;
         top: 0;
         width: 100%;
@@ -127,11 +129,11 @@
             padding: 10px 15px;
             max-width: 90%;
         }
-        
+
         .modal-title {
             font-size: 1rem;
         }
-        
+
         .modal-description {
             font-size: 0.8rem;
         }
@@ -150,13 +152,14 @@
     document.addEventListener("DOMContentLoaded", function() {
     var modal = document.getElementById("imageModal");
     var modalImg = document.getElementById("modalImg");
+    var modalVideo = document.getElementById("modalVideo");
     var modalTitle = document.getElementById("modalTitle");
     var modalDescription = document.getElementById("modalDescription");
     var modalCounter = document.getElementById("modalCounter");
     var prevBtn = document.getElementById("prevBtn");
     var nextBtn = document.getElementById("nextBtn");
     var scrollPosition = 0;
-    
+
     // Array untuk menyimpan data gambar
     var imageData = [];
     var currentIndex = 0;
@@ -164,18 +167,28 @@
 
     // Event delegation untuk gallery items dan repo post images
     document.addEventListener('click', function(event) {
+        // If click originates from a project item, ignore here (project modal handles it)
+        if (event.target.closest('.project-item')) return;
         // Cek apakah yang diklik adalah gallery item
         var galleryItem = event.target.closest('.gallery-item');
         if (galleryItem) {
-            var img = galleryItem.querySelector('.clickable-image');
-            if (img) {
-                // Setup gallery mode dulu untuk mendapatkan data yang benar
-                setupGalleryMode();
-                // Cari index berdasarkan urutan yang terlihat saja
-                var visibleItems = document.querySelectorAll('.gallery-item:not([style*="display: none"])');
-                var index = Array.from(visibleItems).indexOf(galleryItem);
-                openModal(index, true);
-            }
+                // If gallery item contains a data-video attribute, open video modal instead
+                var videoSrc = galleryItem.getAttribute('data-video') || galleryItem.dataset.video;
+                var img = galleryItem.querySelector('.clickable-image');
+                if (videoSrc && videoSrc !== 'undefined' && videoSrc !== '') {
+                    var title = galleryItem.querySelector('.gallery-title') ? galleryItem.querySelector('.gallery-title').textContent : '';
+                    var description = galleryItem.querySelector('.gallery-description') ? galleryItem.querySelector('.gallery-description').textContent : '';
+                    openVideoModal(videoSrc, title, description);
+                    return;
+                }
+                if (img) {
+                    // Setup gallery mode dulu untuk mendapatkan data yang benar
+                    setupGalleryMode();
+                    // Cari index berdasarkan urutan yang terlihat saja
+                    var visibleItems = document.querySelectorAll('.gallery-item:not([style*="display: none"])');
+                    var index = Array.from(visibleItems).indexOf(galleryItem);
+                    openModal(index, true);
+                }
         }
         // Cek apakah yang diklik adalah gambar di repo post
         else if (event.target.classList.contains('clickable-image') && !event.target.closest('.gallery-item')) {
@@ -189,12 +202,12 @@
         imageData = [];
         // Hanya ambil gallery items yang sedang visible (tidak tersembunyi oleh filter)
         var galleryItems = document.querySelectorAll('.gallery-item:not([style*="display: none"])');
-        
+
         galleryItems.forEach(function(item) {
             var img = item.querySelector('.clickable-image');
             var title = item.querySelector('.gallery-title');
             var description = item.querySelector('.gallery-description');
-            
+
             if (img) {
                 imageData.push({
                     src: img.src,
@@ -216,13 +229,13 @@
 
     function openModal(index, showNav) {
         if (imageData.length === 0) return;
-        
+
         currentIndex = index;
         scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-        
+
         modal.style.display = "flex";
         updateModalContent();
-        
+
         // Tampilkan/sembunyikan navigasi berdasarkan mode
         if (showNav && imageData.length > 1) {
             prevBtn.style.display = "block";
@@ -231,7 +244,7 @@
             prevBtn.style.display = "none";
             nextBtn.style.display = "none";
         }
-        
+
         document.body.classList.add("modal-open");
         document.body.style.top = -scrollPosition + 'px';
     }
@@ -250,10 +263,17 @@
 
     function updateModalContent() {
         if (imageData[currentIndex]) {
+            // ensure video is hidden when showing images
+            if (modalVideo) {
+                try { modalVideo.pause(); } catch(e){}
+                modalVideo.style.display = 'none';
+                modalVideo.removeAttribute('src');
+            }
+            modalImg.style.display = 'block';
             modalImg.src = imageData[currentIndex].src;
             modalTitle.textContent = imageData[currentIndex].title;
             modalDescription.textContent = imageData[currentIndex].description;
-            
+
             if (isGalleryMode && imageData.length > 1) {
                 modalCounter.textContent = (currentIndex + 1) + ' / ' + imageData.length;
             } else {
@@ -267,9 +287,15 @@
 
     function closeModal() {
         modal.style.display = "none";
+        // stop and clear video if playing
+        if (modalVideo) {
+            try { modalVideo.pause(); } catch(e){}
+            try { modalVideo.removeAttribute('src'); modalVideo.load(); } catch(e){}
+            modalVideo.style.display = 'none';
+        }
         document.body.classList.remove("modal-open");
         document.body.style.top = '';
-        
+
         requestAnimationFrame(function() {
             window.scrollTo(0, scrollPosition);
         });
@@ -289,8 +315,35 @@
         }
     }
 
-    // Event listeners
-    document.querySelector(".close").onclick = closeModal;
+    function openVideoModal(src, title, description) {
+        // prepare
+        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        modal.style.display = 'flex';
+        // hide image element
+        modalImg.style.display = 'none';
+        // set title/description
+        modalTitle.textContent = title || '';
+        modalDescription.textContent = description || '';
+        // set counters and nav hidden for single video
+        modalCounter.textContent = '';
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        // setup video
+        if (modalVideo) {
+            modalVideo.style.display = 'block';
+            // allow both absolute and relative urls
+            modalVideo.src = src;
+            try { modalVideo.load(); } catch(e){}
+            // try to autoplay muted to assist UX (may be blocked)
+            try { modalVideo.play().catch(function(){}); } catch(e){}
+        }
+        document.body.classList.add("modal-open");
+        document.body.style.top = -scrollPosition + 'px';
+    }
+
+    // Event listeners (scoped to this modal to avoid conflicts)
+    var modalCloseBtn = modal.querySelector('.close');
+    if (modalCloseBtn) modalCloseBtn.onclick = closeModal;
     prevBtn.onclick = showPrev;
     nextBtn.onclick = showNext;
 

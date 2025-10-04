@@ -1,0 +1,23 @@
+# List of projects shown in the projects gallery
+- title: "CTFS (Capture The Flag Simple)"
+  description: "Free & Simple CTF Platform — Deploy seamlessly with Vercel + Supabase. Perfect for individuals or teams who want a free and lightweight CTF platform."
+  images:
+  - https://raw.githubusercontent.com/ariafatah0711/ctfs/main/images/README/image-4.png
+  - https://raw.githubusercontent.com/ariafatah0711/ctfs/main/images/README/image-7.png
+  - https://raw.githubusercontent.com/ariafatah0711/ctfs/main/images/README/image-6.png
+  - https://raw.githubusercontent.com/ariafatah0711/ctfs/main/images/README/image-8.png
+  source_url: "https://github.com/ariafatah0711/ctfs"
+  demo_url: "https://ctf.ariaf.my.id"
+  repo: "ariafatah0711/ctfs"
+
+- title: "HPone - Docker Honeypot Manager"
+  description: "HPone is a comprehensive Docker-based honeypot management platform that simplifies the deployment, monitoring, and maintenance of security honeypots. With intelligent auto-import features and streamlined command interfaces, HPone makes honeypot management accessible for both production and development environments."
+  images:
+    - "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/hpone/img235.jpg"
+    - "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/hpone/img240.jpg"
+    - "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/hpone/img239.jpg"
+    - "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/hpone/img236.jpg"
+    # - https://github.com/user-attachments/assets/927fa1fe-27e8-401f-9d18-f7cb63a3e9e1
+  source_url: "https://github.com/ariafatah0711/hpone"
+  demo_url: ""
+  repo: "ariafatah0711/hpone"

@@ -40,6 +40,8 @@ app:
       # url: /cv
     - name: gallery
       url: /gallery
+    - name: projects
+      url: /projects
     # - name: notes
     #   url: /notes
     # - name: blogs

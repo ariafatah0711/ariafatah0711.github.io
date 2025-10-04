@@ -1,0 +1,134 @@
+{% comment %} Project gallery include
+   Expects `_data/projects.yml` with: title, description, image, source_url, demo_url, repo
+{% endcomment %}
+
+<div class="projects-gallery">
+  <div class="projects-grid">
+    {% for project in site.data.projects %}
+    {% comment %} normalize images into img_list array {% endcomment %}
+    {% if project.images %}
+      {% if project.images.size %}
+        {% assign img_list = project.images %}
+      {% elsif project.images contains ',' %}
+        {% assign img_list = project.images | split: ',' %}
+      {% else %}
+        {% assign img_list = project.images | split: ',' %}
+      {% endif %}
+    {% elsif project.image %}
+      {% assign img_list = project.image | split: ',' %}
+    {% else %}
+      {% assign img_list = '' %}
+    {% endif %}
+    {% if img_list == '' %}
+      {% assign img_list_json = '[]' %}
+    {% else %}
+      {% assign img_list_json = img_list | jsonify %}
+    {% endif %}
+  <div class="project-item" data-repo="{{ project.repo }}" data-source="{{ project.source_url | default: '' }}" data-demo="{{ project.demo_url | default: '' }}" data-images='{{ img_list_json }}' {% if project.videos or project.video %}data-video="{{ project.videos | default: project.video }}"{% endif %}>
+      <div class="project-thumb">
+        {% if project.image or project.images %}
+          {% assign img = project.image | default: (project.images | first) %}
+          {% if img contains 'http' %}
+            <img src="{{ img }}" alt="{{ project.title }}" class="clickable-image" loading="lazy">
+          {% elsif img contains '.' %}
+            <img src="/{{ img | relative_url }}" alt="{{ project.title }}" class="clickable-image" loading="lazy">
+          {% else %}
+            {%- comment -%} fallback to site profile image when project.image has no extension {%- endcomment -%}
+            <img src="/assets/images/profile2-128.avif" alt="{{ project.title }}" class="clickable-image" loading="lazy">
+          {% endif %}
+          {% if project.videos or project.video %}
+            <div class="play-overlay">▶</div>
+          {% endif %}
+
+          <!-- Stars overlay in top-right -->
+          <div class="stars-overlay github-stars" data-repo="{{ project.repo }}" title="GitHub stars">
+            ★ <span class="star-count">-</span>
+          </div>
+
+          {%- comment -%} thumbnails row if multiple images provided in project.images {%- endcomment -%}
+          {% if project.images %}
+            <div class="project-thumbs-row" style="display:flex; gap:6px; margin-top:8px; justify-content:flex-start;">
+              {% for thumb in img_list %}
+                {% assign t = thumb %}
+                {% if t contains 'http' %}
+                  <img class="project-thumb-img" src="{{ t }}" alt="thumb" style="width:56px;height:42px;object-fit:cover;border-radius:6px;cursor:pointer;" data-thumb-src="{{ t }}">
+                {% elsif t contains '.' %}
+                  <img class="project-thumb-img" src="/{{ t | relative_url }}" alt="thumb" style="width:56px;height:42px;object-fit:cover;border-radius:6px;cursor:pointer;" data-thumb-src="/{{ t | relative_url }}">
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% else %}
+          <img src="/assets/images/profile2-128.avif" alt="{{ project.title }}" class="clickable-image" loading="lazy">
+        {% endif %}
+      </div>
+      <div class="project-meta">
+        <div class="gallery-title">{{ project.title }}</div>
+        <div class="gallery-description">{{ project.description }}</div>
+        <div class="project-links">
+          <div class="links-row">
+            {% if project.source_url %}<a class="btn small secondary" href="{{ project.source_url }}" target="_blank" rel="noopener">Source</a>{% endif %}
+            {% if project.demo_url and project.demo_url != "" %}<a class="btn small primary" href="{{ project.demo_url }}" target="_blank" rel="noopener">Demo</a>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+/* Basic grid matching site styles */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-bottom: 20px;
+}
+.project-item {
+  background: var(--card-bg, #fff);
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+}
+.project-thumb img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; cursor: pointer; }
+.play-overlay { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:28px; color:white; background: rgba(0,0,0,0.45); padding:6px 10px; border-radius:50%; }
+.project-thumb { position:relative; }
+.project-meta { padding-top: 12px; display:flex; flex-direction:column; flex:1; justify-content:space-between; align-items:stretch; }
+.gallery-title { font-weight: 700; font-size: 1rem; text-align:left; }
+.gallery-description { font-size: 0.9rem; opacity: 0.9; margin: 8px 0; text-align:left; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; max-height:3.6em; }
+.project-links { display:flex; flex-direction:column; gap:8px; align-items:flex-start; justify-content:flex-end; margin-top:8px; }
+.project-links .links-row { display:flex; gap:12px; }
+
+.btn.small { background:#111; color:#fff; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:0.9rem; min-width:88px; text-align:center; display:inline-block; }
+.btn.small.primary { background: #0b74ff; }
+.btn.small.secondary { background: #333; }
+.btn.small:hover { filter:brightness(1.05); }
+
+.github-stars {
+  font-size:0.9rem;
+  color: gold;
+  background: rgba(0,0,0,0.65);
+  padding:4px 8px;
+  border-radius:6px;
+}
+.github-stars .star-count { font-weight:700; margin-left:4px; }
+
+.stars-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+@media (max-width: 900px) {
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-thumb img { height: 160px; }
+}
+@media (max-width: 480px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-thumb img { height: 120px; }
+}
+</style>
