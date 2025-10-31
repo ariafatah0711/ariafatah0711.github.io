@@ -6,7 +6,7 @@ async function checkDiscordStatus(DISCORD_ID, cacheTime = 15000) {
   try {
     console.log(`fetch ${DISCORD_ID}, ${cacheTime}`);
     const cachedData = localStorage.getItem(CACHE_KEY);
-    const cachedTime = localStorage.getItem("cacheTime");
+    const cachedTime = parseInt(localStorage.getItem("cacheTime"), 10) || 0;
 
     // Jika cache masih valid, gunakan cache
     if (cachedData && cachedTime && new Date().getTime() - cachedTime < cacheTime) {
@@ -61,25 +61,34 @@ function updateStatus(data) {
       .slice(0, 2) // Ambil max 2 aktivitas
       .map((activity) => {
         console.log(activity);
-        let imageUrl = activity.assets.large_image;
+        // Safely handle missing assets / large_image
+        let rawImage = activity.assets?.large_image ?? null;
+        let imageUrl = null;
+        let imageElement = "";
 
-        if (imageUrl.startsWith("mp:external/")) {
-          // Jika URL eksternal, ambil URL sebenarnya
-          imageUrl = imageUrl.split("/https/").pop();
-          imageUrl = "https://" + imageUrl;
-        } else {
-          // Jika ID internal, ambil dari CDN Discord
-          imageUrl = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${imageUrl}.png`;
+        if (rawImage && typeof rawImage === "string") {
+          if (rawImage.startsWith("mp:external/")) {
+            // Jika URL eksternal, ambil URL sebenarnya
+            const parts = rawImage.split("/https/");
+            const tail = parts.pop();
+            imageUrl = tail ? `https://${tail}` : null;
+          } else if (activity.application_id) {
+            // Jika ID internal, ambil dari CDN Discord
+            imageUrl = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${rawImage}.png`;
+          }
+
+          if (imageUrl) {
+            imageElement = `<img src="${imageUrl}" alt="Activity Image" width="15" height="15" style="margin-right: 5px">`;
+          }
         }
 
-        let imageElement = `<img src="${imageUrl}" alt="Activity Image" width="15" height="15" style="margin-right: 5px">`;
-
-        let message = imageElement + `<strong>${activity.name}</strong>`;
+        let message = imageElement;
+        // let message = imageElement + `<strong>${activity.name}</strong>`;
         // let message = `<strong>${activity.name}</strong>`;
-        if (activity.details) message += ` - ${activity.details}`;
+        if (activity.details) message += `${activity.details}`;
         return message;
       })
-      .join("<br>"); // Gabungkan dengan baris baru
+      .join(" ");
   }
 
   // Gabungkan hanya yang ada, tanpa `<br>` berlebihan
