@@ -587,9 +587,63 @@ pre {
   transform: scale(0.95);
 }
 
+/* profile action row */
+.profile-action-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.profile-action-row .linktree-toggle,
+.profile-action-row .theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.2s, transform 0.2s;
+  color: var(--primary-font-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+}
+
+.profile-action-row .linktree-toggle:hover,
+.profile-action-row .theme-toggle:hover {
+  background: var(--bg-hover-color, #f0f0f0);
+  transform: scale(1.1);
+}
+
+.profile-action-row .linktree-toggle svg,
+.profile-action-row .theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  display: block;
+  margin: auto;
+}
+
+.profile-action-row .theme-toggle svg path {
+  fill: currentColor;
+}
+
 .info-footer {
   display: flex;
   margin-bottom: 25px;
+  gap: 10px;
 }
 
 /* song */

@@ -12,10 +12,11 @@
 
 {% unless is_always_show %}
 <script>
-// preflight: hide loader instantly if already seen on this origin
+// preflight: check if should skip loader
 (function(){
   try {
-    if (sessionStorage.getItem('seenLoader') === '1') {
+    const shown = localStorage.getItem('loaderShown');
+    if (shown === 'true') {
       document.documentElement.classList.add('skip-loader');
     }
   } catch (e) {
@@ -27,15 +28,13 @@
 
 <div id="page-loader" class="page-loader" aria-hidden="true">
   <div class="loader-stack">
-    <h1 class="loader-text" id="loader-text">Loading</h1>
+    <div id="loader-words"></div>
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
 (function () {
-  const key = "seenLoader";
-  const currentPath = window.location.pathname;
-
   // Cek apakah path ini always show
   const isAlwaysShow = {{ is_always_show | default: false }};
 
@@ -46,92 +45,82 @@
   const words = bioText.split('<br>').map(s => s.trim()).filter(s => s.length > 0);
   {% endif %}
 
-  const init = () => {
+  window.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById("page-loader");
-    const textEl = document.getElementById("loader-text");
-    if (!loader || !textEl) return;
+    const container = document.getElementById("loader-words");
 
-    // double-check skip class from preflight
+    if (!loader || !container) return;
+
+    // Check if should skip loader
     if (document.documentElement.classList.contains('skip-loader')) {
       loader.remove();
       return;
     }
 
-    // skip if already seen on this origin (only if NOT in always_show list)
-    if (!isAlwaysShow && sessionStorage.getItem(key) === "1") {
-      loader.remove();
-      return;
-    }
-
-    // mark immediately so even quick refreshes won't replay (only if NOT in always_show list)
+    // Check if already shown and NOT in always_show list
     if (!isAlwaysShow) {
       try {
-        sessionStorage.setItem(key, "1");
+        const shown = localStorage.getItem('loaderShown');
+        if (shown === 'true') {
+          loader.remove();
+          return;
+        }
       } catch (e) {
         // ignore storage errors
       }
     }
 
-    document.documentElement.style.overflow = "hidden";
+    // Create word elements
+    words.forEach((word) => {
+      const h1 = document.createElement('h1');
+      h1.className = 'loader-text header-text';
+      h1.textContent = word;
+      container.appendChild(h1);
+    });
 
-    let idx = 0;
-    let cycleInterval;
+    const tl = gsap.timeline();
 
-    const showWord = () => {
-      // Add leaving animation to current text
-      textEl.classList.add("is-leaving");
-      textEl.classList.remove("is-visible");
+    // Animate words
+    tl.to(".header-text", {
+      y: "-100%",
+      opacity: 1,
+      duration: 0.7,
+      stagger: {
+        each: 0.7,
+        onComplete: function () {
+          gsap.to(this.targets()[0], {
+            y: "-200%",
+            opacity: 0,
+            duration: 0.6,
+            ease: "power1.inOut",
+            onComplete: function () {
+              this.targets()[0].style.display = "none";
+            }
+          });
+        }
+      },
+      ease: "power1.inOut"
+    });
 
-      setTimeout(() => {
-        textEl.textContent = words[idx];
-        textEl.classList.remove("is-leaving");
-
-        // Force reflow
-        void textEl.offsetWidth;
-
-        // Trigger entrance animation
-        requestAnimationFrame(() => {
-          textEl.classList.add("is-visible");
-        });
-
-        idx = (idx + 1) % words.length;
-      }, 200);
-    };
-
-    // Initial show with delay for smoother entrance
-    setTimeout(() => {
-      showWord();
-      cycleInterval = setInterval(showWord, 1100);
-    }, 100);
-
-    const finish = () => {
-      clearInterval(cycleInterval);
-
-      // Smooth exit animation
-      textEl.classList.add("is-leaving");
-
-      setTimeout(() => {
-        loader.classList.add("is-hidden");
+    // Fade out loader
+    tl.to(loader, {
+      opacity: 0,
+      duration: 0.5,
+      ease: "power1.inOut",
+      onComplete: () => {
         document.documentElement.style.overflow = "";
+        if (loader.parentNode) loader.remove();
 
-        loader.addEventListener("transitionend", () => {
-          loader.remove();
-        }, { once: true });
-
-        // Fallback removal
-        setTimeout(() => {
-          if (loader.parentNode) loader.remove();
-        }, 1000);
-      }, 300);
-    };
-
-    setTimeout(finish, 4300);
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
-  } else {
-    init();
-  }
+        // Mark as shown (only if NOT always_show)
+        if (!isAlwaysShow) {
+          try {
+            localStorage.setItem('loaderShown', 'true');
+          } catch (e) {
+            // ignore storage errors
+          }
+        }
+      }
+    }, "+=0.5");
+  });
 })();
 </script>

@@ -1,73 +1,73 @@
-<!-- <pre>{{ site.app.linktree | jsonify }}</pre> -->
-{% if page.hidden_navbar != true %}
+{% comment %}Linktree tombol dan popup, siap di-include di mana saja{% endcomment %}
 
-<div style="display: flex; margin-bottom: 20px; height: 100%;">
-  {% for item in site.app.navbar %}
-    <a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
-  {% endfor %}
+<!-- Tombol Linktree (SVG only, tanpa label) -->
+<button class="linktree-toggle" onclick="openLinktree(); return false;" title="Linktree">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</button>
 
+<!-- Popup Linktree -->
+<div id="linktreeBox" class="linktree-box" style="display: none;">
+  <div class="linktree-inner">
+    <span class="close-btn" onclick="toggleLinktree(event)">&times;</span>
+    {% for group in site.app.linktree.groups %}
+      <div class="linktree-group">
+        <h3>{{ group.title }}</h3>
+        <ul>
+          {% for item in group.items %}
+            <li><a href="{{ item.url }}" target="_blank">{{ item.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% if forloop.last == false %}
+        <div class="linktree-divider"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
 </div>
 
 <script>
   function toggleLinktree(event, forceShow = null) {
     if (event) event.preventDefault();
-
     const box = document.getElementById("linktreeBox");
     const show = forceShow !== null ? forceShow : box.style.display !== "flex";
-
     box.style.display = show ? "flex" : "none";
-
     if (show) {
       document.body.classList.add("linktree-lock-scroll");
-      console.log("Popup opened — hash preserved");
     } else {
       document.body.classList.remove("linktree-lock-scroll");
       history.replaceState(null, null, location.pathname + location.search);
-      console.log("Popup closed — hash removed");
     }
   }
-
   function openLinktree() {
-    location.hash = "linktree"; // ini bakal kelihatan di URL
+    location.hash = "linktree";
   }
-
   function handleHashChange() {
     if (window.location.hash === "#linktree") {
       toggleLinktree(null, true);
-    } else {
-      // toggleLinktree(null, false);
     }
   }
-
   window.addEventListener("DOMContentLoaded", () => {
     handleHashChange();
-
     const box = document.getElementById("linktreeBox");
     const inner = document.querySelector(".linktree-inner");
-
-    // Close popup if clicked outside of the box
     box.addEventListener("click", (e) => {
       if (!inner.contains(e.target)) {
         toggleLinktree(null, false);
-        // history.replaceState(null, null, " "); // Optional: remove #link
       }
     });
-
     document.addEventListener("keydown", function (event) {
       const box = document.getElementById("linktreeBox");
-
-      // ESC untuk close popup
       if (event.key === "Escape" && box.style.display === "flex") {
         toggleLinktree(null, false);
       }
-
-      // Tekan L untuk buka popup
       if (!event.ctrlKey && event.key.toLowerCase() === "l") {
-        event.preventDefault(); // biar gak scroll ke bawah (default shortcut "L" di browser)
+        event.preventDefault();
         openLinktree();
       }
     });
   });
   window.addEventListener("hashchange", handleHashChange);
 </script>
-{% endif %}

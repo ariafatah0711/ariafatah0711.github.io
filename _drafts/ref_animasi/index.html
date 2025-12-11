@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Loader + Text Animation</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      overflow-x: hidden;
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #212121;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      color: white;
+      font-size: 2rem;
+      letter-spacing: 2px;
+    }
+
+    /* Hero area */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .header-text {
+      opacity: 0;
+      transform: translateY(100%);
+      position: absolute;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    #myName {
+      opacity: 0;
+      transform: translateY(100%);
+      font-size: 3rem;
+      font-weight: bold;
+      margin-top: 80px;
+    }
+
+    /* Scroll sections */
+    section {
+      padding: 100px 20px;
+      opacity: 0;
+      transform: translateY(40px);
+      max-width: 700px;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    LOADING...
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1 class="header-text">Front-End Developer</h1>
+    <h1 class="header-text">Back-End Developer</h1>
+    <h1 class="header-text">Full-Stack Developer</h1>
+    <h1 id="myName">Nama Kamu</h1>
+  </div>
+
+  <!-- CONTENT -->
+  <section>
+    <h2>Section 1</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc facilisis gravida sapien.</p>
+  </section>
+
+  <section>
+    <h2>Section 2</h2>
+    <p>More content appears here when scrolling. This fades in smoothly.</p>
+  </section>
+
+  <section>
+    <h2>Section 3</h2>
+    <p>Another scroll-reveal example. Simple and lightweight.</p>
+  </section>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <script>
+    window.onload = () => {
+
+      /* -----------------------
+         LOADER ANIMATION
+      ------------------------*/
+      gsap.to("#loader", {
+        y: -200,
+        opacity: 0,
+        duration: 1,
+        delay: 0.7,
+        ease: "power2.out",
+        onComplete: () => {
+          document.getElementById("loader").remove();
+        }
+      });
+
+      /* -----------------------
+         TEXT TITLE ANIMATION
+      ------------------------*/
+      const tl = gsap.timeline();
+
+      tl.to(".header-text", {
+        y: "-100%",
+        opacity: 1,
+        duration: 0.7,
+        stagger: {
+          each: 0.7,
+          onComplete: function () {
+            gsap.to(this.targets()[0], {
+              y: "-200%",
+              opacity: 0,
+              duration: 0.6,
+              ease: "power1.inOut",
+              onComplete: function () {
+                this.targets()[0].style.display = "none";
+              }
+            });
+          }
+        }
+      });
+
+      tl.to("#myName", {
+        y: "-100%",
+        opacity: 1,
+        duration: 0.7,
+        ease: "power2.out"
+      });
+
+      /* -----------------------
+         SCROLL FADE-IN
+      ------------------------*/
+      const sections = document.querySelectorAll("section");
+
+      window.addEventListener("scroll", () => {
+        sections.forEach(sec => {
+          const rect = sec.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) {
+            gsap.to(sec, {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: "power2.out"
+            });
+          }
+        });
+      });
+    };
+  </script>
+</body>
+</html>

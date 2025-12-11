@@ -1,0 +1,46 @@
+/* linktree-toggle styles dipindahkan ke default.html di .profile-action-row section */
+.linktree-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.linktree-inner {
+    background: var(--body-bg);
+    color: var(--primary-font-color);
+    border-radius: 12px;
+    padding: 20px 16px;
+    min-width: 280px;
+    max-width: 400px;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--primary-font-color);
+}
+
+.linktree-group h3 {
+    margin-top: 0;
+}
+
+.linktree-divider {
+    border-top: 1px solid var(--border-color);
+    margin: 16px 0;
+}
+
+.linktree-lock-scroll {
+    overflow: hidden;
+}

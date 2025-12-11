@@ -62,7 +62,15 @@
 			<!-- <a href="about"><img src="assets/images/icon/me.svg" height="24px" width="27px" class="social-icon" alt="me"></a> -->
 			<!-- <br> -->
 			<div class="profile-bio">
-				{{ site.author.bio }}
+					{{ site.author.bio }}
+			</div>
+
+			<!-- Tombol Linktree dan Theme Toggle di bawah bio -->
+			<div class="profile-action-row">
+				{% if site.app.linktree.active %}
+					{% include linktree.html %}
+				{% endif %}
+				{% include theme_toggle.html %}
 			</div>
 			<!-- <br> -->
 
