@@ -39,34 +39,16 @@ layout: default
     {% endif %}
 </div> -->
 
-<style>
-	.navigation {
-		flex-direction: row-reverse; /* Membalikkan urutan elemen */
-	}
-
-	.navigation .prev {
-		text-align: right; /* Posisi teks di kanan */
-	}
-
-	.navigation .next {
-		text-align: left; /* Posisi teks di kiri */
-	}
-</style>
-
-<div class="navigation">
-    {% if page.previous %}
-        <!-- <a class="prev" href="{{ page.previous | relative_url }}#prev">{{ page.previous.title }} →</a> -->
-        <a class="prev" href="{{ page.previous | relative_url }}#prev">Prev ></a>
+<div class="pagination">
+    {% if page.next %}
+        <a class="prev" href="{{ page.next | relative_url }}#next">< Previous</a>
     {% else %}
-        <!-- <span class="prev">Prev →</span> -->
         <span class="prev"></span>
     {% endif %}
 
-    {% if page.next %}
-        <!-- <a class="next" href="{{ page.next | relative_url }}#next">← {{ page.next.title }}</a> -->
-        <a class="next" href="{{ page.next | relative_url }}#next">< Next</a>
+    {% if page.previous %}
+        <a class="next" href="{{ page.previous | relative_url }}#prev">Next ></a>
     {% else %}
-        <!-- <span class="next">← Next</span> -->
         <span class="next"></span>
     {% endif %}
 </div>
@@ -86,3 +68,23 @@ layout: default
 </div> -->
 
 {% include disqus.html %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add clickable-image class to all images in blog post content
+        const postContent = document.querySelector('.blog-post-content');
+        if (postContent) {
+            const images = postContent.querySelectorAll('img');
+            images.forEach(img => {
+                // Skip images that are already in a link
+                if (!img.closest('a')) {
+                    img.classList.add('clickable-image');
+                    // Set alt text if empty to avoid "Preview" showing in modal
+                    if (!img.alt || img.alt === 'Preview') {
+                        img.alt = '';
+                    }
+                }
+            });
+        }
+    });
+</script>

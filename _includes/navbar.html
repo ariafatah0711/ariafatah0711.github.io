@@ -1,5 +1,6 @@
 <!-- <pre>{{ site.app.linktree | jsonify }}</pre> -->
 {% if page.hidden_navbar != true %}
+
 <div style="display: flex; margin-bottom: 20px; height: 100%;">
   {% for item in site.app.navbar %}
     <a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
@@ -92,101 +93,4 @@
   });
   window.addEventListener("hashchange", handleHashChange);
 </script>
-
-<style>
-  .linktree-box {
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    backdrop-filter: blur(5px);
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .linktree-inner {
-    background: var(--body-bg);
-    color: var(--primary-font-color);
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-    position: relative;
-    border: 1px solid var(--border-color);
-  }
-
-  .linktree-divider {
-    height: 1px;
-    width: 100%;
-    background: var(--border-color);
-    margin: 20px 0;
-    opacity: 0.5;
-  }
-
-  .linktree-inner ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .linktree-inner li {
-    margin: 10px 0;
-  }
-
-  .linktree-inner a {
-    position: relative;
-    text-decoration: none;
-    color: var(--primary-font-color);
-    font-weight: bold;
-    display: inline-block;
-    transition: color 0.3s ease;
-  }
-
-  .linktree-inner a::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background-color: var(--primary-font-color);
-    transition: width 0.3s ease;
-  }
-
-  .linktree-inner a:hover {
-    color: var(--primary-font-color);
-    opacity: 0.8;
-  }
-
-  .linktree-inner a:hover::after {
-    width: 100%;
-  }
-
-  .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    font-size: 22px;
-    font-weight: bold;
-    color: var(--primary-font-color);
-    opacity: 0.7;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-  }
-
-  .close-btn:hover {
-    opacity: 1;
-  }
-
-  body.linktree-lock-scroll {
-    overflow: hidden !important;
-    height: 100vh;
-    touch-action: none;
-  }
-</style>
 {% endif %}

@@ -12,142 +12,6 @@
     </div>
 </div>
 
-<style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.8);
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        max-width: 90%;
-        max-height: 80%;
-        display: block;
-        margin: auto;
-        border-radius: 8px;
-        object-fit: contain;
-    }
-
-    .close {
-        position: fixed;
-        top: 15px;
-        right: 25px;
-        color: white;
-        font-size: 35px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 1100;
-        transition: opacity 0.3s ease;
-    }
-
-    .close:hover {
-        opacity: 0.7;
-    }
-
-    .modal-nav {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        color: white;
-        font-size: 52px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 1100;
-        /* height: 56px; */
-        /* width: 56px; */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        user-select: none;
-        opacity: 0.9;
-    }
-
-    .modal-nav:hover {
-        color: rgb(0, 0, 0, 0.7);
-    }
-
-    .modal-nav:active {
-        opacity: 1;
-    }
-
-    .modal-nav.prev {
-        left: 30px;
-    }
-
-    .modal-nav.next {
-        right: 30px;
-    }
-
-    .modal-info {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        text-align: center;
-        max-width: 80%;
-        z-index: 1100;
-    }
-
-    .modal-title {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    .modal-description {
-        font-size: 0.9rem;
-        opacity: 0.9;
-        margin-bottom: 5px;
-    }
-
-    .modal-counter {
-        font-size: 0.8rem;
-        opacity: 0.7;
-    }
-
-    @media (max-width: 768px) {
-        .modal-nav {
-            font-size: 32px;
-        }
-        .modal-nav.prev { left: 12px; }
-        .modal-nav.next { right: 12px; }
-
-        .modal-info {
-            bottom: 10px;
-            padding: 10px 15px;
-            max-width: 90%;
-        }
-
-        .modal-title {
-            font-size: 1rem;
-        }
-
-        .modal-description {
-            font-size: 0.8rem;
-        }
-    }
-
-    body.modal-open {
-        overflow: hidden;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        left: 0;
-    }
-</style>
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
     var modal = document.getElementById("imageModal");
@@ -222,7 +86,7 @@
         isGalleryMode = false;
         imageData = [{
             src: img.src,
-            title: img.alt || 'Preview',
+            title: img.alt || '',
             description: ''
         }];
     }
@@ -273,6 +137,13 @@
             modalImg.src = imageData[currentIndex].src;
             modalTitle.textContent = imageData[currentIndex].title;
             modalDescription.textContent = imageData[currentIndex].description;
+
+            // Hide modal-info if no title and no description
+            var hasContent = imageData[currentIndex].title || imageData[currentIndex].description;
+            var modalInfoEl = document.getElementById('modalInfo');
+            if (modalInfoEl) {
+                modalInfoEl.style.display = hasContent || (isGalleryMode && imageData.length > 1) ? 'flex' : 'none';
+            }
 
             if (isGalleryMode && imageData.length > 1) {
                 modalCounter.textContent = (currentIndex + 1) + ' / ' + imageData.length;

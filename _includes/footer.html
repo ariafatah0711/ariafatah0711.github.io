@@ -6,6 +6,7 @@
 	{% if site.app.toggle_song.active %}
 	<script src="assets/js/song.js" defer></script>
 	{% endif %}
+	{% include image_modal.html %}
 	<!-- ### -->
 	<script type="text/javascript">
 		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: {{ site.app.theme }})').matches)) {
