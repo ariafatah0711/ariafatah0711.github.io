@@ -89,10 +89,9 @@ app:
       - /about/
     custom_teks:
       - "IT Enthusiast"
-      - "Cyber Security"
-      - "Networking"
-      - "Web Development"
-      - "DevOps"
+      - "Fokus di Cyber Security & Networking"
+      - "Belajar Web Dev & DevOps"
+      - "Mahasiswa STT Nurul Fikri"
 
 # pwa (opsional)
 # pwa:

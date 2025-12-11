@@ -73,21 +73,24 @@
 
 .loader-text {
   font-family: 'Bebas Neue', 'Catamaran', sans-serif;
-  font-size: clamp(48px, 9vw, 108px);
+  font-size: clamp(24px, 8vw, 68px);
   letter-spacing: 2px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
   filter: drop-shadow(0 2px 8px rgba(15, 23, 42, 0.1));
   background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  max-width: 90vw;
+  padding: 0 10px;
 }
 
 .loader-text.is-visible {
@@ -182,7 +185,7 @@
     // Initial show with delay for smoother entrance
     setTimeout(() => {
       showWord();
-      cycleInterval = setInterval(showWord, 900);
+      cycleInterval = setInterval(showWord, 1100);
     }, 100);
 
     const finish = () => {
@@ -206,7 +209,7 @@
       }, 300);
     };
 
-    setTimeout(finish, 3000);
+    setTimeout(finish, 4300);
   };
 
   if (document.readyState === "loading") {
