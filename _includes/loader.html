@@ -1,126 +1,96 @@
 {% assign is_always_show = false %}
+
 {% if site.app.loader.always_show %}
   {% for always_path in site.app.loader.always_show %}
-    {% assign normalized_always = always_path | remove_first: '/' | remove: 'index.html' %}
-    {% assign normalized_current = page.url | remove_first: '/' | remove: 'index.html' %}
-    {% if normalized_current == normalized_always or page.url == always_path or page.permalink == always_path %}
+    {% assign normalized_always = always_path | replace: "/index.html","" | replace: "index.html","" | remove_first:"/" %}
+    {% assign normalized_current = page.url | replace: "/index.html","" | replace: "index.html","" | remove_first:"/" %}
+
+    {% if normalized_current == normalized_always %}
       {% assign is_always_show = true %}
       {% break %}
     {% endif %}
   {% endfor %}
 {% endif %}
 
-{% unless is_always_show %}
-<script>
-// preflight: check if should skip loader
-(function(){
-  try {
-    const shown = localStorage.getItem('loaderShown');
-    if (shown === 'true') {
-      document.documentElement.classList.add('skip-loader');
-    }
-  } catch (e) {
-    // ignore storage errors
-  }
-})();
-</script>
-{% endunless %}
+<div id="page-loader" class="page-loader">
+  <div id="loader-words"></div>
+</div>
 
-<div id="page-loader" class="page-loader" aria-hidden="true">
-  <div class="loader-stack">
-    <div id="loader-words"></div>
-  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script>
-(function () {
-  // Cek apakah path ini always show
-  const isAlwaysShow = {{ is_always_show | default: false }};
 
+<script>
+(function() {
+
+  const isAlwaysShow = {{ is_always_show | jsonify }};
+
+  const loader = document.getElementById("page-loader");
+  const container = document.getElementById("loader-words");
+
+  // ambil teks dari config
   {% if site.app.loader.custom_teks and site.app.loader.custom_teks.size > 0 %}
-  const words = {{ site.app.loader.custom_teks | jsonify }};
+    let words = {{ site.app.loader.custom_teks | jsonify }};
   {% else %}
-  const bioText = `{{ site.author.bio | strip_newlines }}`;
-  const words = bioText.split('<br>').map(s => s.trim()).filter(s => s.length > 0);
+    let words = ["Loading", "Please wait"];
   {% endif %}
 
-  window.addEventListener('DOMContentLoaded', function() {
-    const loader = document.getElementById("page-loader");
-    const container = document.getElementById("loader-words");
-
-    if (!loader || !container) return;
-
-    // Check if should skip loader
-    if (document.documentElement.classList.contains('skip-loader')) {
-      loader.remove();
-      return;
-    }
-
-    // Check if already shown and NOT in always_show list
-    if (!isAlwaysShow) {
-      try {
-        const shown = localStorage.getItem('loaderShown');
-        if (shown === 'true') {
-          loader.remove();
-          return;
-        }
-      } catch (e) {
-        // ignore storage errors
+  // skip loader jika pernah ditampilkan di session ini (bukan always_show)
+  if (!isAlwaysShow) {
+    try {
+      if (sessionStorage.getItem("loaderShown") === "true") {
+        loader.remove();
+        return;
       }
-    }
+    } catch (e) {}
+  }
 
-    // Create word elements
-    words.forEach((word) => {
-      const h1 = document.createElement('h1');
-      h1.className = 'loader-text header-text';
-      h1.textContent = word;
-      container.appendChild(h1);
-    });
+  // generate elemen teks
+  words.forEach(t => {
+    const h1 = document.createElement("h1");
+    h1.className = "header-text";
+    h1.textContent = t;
+    container.appendChild(h1);
+  });
+
+  // jalankan animasi setelah page fully load (agar smooth)
+  window.addEventListener("load", function() {
 
     const tl = gsap.timeline();
 
-    // Animate words
+    // animasi teks SAMA PERSIS versi index.html
     tl.to(".header-text", {
       y: "-100%",
       opacity: 1,
-      duration: 0.7,
+      duration: 0.75,
+      ease: "power2.out",
       stagger: {
-        each: 0.7,
-        onComplete: function () {
+        each: 0.75,
+        onComplete() {
           gsap.to(this.targets()[0], {
             y: "-200%",
             opacity: 0,
-            duration: 0.6,
-            ease: "power1.inOut",
-            onComplete: function () {
-              this.targets()[0].style.display = "none";
-            }
+            duration: 0.75,
+            ease: "power1.inOut"
           });
         }
-      },
-      ease: "power1.inOut"
+      }
     });
 
-    // Fade out loader
-    tl.to(loader, {
+    // fade out loader smooth
+    tl.to("#page-loader", {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.75,
       ease: "power1.inOut",
-      onComplete: () => {
-        document.documentElement.style.overflow = "";
-        if (loader.parentNode) loader.remove();
-
-        // Mark as shown (only if NOT always_show)
+      onComplete() {
+        loader.remove();
         if (!isAlwaysShow) {
-          try {
-            localStorage.setItem('loaderShown', 'true');
-          } catch (e) {
-            // ignore storage errors
-          }
+          try { sessionStorage.setItem("loaderShown","true"); } catch (e) {}
         }
       }
-    }, "+=0.5");
+    }, "+=0.4");
+
   });
+
 })();
 </script>
