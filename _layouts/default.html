@@ -1,4 +1,19 @@
 {% include header.html %}
+{% if site.app.loader.active %}
+  {% assign show_loader = false %}
+  {% assign current_url = page.url | remove_first: '/' | remove: 'index.html' %}
+  {% for loader_path in site.app.loader.path %}
+    {% assign check_path = loader_path | remove_first: '/' %}
+    {% if current_url == check_path or page.url == loader_path or page.permalink == loader_path %}
+      {% assign show_loader = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+  {% if show_loader %}
+    {% include loader.html %}
+  {% endif %}
+{% endif %}
+
 <div class="container">
 	<div class="profile">
 		<!-- <a href="{{ site.url }}"><img src="{{site.author.picture}}" class="profile-image"></a> -->

@@ -80,6 +80,19 @@ app:
   toggle_song:
     active: False
     song: assets/song/song.m4a
+  loader:
+    active: True
+    path:
+      - /
+      - /about/
+    always_show:
+      - /about/
+    custom_teks:
+      - "IT Enthusiast"
+      - "Cyber Security"
+      - "Networking"
+      - "Web Development"
+      - "DevOps"
 
 # pwa (opsional)
 # pwa:

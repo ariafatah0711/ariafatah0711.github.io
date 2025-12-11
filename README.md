@@ -53,7 +53,7 @@ echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-````bash
+```bash
 git clone https://github.com/ariafatah0711/ariafatah0711.github.io
 cd ariafatah0711.github.io
 

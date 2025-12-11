@@ -1,0 +1,218 @@
+{% assign is_always_show = false %}
+{% if site.app.loader.always_show %}
+  {% for always_path in site.app.loader.always_show %}
+    {% assign normalized_always = always_path | remove_first: '/' | remove: 'index.html' %}
+    {% assign normalized_current = page.url | remove_first: '/' | remove: 'index.html' %}
+    {% if normalized_current == normalized_always or page.url == always_path or page.permalink == always_path %}
+      {% assign is_always_show = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% unless is_always_show %}
+<script>
+// preflight: hide loader instantly if already seen on this origin
+(function(){
+  try {
+    if (localStorage.getItem('seenLoader') === '1') {
+      document.documentElement.classList.add('skip-loader');
+    }
+  } catch (e) {
+    // ignore storage errors
+  }
+})();
+</script>
+{% endunless %}
+
+<div id="page-loader" class="page-loader" aria-hidden="true">
+  <div class="loader-stack">
+    <h1 class="loader-text" id="loader-text">Loading</h1>
+  </div>
+</div>
+
+<style>
+.page-loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  color: #0f172a;
+  z-index: 9999;
+  overflow: hidden;
+  transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-50px);
+}
+
+.skip-loader #page-loader {
+  display: none !important;
+}
+
+.loader-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  transform: translateY(0);
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-loader.is-hidden .loader-stack {
+  transform: translateY(-100px);
+}
+
+.loader-text {
+  font-family: 'Bebas Neue', 'Catamaran', sans-serif;
+  font-size: clamp(48px, 9vw, 108px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  white-space: nowrap;
+  filter: drop-shadow(0 2px 8px rgba(15, 23, 42, 0.1));
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.loader-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.loader-text.is-leaving {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader,
+  .loader-stack,
+  .loader-text {
+    animation: none;
+    transition: opacity 0.3s ease;
+  }
+}
+</style>
+
+<script>
+(function () {
+  const key = "seenLoader";
+  const currentPath = window.location.pathname;
+
+  // Cek apakah path ini always show
+  const isAlwaysShow = {{ is_always_show | default: false }};
+
+  {% if site.app.loader.custom_teks and site.app.loader.custom_teks.size > 0 %}
+  const words = {{ site.app.loader.custom_teks | jsonify }};
+  {% else %}
+  const bioText = `{{ site.author.bio | strip_newlines }}`;
+  const words = bioText.split('<br>').map(s => s.trim()).filter(s => s.length > 0);
+  {% endif %}
+
+  const init = () => {
+    const loader = document.getElementById("page-loader");
+    const textEl = document.getElementById("loader-text");
+    if (!loader || !textEl) return;
+
+    // double-check skip class from preflight
+    if (document.documentElement.classList.contains('skip-loader')) {
+      loader.remove();
+      return;
+    }
+
+    // skip if already seen on this origin (only if NOT in always_show list)
+    if (!isAlwaysShow && localStorage.getItem(key) === "1") {
+      loader.remove();
+      return;
+    }
+
+    // mark immediately so even quick refreshes won't replay (only if NOT in always_show list)
+    if (!isAlwaysShow) {
+      try {
+        localStorage.setItem(key, "1");
+      } catch (e) {
+        // ignore storage errors
+      }
+    }
+
+    document.documentElement.style.overflow = "hidden";
+
+    let idx = 0;
+    let cycleInterval;
+
+    const showWord = () => {
+      // Add leaving animation to current text
+      textEl.classList.add("is-leaving");
+      textEl.classList.remove("is-visible");
+
+      setTimeout(() => {
+        textEl.textContent = words[idx];
+        textEl.classList.remove("is-leaving");
+
+        // Force reflow
+        void textEl.offsetWidth;
+
+        // Trigger entrance animation
+        requestAnimationFrame(() => {
+          textEl.classList.add("is-visible");
+        });
+
+        idx = (idx + 1) % words.length;
+      }, 200);
+    };
+
+    // Initial show with delay for smoother entrance
+    setTimeout(() => {
+      showWord();
+      cycleInterval = setInterval(showWord, 900);
+    }, 100);
+
+    const finish = () => {
+      clearInterval(cycleInterval);
+
+      // Smooth exit animation
+      textEl.classList.add("is-leaving");
+
+      setTimeout(() => {
+        loader.classList.add("is-hidden");
+        document.documentElement.style.overflow = "";
+
+        loader.addEventListener("transitionend", () => {
+          loader.remove();
+        }, { once: true });
+
+        // Fallback removal
+        setTimeout(() => {
+          if (loader.parentNode) loader.remove();
+        }, 1000);
+      }, 300);
+    };
+
+    setTimeout(finish, 3000);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
+</script>
