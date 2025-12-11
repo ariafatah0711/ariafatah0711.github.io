@@ -45,9 +45,9 @@
     text-transform: uppercase;
     font-weight: 700;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(8px);
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
     white-space: normal;
     word-break: break-word;
@@ -64,9 +64,9 @@
 
 .loader-text.is-leaving {
     opacity: 0;
-    transform: translateY(-30px);
-    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-14px);
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {

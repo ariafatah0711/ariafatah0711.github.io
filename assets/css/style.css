@@ -182,7 +182,6 @@ body {
   margin-bottom: 5px;
   background: var(--bg-color);
   border: 1px dashed var(--border-color);
-
 }
 
 .navigation .prev {
@@ -210,12 +209,14 @@ body {
   width: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 5px 10px;
   margin-bottom: 5px;
   background: var(--bg-color);
+  border: 1px dashed var(--border-color);
+  min-height: 24px;
 }
 
 .pagination .prev {
@@ -247,7 +248,7 @@ body {
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  padding: 15px 10px;
+  padding: 10px 10px;
 }
 
 .profile-header {
@@ -269,13 +270,16 @@ body {
 
 /* status */
 #status {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   gap: 0.3rem;
   max-height: 80px;
   font-size: 13px;
   line-height: 1.5;
   width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .discord-status,
@@ -286,7 +290,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  width: auto;
 }
 
 .discord-status svg,
@@ -445,6 +449,17 @@ pre {
 }
 
 @media only screen and (max-width: 480px) {
+  #status {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .discord-status,
+  .discord-activity {
+    justify-content: center;
+    text-align: center;
+  }
+
   .profile {
     flex-direction: column;
     align-items: center;
@@ -454,7 +469,7 @@ pre {
     width: 100%;
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+    align-items: center;
     flex-direction: column;
     text-align: center;
   }

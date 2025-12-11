@@ -37,12 +37,12 @@
 }
 
 .blog-post-content {
-    margin: 1rem 0;
-    line-height: 1.8;
+    margin: 0.75rem 0;
+    line-height: 1.65;
 }
 
 .blog-post-content h1 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     color: var(--primary-font-color);
     font-weight: 700;
 }
@@ -50,14 +50,14 @@
 .blog-post-content h2,
 .blog-post-content h3,
 .blog-post-content h4 {
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0.35rem;
     color: var(--primary-font-color);
     font-weight: 600;
 }
 
 .blog-post-content p {
-    margin: 0.75rem 0;
+    margin: 0.6rem 0;
     color: var(--primary-font-color);
 }
 
@@ -84,7 +84,7 @@
 .blog-post-content img {
     max-width: 100%;
     height: auto;
-    margin: 1rem 0;
+    margin: 0.75rem 0;
     border-radius: 8px;
     display: block;
 }
@@ -113,8 +113,8 @@
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
-    margin: 1rem 0;
-    padding: 0.75rem 0;
+    margin: 0.75rem 0;
+    padding: 0.5rem 0;
     border-top: 2px solid var(--border-color);
     border-bottom: 2px solid var(--border-color);
 }
@@ -137,19 +137,21 @@
 }
 
 /* Pagination/Navigation - matches main pagination style */
-.pagination {
+/* .pagination {
     width: 100%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
+    padding: 5px 10px;
     margin: 1rem 0;
+    margin-top: 1.5rem;
     background: var(--bg-color);
-    border-radius: 8px;
     border: 1px solid var(--border-color);
-}
+    min-height: 24px;
+    gap: 0.5rem;
+} */
 
 .pagination .prev,
 .pagination .next {
@@ -258,7 +260,6 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .post-header {
-        flex-direction: column;
         align-items: flex-start;
     }
 
