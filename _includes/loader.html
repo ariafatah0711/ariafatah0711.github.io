@@ -38,8 +38,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  color: #0f172a;
+  background: var(--body-bg);
+  color: var(--primary-font-color);
   z-index: 9999;
   overflow: hidden;
   transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1),
@@ -84,11 +84,8 @@
   text-align: center;
   white-space: normal;
   word-break: break-word;
-  filter: drop-shadow(0 2px 8px rgba(15, 23, 42, 0.1));
-  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+  color: var(--primary-font-color);
   max-width: 90vw;
   padding: 0 10px;
 }
