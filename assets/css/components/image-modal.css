@@ -82,6 +82,10 @@
     text-align: center;
     max-width: 80%;
     z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
 }
 
 .modal-title {

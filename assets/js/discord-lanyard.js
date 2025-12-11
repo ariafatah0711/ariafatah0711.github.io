@@ -37,24 +37,37 @@ async function checkDiscordStatus(DISCORD_ID, cacheTime = 15000) {
 function updateStatus(data) {
   let statusMessage = "";
 
+  // SVG Icons - standardized sizing
+  const svgIcons = {
+    online: '<svg width="12" height="12" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#3ba55d"/></svg>',
+    idle: '<svg width="12" height="12" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#faa81a"/><circle cx="12" cy="12" r="5" fill="var(--body-bg)"/></svg>',
+    dnd: '<svg width="12" height="12" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#ed4245"/><rect x="4" y="7" width="8" height="2" fill="var(--body-bg)"/></svg>',
+    offline: '<svg width="12" height="12" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#747f8d"/></svg>',
+    music:
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="#1db954"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 14h-2v-4h-4v4H8V8h2v4h4V8h2v8z"/></svg>',
+    app: '<svg width="12" height="12" viewBox="0 0 24 24" fill="var(--primary-font-color)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>',
+  };
+
   // Status utama (online, idle, dnd, offline)
   const statusText = {
-    online: "🟢 Online",
-    idle: "🟡 Idle",
-    // idle: "🟢 Online",
-    dnd: "🔴 Do Not Disturb",
-    offline: "⚫ Offline",
+    online: "Online",
+    idle: "Idle",
+    dnd: "Do Not Disturb",
+    offline: "Offline",
   };
-  statusMessage = statusText[data.discord_status] || "Unknown";
+  const statusIcon = svgIcons[data.discord_status] || svgIcons.offline;
+  statusMessage = `<span class="discord-status">${statusIcon}${statusText[data.discord_status] || "Unknown"}</span>`;
 
   // Status Spotify
   let spotifyMessage = "";
   if (data.listening_to_spotify) {
-    spotifyMessage = `🎵 <strong>${data.spotify.song}</strong> - ${data.spotify.artist}`;
+    console.log("Spotify detected:", data.spotify);
+    spotifyMessage = `<span class="discord-activity">${svgIcons.music}<strong>${data.spotify.song}</strong> - ${data.spotify.artist}</span>`;
   }
 
   let activityMessage = "";
-  const otherActivities = data.activities.filter((a) => a.name !== "Spotify");
+  const otherActivities = data.activities.filter((a) => a.name !== "Spotify" && a.details);
+  console.log("Other activities:", otherActivities);
 
   if (otherActivities.length > 0) {
     activityMessage = otherActivities
@@ -78,22 +91,24 @@ function updateStatus(data) {
           }
 
           if (imageUrl) {
-            imageElement = `<img src="${imageUrl}" alt="Activity Image" width="15" height="15" style="margin-right: 5px">`;
+            imageElement = `<img src="${imageUrl}" alt="${activity.name}" class="discord-app-icon">`;
+          } else {
+            // Fallback to app SVG icon if no image
+            imageElement = svgIcons.app;
           }
+        } else {
+          imageElement = svgIcons.app;
         }
 
-        let message = imageElement;
-        // let message = imageElement + `<strong>${activity.name}</strong>`;
-        // let message = `<strong>${activity.name}</strong>`;
-        if (activity.details) message += `${activity.details}`;
+        let message = `<span class="discord-activity">${imageElement}${activity.details}</span>`;
         return message;
       })
-      .join(" ");
+      .join("");
   }
 
-  // Gabungkan hanya yang ada, tanpa `<br>` berlebihan
-  const allMessages = [statusMessage, spotifyMessage, activityMessage].filter(Boolean).join("<br>");
-  // const allMessages = '🟢 Online<br>🎵 <strong>Let Down</strong> - Radiohead<br><img src="https://raw.githubusercontent.com/ariafatah0711/win_aria/refs/heads/main/vscode/image/2.png" alt="Activity Image" width="15" height="15" style="margin-right: 5px"><strong>Code</strong> - Editing README.md <br> a'
+  // Gabungkan dalam container untuk flex layout
+  const messages = [statusMessage, spotifyMessage, activityMessage].filter(Boolean);
+  const allMessages = messages.length > 0 ? messages.join("") : "Status tidak tersedia";
 
   elementHtmlStatus.innerHTML = allMessages;
   return allMessages;

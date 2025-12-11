@@ -269,12 +269,39 @@ body {
 
 /* status */
 #status {
-  display: block;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.3rem;
   max-height: 80px;
   font-size: 13px;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.discord-status,
+.discord-activity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  width: 100%;
+}
+
+.discord-status svg,
+.discord-activity svg {
+  flex-shrink: 0;
+  min-width: 12px;
+  min-height: 12px;
+}
+
+.discord-app-icon {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  object-fit: cover;
 }
 
 .profile-image-container {
