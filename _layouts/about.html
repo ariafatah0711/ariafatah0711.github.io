@@ -1,0 +1,133 @@
+{% include header.html %}
+
+{% if site.app.loader.active %}
+  {% assign show_loader = false %}
+  {% assign current_url = page.url | remove_first: '/' | remove: 'index.html' %}
+  {% for loader_path in site.app.loader.path %}
+    {% assign check_path = loader_path | remove_first: '/' %}
+    {% if current_url == check_path or page.url == loader_path or page.permalink == loader_path %}
+      {% assign show_loader = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+  {% if show_loader %}
+    {% include loader.html %}
+  {% endif %}
+{% endif %}
+
+<div class="container about-layout">
+	<!-- Navbar dengan Toggle Buttons di Samping -->
+	<div class="about-navbar-wrapper">
+		<div class="about-navbar">
+			<a href="{{ site.baseurl }}">home</a>
+			{% for item in site.app.navbar %}
+				<a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
+			{% endfor %}
+		</div>
+
+		<!-- Toggle Buttons -->
+		<div class="about-navbar-toggles">
+			{% if site.app.linktree.active %}
+				{% include linktree.html %}
+			{% endif %}
+			{% include theme_toggle.html %}
+		</div>
+	</div>
+
+	<!-- Main Content -->
+	<div class="about-content">
+		{{ content }}
+	</div>
+
+	<div class="footer">
+		<span>Made with <font color="red">♥</font> on Earth, a minimalist Jekyll Theme by <a href="{{ site.baseurl }}/info"><b>ariaf</b></a></span>
+	</div>
+</div>
+
+{% include footer.html %}
+
+<style>
+	.about-layout {
+		padding: 0;
+	}
+
+	.about-navbar-wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 30px;
+		padding-bottom: 20px;
+		border-bottom: 1px solid var(--border-color, #e0e0e0);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.about-navbar {
+		display: flex;
+		gap: 20px;
+	}
+
+	.about-navbar a {
+		text-decoration: none;
+		color: inherit;
+		font-weight: 500;
+		transition: opacity 0.3s ease;
+	}
+
+	.about-navbar a:hover {
+		opacity: 0.7;
+	}
+
+	.about-navbar-toggles {
+		display: flex;
+		gap: 15px;
+		align-items: center;
+	}
+
+	.about-navbar-toggles .linktree-toggle,
+	.about-navbar-toggles .theme-toggle {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 8px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 6px;
+		transition: background-color 0.3s ease;
+		color: inherit;
+	}
+
+	.about-navbar-toggles svg {
+		width: 24px;
+		height: 24px;
+		stroke: currentColor;
+		fill: none;
+		stroke-width: 2;
+	}
+
+	.about-content {
+		max-width: 900px;
+		margin: 0 auto;
+		line-height: 1.6;
+		color: inherit;
+	}
+
+	@media (max-width: 768px) {
+		.about-navbar-wrapper {
+			flex-direction: column;
+			gap: 15px;
+			align-items: flex-start;
+		}
+
+		.about-navbar {
+			width: 100%;
+			flex-wrap: wrap;
+		}
+
+		.about-navbar-toggles {
+			width: 100%;
+			justify-content: flex-start;
+		}
+	}
+</style>

@@ -2,11 +2,12 @@
     position: fixed;
     inset: 0;
     background: var(--loader-bg, #212121);
-    z-index: 99999;
+    z-index: 49;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    pointer-events: none;
 }
 
 /* this MUST have 100% height */

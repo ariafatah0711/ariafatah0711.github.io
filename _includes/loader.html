@@ -60,10 +60,13 @@
     --------------------------------------------- */
     tl.from("#page-loader", {
       opacity: 0,
-      scale: 0.90,
-      duration: 0.6,
-      ease: "power2.out"
+      scale: 0.95,
+      duration: 0.8,
+      ease: "cubic.inOut"
     });
+
+    /* Delay sebelum animasi teks */
+    tl.to({}, {duration: 0.2});
 
     /* ---------------------------------------------
        ANIMASI TEKS (SAMA dengan index.html)
@@ -71,16 +74,16 @@
     tl.to(".header-text", {
       y: "-100%",
       opacity: 1,
-      duration: 0.75,
-      ease: "power2.out",
+      duration: 0.85,
+      ease: "cubic.out",
       stagger: {
-        each: 0.75,
+        each: 0.8,
         onComplete() {
           gsap.to(this.targets()[0], {
             y: "-200%",
             opacity: 0,
-            duration: 0.75,
-            ease: "power1.inOut"
+            duration: 0.8,
+            ease: "cubic.inOut"
           });
         }
       }
@@ -91,15 +94,15 @@
     --------------------------------------------- */
     tl.to("#page-loader", {
       opacity: 0,
-      duration: 0.75,
-      ease: "power2.inOut",
+      duration: 0.8,
+      ease: "cubic.inOut",
       onComplete() {
         loader.remove();
         if (!isAlwaysShow) {
           try { sessionStorage.setItem("loaderShown", "true"); } catch (e) {}
         }
       }
-    }, "+=0.4");
+    }, "+=0.3");
 
   });
 
