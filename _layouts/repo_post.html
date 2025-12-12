@@ -25,21 +25,19 @@ layout: post
 </div>
 {% endif %}
 
-<p align="center">
-  {% if page.repo.demo %}
-      <a href="{{ page.repo.demo }}" class="button demo">🚀 Demo</a>
-  {% endif %}
+<div class="repo-buttons-container">
   {% if page.repo.source %}
-      <a href="{{ page.repo.source }}" class="button source">💻 Source Code</a>
+      <a href="{{ page.repo.source }}" class="btn repo-btn secondary" target="_blank" rel="noopener">Source</a>
+  {% endif %}
+  {% if page.repo.demo %}
+      <a href="{{ page.repo.demo }}" class="btn repo-btn primary" target="_blank" rel="noopener">Demo</a>
   {% endif %}
   {% if page.repo.jt %}
-      <a href="{{ page.repo.jt }}" class="button jt">🎨 Jekyll Theme</a>
+      <a href="{{ page.repo.jt }}" class="btn repo-btn tertiary" target="_blank" rel="noopener">Jekyll Theme</a>
   {% endif %}
-</p>
+</div>
 
-{% if page.repo.desc %}
-  <p class="description" align="center">{{ page.repo.desc }}</p>
-{% endif %}
+{{ content }}
 
 {% if page.repo.tags %}
   <p class="repo_tags">

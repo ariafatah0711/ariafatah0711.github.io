@@ -182,6 +182,7 @@
     font-weight: 500;
     font-size: 0.9rem;
     opacity: 0.8;
+    padding: 0 8px;
 }
 
 .pagination span.prev,

@@ -8,11 +8,21 @@ repo:
   preview: https://raw.githubusercontent.com/ariafatah0711/dicoding_1/refs/heads/main/preview.png
   demo: https://ariaf.my.id/dicoding_1/
   source: https://github.com/ariafatah0711/dicoding_1
-  desc: >
-    <b>Proyek ini merupakan hasil dari kelas Belajar Dasar Pemrograman Web di Dicoding.</b>  
-    Modul ini membahas dasar-dasar <b>HTML</b> dan <b>CSS</b> sebagai fondasi pengembangan website. <br>
-    Proyek ini dibuat menggunakan elemen <b>HTML semantik</b> untuk struktur yang lebih terorganisir serta menerapkan <b>tata letak responsif</b> agar tampilan optimal di berbagai perangkat.  
-    Tugas akhir dari modul ini adalah membangun halaman web sederhana dengan desain yang bersih dan mudah diakses.
   tags: [HTML, CSS, JavaScript, Responsive]
 tags: [web, repo, dicoding]
 ---
+
+## Tentang Web Academy
+
+🎓 **Hasil dari kelas "Belajar Dasar Pemrograman Web" di Dicoding**
+
+Proyek ini adalah implementasi dari pembelajaran fundamental web development dengan fokus pada:
+
+### Teknik yang Diterapkan
+- 🏗️ **HTML Semantik** - Struktur dokumen yang terorganisir dengan baik
+- 🎨 **CSS Modern** - Styling yang clean dan maintainable
+- 📱 **Responsive Design** - Layout yang optimal di semua ukuran device
+- ♿ **Web Accessibility** - Desain yang dapat diakses semua orang
+
+### Hasil Akhir
+Halaman web yang sederhana namun fungsional dengan desain yang bersih, mudah diakses, dan memberikan user experience yang baik di berbagai platform.

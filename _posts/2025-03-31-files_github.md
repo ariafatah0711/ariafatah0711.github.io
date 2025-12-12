@@ -8,16 +8,41 @@ repo:
   preview: https://raw.githubusercontent.com/ariafatah0711/files/refs/heads/main/preview.png
   demo: https://ariaf.my.id/files/
   source: https://github.com/ariafatah0711/files
-  desc: >
-    <b>files github</b> adalah aplikasi web berbasis <b>Vue</b> dan <b>Vite</b> untuk mengelola repositori file secara langsung di <b>GitHub</b>. 
-    Aplikasi ini memungkinkan pengguna untuk membuat, mengedit, menghapus, mengunggah file dan folder, serta menambah dan menghapus repositori. 
-    Semua data dikelola melalui <b>GitHub API</b>, bukan lagi menggunakan <b>Gist</b>.<br><br>
-    
-    Deployment dilakukan melalui <b>Vercel</b> dan <b>GitHub Pages</b>, memastikan aksesibilitas yang cepat dan mudah. 
-    Teknologi yang digunakan mencakup <b>Vue</b>, <b>Vite</b>, <b>GitHub API</b>, <b>Vercel</b>, dan <b>GitHub Pages</b>.<br><br> 
-
-    Fitur utama meliputi pengelolaan file dan folder dalam repositori, integrasi dengan <b>GitHub API</b>, 
-    serta fitur unggah file, unggah folder, tambah/hapus repositori, dan pengelolaan lainnya.
   tags: [Vue, Vite, GitHub API, JSON, Vercel]
 tags: [web, repo]
 ---
+
+## Tentang Files GitHub
+
+📂 **GitHub Repository File Manager**
+
+Aplikasi web untuk mengelola files & folders di **GitHub repositories** secara langsung melalui browser dengan interface yang user-friendly.
+
+### Fitur Utama
+- 📁 **File Management** - Create, edit, delete files & folders
+- 📤 **Upload Support** - Upload single files atau entire folders
+- 📝 **File Editing** - Edit file content dengan syntax highlighting
+- 🗂️ **Repository Management** - Add & remove repositories
+- 🔐 **GitHub API Integration** - Direct integration dengan GitHub
+- 💾 **Auto Save** - Changes disimpan langsung ke GitHub
+- 🏷️ **Branch Support** - Work dengan different branches
+
+### Teknologi
+- 💚 **Vue 3** - Progressive JavaScript framework
+- ⚡ **Vite** - Next-gen build tool
+- 🌐 **GitHub API** - Direct repository access
+- 📦 **JSON Format** - Structured data handling
+- 🚀 **Vercel** - Fast & reliable hosting
+
+### Advantages Over Git CLI
+- 🎨 **Visual Interface** - No need to remember git commands
+- ⚙️ **Zero Setup** - Works directly in browser
+- 🔄 **Folder Upload** - Bulk upload capabilities
+- 📊 **Repository View** - See all files at glance
+- 🚀 **Instant Deploy** - Vercel integration for quick deployment
+
+### Deployment
+- **Primary**: Vercel untuk production
+- **Secondary**: GitHub Pages sebagai backup
+
+Perfect untuk developers yang ingin manage GitHub files tanpa CLI, atau beginner yang masih belajar git.

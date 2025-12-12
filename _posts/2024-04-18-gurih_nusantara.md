@@ -8,11 +8,31 @@ repo:
   preview: https://raw.githubusercontent.com/ariafatah0711/dicoding_5/refs/heads/main/preview.png
   demo: https://gurih-nusantara.vercel.app/
   source: https://github.com/ariafatah0711/dicoding_5
-  desc: >
-    <b>Ini adalah proyek submission untuk kelas Menjadi Front-End Web Developer Expert di Dicoding.</b> <br>
-    Dalam proyek ini, saya mengembangkan sebuah website restoran bernama <b>Gurih Nusantara</b>, yang dirancang agar <b>optimal, user-friendly,</b> dan <b>responsif</b> di berbagai perangkat.  
-    Website ini dibangun menggunakan <b>HTML, CSS,</b> dan <b>JavaScript</b>, serta menerapkan konsep <b>Progressive Web App (PWA), automated testing,</b> dan <b>performance optimization</b> untuk meningkatkan pengalaman pengguna.  
-    Dengan fitur-fitur canggih yang diimplementasikan, proyek ini menunjukkan pemahaman mendalam dalam <b>pengembangan front-end yang modern dan efisien.</b>
   tags: [HTML, CSS, JavaScript, NodeJS, PWA, Optimization, Automation Testing]
 tags: [web, repo, dicoding]
 ---
+
+## Tentang Gurih Nusantara
+
+🍜 **Submission untuk kelas "Menjadi Front-End Web Developer Expert" di Dicoding**
+
+Website restoran **Gurih Nusantara** yang menyajikan pengalaman kuliner digital dengan teknologi modern dan best practices.
+
+### Fitur Unggulan
+- 📱 **Progressive Web App (PWA)** - Installable & offline-capable
+- 🎯 **Responsive Design** - Optimal di semua ukuran screen
+- ⚡ **Performance Optimized** - Fast loading & smooth interactions
+- 🔍 **SEO Friendly** - Struktur dan metadata yang proper
+- 🧪 **Automated Testing** - Unit & integration tests
+
+### Teknologi & Best Practices
+- 🏗️ **Clean Architecture** - Modular & maintainable code
+- 🎨 **UI/UX Focused** - User-centric design approach
+- 📊 **Analytics** - Track user behavior & performance
+- 🔐 **Security** - Best practices untuk keamanan
+- ♿ **Accessibility** - WCAG compliant interface
+
+### Deployment
+Hosted di **Vercel** untuk performa terbaik dengan CDN global dan automatic deployments.
+
+Proyek ini menunjukkan pemahaman mendalam dalam **front-end web development modern**, dari design hingga deployment dengan standar enterprise-grade.

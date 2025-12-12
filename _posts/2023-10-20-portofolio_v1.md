@@ -8,9 +8,25 @@ repo:
   preview: https://raw.githubusercontent.com/ariafatah0711/portofolio_v.1/refs/heads/main/preview.png
   demo: https://ariafatah0711.github.io/portofolio_v.1
   source: https://github.com/ariafatah0711/portofolio_v.1
-  desc: >
-    Versi pertama dari <b>portofolio web</b> saya, dibuat menggunakan <b>HTML, CSS,</b> dan <b>JavaScript</b>. 
-    Website ini memiliki fitur <b>snap scrolling</b> untuk navigasi yang <b>mulus</b> menggunakan tombol <b>panah atas dan bawah</b>. Menampilkan informasi tentang <b>saya, pengalaman, proyek,</b> dan <b>kontak</b>.
   tags: [HTML, CSS, JavaScript, Portfolio, Snap Scrolling]
 tags: [web, repo]
 ---
+
+## Tentang Portofolio v1
+
+🎯 **Versi pertama dari portofolio web saya**
+
+Portofolio interaktif dengan navigasi unik menggunakan **snap scrolling** untuk pengalaman browsing yang lebih mulus dan engaging.
+
+### Fitur Unggulan
+- ⬆️⬇️ **Snap Scrolling** - Navigasi halus dengan tombol panah atas/bawah
+- 🎨 **Desain Modern** - Visual yang bersih dan profesional
+- 📱 **One-Page Website** - Semua konten dalam satu halaman
+
+### Konten
+- 👋 Tentang Saya
+- 💼 Pengalaman & Skill
+- 🚀 Proyek-Proyek
+- 📧 Kontak
+
+Portofolio pertama ini menunjukkan fondasi yang solid dalam web development dengan implementasi fitur interaktif yang meningkatkan user experience.
