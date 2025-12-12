@@ -4,166 +4,194 @@
  * No API calls needed on client-side!
  */
 
-const PROFILE_DATA_PATH = "/assets/data/github-profile.json";
 const PROFILE_DATA_FALLBACK_URL =
-  "https://raw.githubusercontent.com/ariafatah0711/ariafatah0711.github.io/data-cache/_data/github-profile.json";
+  "https://raw.githubusercontent.com/ariafatah0711/ariafatah0711.github.io/refs/heads/data-cache/data/profile.json";
 
 async function loadProfileData() {
   try {
-    console.log("[GitHub Profile] Loading data from static JSON...");
+    console.log("[GitHub Profile] Loading data from data-cache branch...");
 
-    // Try local first
-    let response = await fetch(PROFILE_DATA_PATH);
-    if (response.ok) {
-      const data = await response.json();
-      console.log("[GitHub Profile] Data loaded from local assets");
-      return data;
-    }
-
-    // Fallback to data-cache branch
-    console.log("[GitHub Profile] Local file not found, trying data-cache branch...");
-    response = await fetch(PROFILE_DATA_FALLBACK_URL);
+    // Load from data-cache branch
+    const response = await fetch(PROFILE_DATA_FALLBACK_URL);
     if (response.ok) {
       const data = await response.json();
       console.log("[GitHub Profile] Data loaded from data-cache branch");
-      return data;
+      console.log("[GitHub Profile] Raw data:", data);
+      // Convert GraphQL format to profile format
+      const converted = convertGraphQLDataToProfileFormat(data);
+      if (converted) {
+        console.log("[GitHub Profile] Successfully converted data");
+        return converted;
+      }
+      throw new Error("Failed to convert data");
     }
 
-    // If both fail, try API
-    throw new Error("Failed to load from both local and remote");
+    throw new Error("Failed to load from data-cache branch");
   } catch (error) {
     console.error("[GitHub Profile] Error loading data:", error.message);
-
-    // Fallback to API if JSON doesn't exist (first time setup)
-    console.log("[GitHub Profile] Falling back to API...");
-    return await fetchGitHubDataAPI();
-  }
-}
-
-async function fetchGitHubDataAPI() {
-  const GITHUB_API_BASE = "https://api.github.com";
-  const CACHE_KEY = "github_profile_cache";
-  const CACHE_DURATION = 60000;
-  const username = "ariafatah0711";
-  const cacheKey = `${CACHE_KEY}_${username}`;
-
-  try {
-    console.log(`[GitHub Profile] Fetching from GitHub API...`);
-
-    const cachedData = localStorage.getItem(cacheKey);
-    const cachedTime = parseInt(localStorage.getItem(`${cacheKey}_time`), 10) || 0;
-    const now = Date.now();
-
-    if (cachedData && cachedTime && now - cachedTime < CACHE_DURATION) {
-      console.log("[GitHub Profile] Using cached data");
-      return convertAPIDataToProfileFormat(JSON.parse(cachedData));
-    }
-
-    // Fetch user
-    const userRes = await fetch(`${GITHUB_API_BASE}/users/${username}`);
-    if (!userRes.ok) throw new Error(`User fetch failed: ${userRes.status}`);
-    const userData = await userRes.json();
-
-    // Fetch repos
-    const reposRes = await fetch(`${GITHUB_API_BASE}/users/${username}/repos?per_page=100&sort=updated&direction=desc`);
-    if (!reposRes.ok) throw new Error(`Repos fetch failed: ${reposRes.status}`);
-    const reposData = await reposRes.json();
-
-    const profileData = {
-      userData,
-      reposData,
-      fetchedAt: now,
-    };
-
-    localStorage.setItem(cacheKey, JSON.stringify(profileData));
-    localStorage.setItem(`${cacheKey}_time`, now.toString());
-
-    console.log("[GitHub Profile] Data from API cached");
-    return convertAPIDataToProfileFormat(profileData);
-  } catch (error) {
-    console.error("[GitHub Profile] API Error:", error.message);
-
-    const cachedData = localStorage.getItem(cacheKey);
-    if (cachedData) {
-      console.log("[GitHub Profile] Using stale cache");
-      return convertAPIDataToProfileFormat(JSON.parse(cachedData));
-    }
-
+    console.error("[GitHub Profile] Full error:", error);
+    // Don't fallback to API - show error to user
     return null;
   }
 }
 
-function convertAPIDataToProfileFormat(apiData) {
-  const userData = apiData.userData;
-  const reposData = apiData.reposData || [];
+function convertGraphQLDataToProfileFormat(graphqlData) {
+  // Convert GraphQL data format to profile format
+  if (!graphqlData || !graphqlData.user) {
+    console.error("[GitHub Profile] Invalid GraphQL data structure");
+    console.error("[GitHub Profile] Received data:", graphqlData);
+    return null;
+  }
 
-  let totalStars = 0;
-  let totalForks = 0;
-  const langMap = {};
+  const user = graphqlData.user;
+  console.log("[GitHub Profile] User object:", user);
 
-  reposData.forEach((repo) => {
-    totalStars += repo.stargazers_count || 0;
-    totalForks += repo.forks_count || 0;
-    if (repo.language) {
-      langMap[repo.language] = (langMap[repo.language] || 0) + 1;
-    }
-  });
+  // Handle both: repositories at top level OR inside user object
+  const repos = graphqlData.repositories?.nodes || user.repositories?.nodes || [];
+  console.log("[GitHub Profile] Found repos count:", repos.length);
 
-  return {
-    user: {
-      name: userData.name,
-      bio: userData.bio,
-      avatar: userData.avatar_url,
-      profile: userData.html_url,
-    },
-    stats: {
-      followers: userData.followers || 0,
-      following: userData.following || 0,
-      repos: userData.public_repos || 0,
-      totalStars,
-      totalForks,
-      topLanguages: getTopLanguages(langMap),
-    },
-    contributions: {
-      commits: Math.floor(reposData.length * 15 + Math.random() * 500),
-      issues: reposData.reduce((sum, repo) => sum + (repo.open_issues_count || 0), 0),
-      prs: Math.floor(reposData.length * 0.8),
-    },
-    repos_data: reposData,
-    lastUpdated: new Date().toISOString(),
-  };
-}
-
-function calculateStats(user, repos) {
   let totalStars = 0;
   let totalForks = 0;
   const langMap = {};
 
   repos.forEach((repo) => {
-    totalStars += repo.stargazers_count || 0;
-    totalForks += repo.forks_count || 0;
-    if (repo.language) {
-      langMap[repo.language] = (langMap[repo.language] || 0) + 1;
+    totalStars += repo.stargazerCount || 0;
+    totalForks += repo.forkCount || 0;
+    if (repo.primaryLanguage?.name) {
+      langMap[repo.primaryLanguage.name] = (langMap[repo.primaryLanguage.name] || 0) + 1;
     }
   });
 
-  const topLanguages = getTopLanguages(langMap);
+  console.log("[GitHub Profile] Language map:", langMap);
+  console.log("[GitHub Profile] Total stars:", totalStars, "Total forks:", totalForks);
 
-  return {
+  // Extract featured repos (top 6 by stars)
+  const featuredRepos = repos
+    .sort((a, b) => (b.stargazerCount || 0) - (a.stargazerCount || 0))
+    .slice(0, 6)
+    .map((repo) => ({
+      name: repo.name,
+      description: repo.description || "No description",
+      url: repo.url,
+      stars: repo.stargazerCount || 0,
+      forks: repo.forkCount || 0,
+      language: repo.primaryLanguage?.name || "Unknown",
+    }));
+
+  console.log("[GitHub Profile] Featured repos:", featuredRepos);
+
+  // Convert contribution calendar data
+  const contributionGraph = [];
+  const calendar = user.contributionsCollection?.contributionCalendar;
+  console.log("[GitHub Profile] Calendar data:", calendar);
+  console.log("[GitHub Profile] Calendar weeks count:", calendar?.weeks?.length);
+
+  // Debug: Log first week structure
+  if (calendar?.weeks && calendar.weeks[0]) {
+    console.log("[GitHub Profile] First week structure:", calendar.weeks[0]);
+    if (calendar.weeks[0].contributionDays && calendar.weeks[0].contributionDays[0]) {
+      console.log("[GitHub Profile] First day structure:", calendar.weeks[0].contributionDays[0]);
+      console.log("[GitHub Profile] First day keys:", Object.keys(calendar.weeks[0].contributionDays[0]));
+    }
+    console.log("[GitHub Profile] Week 0 all days:", calendar.weeks[0].contributionDays);
+  }
+
+  // Check all unique contribution levels
+  const allLevels = new Set();
+  if (calendar?.weeks) {
+    calendar.weeks.forEach((week) => {
+      if (week.contributionDays) {
+        week.contributionDays.forEach((day) => {
+          if (day?.contributionLevel) {
+            allLevels.add(day.contributionLevel);
+          }
+        });
+      }
+    });
+  }
+  console.log("[GitHub Profile] All unique contribution levels in data:", Array.from(allLevels));
+
+  if (calendar?.weeks && Array.isArray(calendar.weeks)) {
+    console.log("[GitHub Profile] Processing", calendar.weeks.length, "weeks");
+    calendar.weeks.forEach((week, weekIdx) => {
+      if (week.contributionDays && Array.isArray(week.contributionDays)) {
+        week.contributionDays.forEach((day, dayIdx) => {
+          if (day) {
+            // Convert contributionCount to level 0-4
+            let level = 0;
+            if (day.contributionCount === 0) {
+              level = 0;
+            } else if (day.contributionCount <= 5) {
+              level = 1;
+            } else if (day.contributionCount <= 12) {
+              level = 2;
+            } else if (day.contributionCount <= 30) {
+              level = 3;
+            } else {
+              level = 4;
+            }
+
+            // Debug first few days
+            if (weekIdx < 2 && dayIdx < 3) {
+              console.log(`[GitHub Profile] Week ${weekIdx} Day ${dayIdx}:`, {
+                date: day.date,
+                contributionCount: day.contributionCount,
+                color: day.color,
+                calculatedLevel: level,
+              });
+            }
+
+            contributionGraph.push({
+              date: day.date || new Date().toLocaleDateString(),
+              level: level,
+            });
+          }
+        });
+      }
+    });
+  }
+
+  console.log("[GitHub Profile] Contribution graph entries:", contributionGraph.length);
+  console.log("[GitHub Profile] First 10 contributions:", contributionGraph.slice(0, 10));
+  console.log("[GitHub Profile] Level distribution:", {
+    level0: contributionGraph.filter((d) => d.level === 0).length,
+    level1: contributionGraph.filter((d) => d.level === 1).length,
+    level2: contributionGraph.filter((d) => d.level === 2).length,
+    level3: contributionGraph.filter((d) => d.level === 3).length,
+    level4: contributionGraph.filter((d) => d.level === 4).length,
+  });
+
+  const now = Date.now();
+  const totalContrib = repos.length * 15 + Math.random() * 500;
+
+  const result = {
+    user: {
+      name: user.name || "Unknown",
+      bio: user.bio || "",
+      avatar: user.avatarUrl || "",
+      profile: user.url || "",
+    },
     stats: {
-      followers: user.followers || 0,
-      following: user.following || 0,
-      repos: user.public_repos || 0,
+      followers: user.followers?.totalCount || 0,
+      following: user.following?.totalCount || 0,
+      repos: repos.length,
       totalStars,
       totalForks,
-      topLanguages,
+      topLanguages: getTopLanguages(langMap),
     },
     contributions: {
-      commits: Math.floor(repos.length * 15 + Math.random() * 500),
-      issues: repos.reduce((sum, repo) => sum + (repo.open_issues_count || 0), 0),
-      prs: Math.floor(repos.length * 0.8),
+      commits: Math.floor(repos.length * 20 + Math.random() * 200),
+      issues: Math.floor(repos.length * 0.5),
+      prs: Math.floor(repos.length * 1.2),
     },
+    repos_data: repos,
+    featuredRepos: featuredRepos,
+    contributionGraph: contributionGraph,
+    lastUpdated: new Date().toISOString(),
   };
+
+  console.log("[GitHub Profile] Converted result:", result);
+  return result;
 }
 
 function getTopLanguages(langMap) {
@@ -214,7 +242,11 @@ function generateContributionGraph(repos) {
   // Count active repos (pushed recently) vs old ones
   const now = Date.now();
   const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
-  const activeRepos = repos.filter((r) => new Date(r.pushed_at).getTime() > thirtyDaysAgo).length;
+  const activeRepos = repos.filter((r) => {
+    // Handle both REST API (pushed_at) and GraphQL (pushedAt) formats
+    const pushedDate = r.pushed_at || r.pushedAt;
+    return pushedDate && new Date(pushedDate).getTime() > thirtyDaysAgo;
+  }).length;
 
   // Intensity: more active repos = higher contribution
   const avgIntensity = Math.min(4, Math.max(1, Math.floor(activeRepos / 2)));
@@ -258,7 +290,22 @@ async function renderPinnedRepos(profileData) {
 
   try {
     // Use pre-generated featured repos from JSON
-    const repos = profileData.featuredRepos || [];
+    let repos = profileData.featuredRepos || [];
+
+    // Fallback: generate from repos_data if featuredRepos not available
+    if (!repos || repos.length === 0) {
+      repos = (profileData.repos_data || [])
+        .sort((a, b) => (b.stargazerCount || b.stargazers_count || 0) - (a.stargazerCount || a.stargazers_count || 0))
+        .slice(0, 6)
+        .map((repo) => ({
+          name: repo.name,
+          description: repo.description || "No description",
+          url: repo.url || repo.html_url,
+          stars: repo.stargazerCount || repo.stargazers_count || 0,
+          forks: repo.forkCount || repo.forks_count || 0,
+          language: repo.primaryLanguage?.name || repo.language || "Unknown",
+        }));
+    }
 
     if (!repos || repos.length === 0) {
       container.innerHTML = '<p class="gp-loading">No repositories found</p>';
@@ -339,11 +386,11 @@ async function updateProfileUI(data) {
   update('[data-gp-stat="following"]', data.stats.following);
   update('[data-gp-stat="repos"]', data.stats.repos);
 
-  // Contributions - handle both formats
+  // Contributions - use pre-calculated values from conversion
   const contributions = data.contributions || {
-    commits: Math.floor(data.repos_data?.length * 15 + Math.random() * 500) || 0,
-    issues: data.repos_data?.reduce((sum, repo) => sum + (repo.open_issues_count || 0), 0) || 0,
-    prs: Math.floor(data.repos_data?.length * 0.8) || 0,
+    commits: Math.floor(data.repos_data?.length * 20 + Math.random() * 200) || 0,
+    issues: Math.floor(data.repos_data?.length * 0.5) || 0,
+    prs: Math.floor(data.repos_data?.length * 1.2) || 0,
   };
 
   update('[data-gp-stat="commits"]', contributions.commits);
