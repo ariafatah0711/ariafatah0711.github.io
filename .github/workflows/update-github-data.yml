@@ -1,0 +1,35 @@
+name: Update GitHub Profile Data
+
+# Run setiap hari jam 00:00 UTC (jam 7 pagi Jakarta)
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  # Bisa juga trigger manual dari GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Generate GitHub Profile Data
+        env:
+          GITHUB_USERNAME: ariafatah0711
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .github/scripts/generate-profile-data.js
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git checkout -b data-cache origin/data-cache 2>/dev/null || git checkout -b data-cache
+          git add _data/github-profile.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update github profile data" && git push origin data-cache)

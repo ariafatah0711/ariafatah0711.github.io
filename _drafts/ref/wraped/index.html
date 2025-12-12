@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>github wrapped - dummy</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* small helpers to better match Next/Tailwind look from your components */
+      .glass { background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.08); }
+      .muted { color: rgba(255,255,255,0.6); }
+      html,body { background: #0b0f12; color: #fff; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+      .square { width: 10px; height: 10px; border-radius: 2px; }
+      @media (min-width: 768px){ .square{ width: 16px; height: 16px; } }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto p-6 md:p-10">
+      <!-- Profile Header -->
+      <div class="glass rounded-lg p-6 mb-6 hover:scale-105 transition-transform duration-200 cursor-pointer">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+          <img src="https://avatars.dicebear.com/api/identicon/aria.svg" alt="avatar" width="120" height="120" class="rounded-full" />
+          <div class="w-full text-center md:text-left">
+            <h1 class="text-3xl md:text-4xl font-bold">Aria L</h1>
+            <p class="muted mt-2">Fullstack tinkerer. Making things and breaking things in equal measure.</p>
+            <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-4">
+              <div class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 00-4-4H9a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="font-semibold">128</span><span class="muted ml-1">Followers</span></div>
+              <div class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="font-semibold">42</span><span class="muted ml-1">Following</span></div>
+              <div class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="font-semibold">56</span><span class="muted ml-1">Repos</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex gap-3 mb-6">
+        <button class="px-4 py-2 rounded bg-green-600 font-semibold">Save Image</button>
+        <button class="px-4 py-2 rounded border border-white/10">Share</button>
+      </div>
+
+      <!-- AI Analysis (static placeholder) -->
+      <div class="glass rounded-lg p-4 mb-6">
+        <h2 class="font-semibold text-lg">AI Analysis</h2>
+        <p class="muted mt-2">Top language JavaScript. Most active month: June. Contribution consistency: good. Keep it up! (dummy)</p>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass rounded-lg p-6">
+          <h3 class="font-semibold mb-4">Contributions (2025)</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between"><div class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20v-8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="muted">Total Commits</span></div><span class="font-semibold">1,234</span></div>
+            <div class="flex justify-between"><div class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20v-8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="muted">Issues Closed</span></div><span class="font-semibold">56</span></div>
+            <div class="flex justify-between"><div class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20v-8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="muted">PRs Merged</span></div><span class="font-semibold">78</span></div>
+          </div>
+        </div>
+
+        <div class="glass rounded-lg p-6">
+          <h3 class="font-semibold mb-4">Repository Impact</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between"><div class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l2.09 4.26L18.9 8l-3.45 2.51L14.18 15 12 12.5 9.82 15l.73-4.49L6.9 8l4.81-1.74L12 2z" stroke-width="0.8"/></svg><span class="muted">Total Stars</span></div><span class="font-semibold">420</span></div>
+            <div class="flex justify-between"><div class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 9l6 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="muted">Total Forks</span></div><span class="font-semibold">120</span></div>
+          </div>
+        </div>
+
+        <div class="glass rounded-lg p-6">
+          <h3 class="font-semibold mb-4">Top Languages</h3>
+          <div class="space-y-3">
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background:#f1e05a"></div><span class="muted">JavaScript</span><span class="ml-auto text-sm">45.2%</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background:#3178c6"></div><span class="muted">TypeScript</span><span class="ml-auto text-sm">28.4%</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full" style="background:#f34b7d"></div><span class="muted">CSS</span><span class="ml-auto text-sm">10.0%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Repo -->
+      <div class="glass rounded-lg p-6 mt-6">
+        <h3 class="font-semibold mb-4">Top Repository</h3>
+        <div class="flex items-center justify-between">
+          <div>
+            <a href="#" class="font-medium hover:underline text-lg">aria/awesome-project</a>
+            <p class="muted text-sm">A small demo project showing off shiny things.</p>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="text-sm">⭐ 256</div>
+            <div class="text-sm">🍴 64</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contribution Graph -->
+      <div class="glass rounded-lg p-4 mt-6 overflow-auto">
+        <h3 class="font-semibold mb-4">Contribution Graph (2025)</h3>
+        <div class="min-w-[640px] md:min-w-0">
+          <div class="grid grid-cols-[repeat(52,auto)] gap-[4px]">
+            <!-- generate 52 weeks of 7 days as squares -->
+            <!-- Using inline dummy colors to mimic GitHub's green scale -->
+            <script>
+              const colors = ['#161b22','#0e4429','#006d32','#26a641','#39d353'];
+              for(let w=0; w<52; w++){
+                document.write('<div class="flex flex-col gap-1">');
+                for(let d=0; d<7; d++){
+                  const c = colors[Math.floor(Math.random()*colors.length)];
+                  const n = Math.floor(Math.random()*6);
+                  const title = n + ' contributions on 2025-06-' + String((d+1)).padStart(2,'0');
+                  document.write(`<div class="square" style="background:${c}" title="${title}"></div>`);
+                }
+                document.write('</div>');
+              }
+            </script>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 mt-3 text-xs muted">
+            <span>More</span>
+            <div class="flex gap-1 items-center">
+              <div class="w-3 h-3 rounded-sm" style="background:#161b22"></div>
+              <div class="w-3 h-3 rounded-sm" style="background:#0e4429"></div>
+              <div class="w-3 h-3 rounded-sm" style="background:#006d32"></div>
+              <div class="w-3 h-3 rounded-sm" style="background:#26a641"></div>
+              <div class="w-3 h-3 rounded-sm" style="background:#39d353"></div>
+            </div>
+            <span>Less</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contribution Breakdown -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div class="glass rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Contributions by Month</h4>
+          <!-- simple svg bar chart -->
+          <svg viewBox="0 0 600 140" class="w-full h-36">
+            <g transform="translate(20,10)">
+              <!-- 12 bars -->
+              <g id="bars"></g>
+              <g id="labels" transform="translate(0,110)"></g>
+            </g>
+          </svg>
+          <script>
+            const data = [30,40,60,80,90,120,110,65,50,45,70,85];
+            const max = Math.max(...data);
+            const svgNS = 'http://www.w3.org/2000/svg';
+            const bars = document.querySelector('#bars');
+            const labels = document.querySelector('#labels');
+            data.forEach((v,i)=>{
+              const x = i*40;
+              const h = (v/max)*80;
+              const rect = document.createElementNS(svgNS,'rect');
+              rect.setAttribute('x', x);
+              rect.setAttribute('y', 80-h);
+              rect.setAttribute('width', 24);
+              rect.setAttribute('height', h);
+              rect.setAttribute('rx', 4);
+              rect.setAttribute('fill', '#22c55e');
+              bars.appendChild(rect);
+
+              const text = document.createElementNS(svgNS,'text');
+              text.setAttribute('x', x+12);
+              text.setAttribute('y', 100);
+              text.setAttribute('text-anchor','middle');
+              text.setAttribute('font-size','10');
+              text.setAttribute('fill','#9ca3af');
+              text.textContent = new Date(2025, i).toLocaleString('default', {month:'short'});
+              labels.appendChild(text);
+            });
+          </script>
+        </div>
+
+        <div class="glass rounded-lg p-4">
+          <h4 class="font-semibold mb-3">Contributions by Day</h4>
+          <svg viewBox="0 0 400 140" class="w-full h-36">
+            <g transform="translate(20,10)">
+              <g id="dayBars"></g>
+              <g id="dayLabels" transform="translate(0,110)"></g>
+            </g>
+          </svg>
+          <script>
+            const days = [50,80,90,120,100,70,60];
+            const max2 = Math.max(...days);
+            const gb = document.querySelector('#dayBars');
+            const gl = document.querySelector('#dayLabels');
+            days.forEach((v,i)=>{
+              const x = i*50;
+              const h = (v/max2)*80;
+              const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+              rect.setAttribute('x', x);
+              rect.setAttribute('y', 80-h);
+              rect.setAttribute('width', 28);
+              rect.setAttribute('height', h);
+              rect.setAttribute('rx',4);
+              rect.setAttribute('fill','#16a34a');
+              gb.appendChild(rect);
+
+              const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+              text.setAttribute('x', x+14);
+              text.setAttribute('y', 100);
+              text.setAttribute('text-anchor','middle');
+              text.setAttribute('font-size','10');
+              text.setAttribute('fill','#9ca3af');
+              text.textContent = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][i];
+              gl.appendChild(text);
+            });
+          </script>
+        </div>
+      </div>
+
+      <!-- small KPI cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
+        <div class="glass rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold">210</div>
+          <div class="muted text-sm">Active Days</div>
+        </div>
+        <div class="glass rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold">45</div>
+          <div class="muted text-sm">Longest Streak</div>
+        </div>
+        <div class="glass rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold">32</div>
+          <div class="muted text-sm">Longest Gap</div>
+        </div>
+        <div class="glass rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold">28</div>
+          <div class="muted text-sm">Weekend Activity</div>
+        </div>
+      </div>
+
+      <!-- pinned repos -->
+      <div class="mt-6">
+        <h3 class="text-xl font-bold mb-4">Pinned Repositories</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <a class="glass rounded-lg p-4 hover:scale-105 transition-transform" href="#">
+            <h4 class="font-semibold">awesome-project</h4>
+            <p class="muted text-sm">An opinionated small project to demonstrate github-wrapped layout.</p>
+            <div class="flex gap-4 mt-3 text-sm muted"><span>JavaScript</span><span>⭐ 128</span><span>🍴 32</span></div>
+          </a>
+          <a class="glass rounded-lg p-4 hover:scale-105 transition-transform" href="#">
+            <h4 class="font-semibold">cli-tools</h4>
+            <p class="muted text-sm">Some handy CLI utilities.</p>
+            <div class="flex gap-4 mt-3 text-sm muted"><span>Go</span><span>⭐ 64</span><span>🍴 8</span></div>
+          </a>
+          <a class="glass rounded-lg p-4 hover:scale-105 transition-transform" href="#">
+            <h4 class="font-semibold">design-system</h4>
+            <p class="muted text-sm">Small design tokens and components.</p>
+            <div class="flex gap-4 mt-3 text-sm muted"><span>TypeScript</span><span>⭐ 48</span><span>🍴 12</span></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="h-10"></div>
+    </div>
+  </body>
+</html>

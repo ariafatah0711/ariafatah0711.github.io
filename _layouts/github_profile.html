@@ -1,0 +1,128 @@
+---
+layout: default
+---
+
+<link rel="stylesheet" href="{{ '/assets/css/github_profile.css' | relative_url }}">
+<script src="{{ '/assets/js/github-profile.js' | relative_url }}"></script>
+
+<div class="github-profile-wrapper" data-github-username="{{ site.author.github }}">
+  <!-- Profile Header - Clickable -->
+  <a href="https://github.com/{{ site.author.github }}" class="gp-card gp-header gp-header-link" target="_blank" rel="noopener noreferrer">
+    <div class="gp-header-content">
+      <img src="{{ site.author.picture }}" alt="avatar" class="gp-avatar" />
+      <div class="gp-header-info">
+        <h1 class="gp-title">{{ site.author.name }}</h1>
+        <p class="gp-bio">{{ site.author.bio | replace: '<br>' | replace: '<br/>' | replace: '&#60;br&#62;' }}</p>
+        <div class="gp-stats-header">
+          <div class="gp-stat-item">
+            <svg class="gp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 00-4-4H9a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="gp-stat-value" data-gp-stat="followers">--</span>
+            <span class="gp-stat-label">Followers</span>
+          </div>
+          <div class="gp-stat-item">
+            <svg class="gp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="gp-stat-value" data-gp-stat="following">--</span>
+            <span class="gp-stat-label">Following</span>
+          </div>
+          <div class="gp-stat-item">
+            <svg class="gp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="gp-stat-value" data-gp-stat="repos">--</span>
+            <span class="gp-stat-label">Repos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <!-- About Section -->
+  <div class="gp-card gp-about">
+    <h2 class="gp-card-title">About</h2>
+    <div class="gp-about-content">
+      {{ content }}
+    </div>
+  </div>
+
+  <!-- Contribution Graph -->
+  <div class="gp-card gp-contribution-graph">
+    <h2 class="gp-card-title">Contributions - Last 300 Days</h2>
+    <div class="gp-graph-container" id="gp-contribution-graph">
+      <p class="gp-loading">Loading contribution graph...</p>
+    </div>
+  </div>
+
+  <!-- Stats Grid (3 columns) -->
+  <div class="gp-stats-grid">
+    <div class="gp-card">
+      <h3 class="gp-card-title">Contributions</h3>
+      <div class="gp-stat-list">
+        <div class="gp-stat-row">
+          <span class="gp-stat-row-label">Commits</span>
+          <span class="gp-stat-row-value" data-gp-stat="commits">--</span>
+        </div>
+        <div class="gp-stat-row">
+          <span class="gp-stat-row-label">Issues</span>
+          <span class="gp-stat-row-value" data-gp-stat="issues">--</span>
+        </div>
+        <div class="gp-stat-row">
+          <span class="gp-stat-row-label">PRs</span>
+          <span class="gp-stat-row-value" data-gp-stat="prs">--</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card">
+      <h3 class="gp-card-title">Repository Impact</h3>
+      <div class="gp-stat-list">
+        <div class="gp-stat-row">
+          <span class="gp-stat-row-label">⭐ Stars</span>
+          <span class="gp-stat-row-value" data-gp-stat="stars">--</span>
+        </div>
+        <div class="gp-stat-row">
+          <span class="gp-stat-row-label">🍴 Forks</span>
+          <span class="gp-stat-row-value" data-gp-stat="forks">--</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card">
+      <h3 class="gp-card-title">Top Languages</h3>
+      <div class="gp-languages-list" data-gp-languages>
+        <p class="gp-loading">Loading...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="gp-kpi-grid">
+    <div class="gp-kpi-card">
+      <div class="gp-kpi-value" data-gp-kpi="active_days">--</div>
+      <div class="gp-kpi-label">Active Days</div>
+    </div>
+    <div class="gp-kpi-card">
+      <div class="gp-kpi-value" data-gp-kpi="longest_streak">--</div>
+      <div class="gp-kpi-label">Longest Streak</div>
+    </div>
+    <div class="gp-kpi-card">
+      <div class="gp-kpi-value" data-gp-kpi="avg_commits">--</div>
+      <div class="gp-kpi-label">Avg Commits</div>
+    </div>
+    <div class="gp-kpi-card">
+      <div class="gp-kpi-value" data-gp-kpi="total_contrib">--</div>
+      <div class="gp-kpi-label">Total Contrib</div>
+    </div>
+  </div>
+
+  <!-- Pinned Repositories -->
+  <div class="gp-pinned-section">
+    <h2 class="gp-section-title">Pinned Repositories</h2>
+    <div class="gp-pinned-grid" id="gp-pinned-repos">
+      <p class="gp-loading">Loading pinned repositories...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function saveImage() {
+  alert('Download fitur akan ditambahkan soon!');
+}
+</script>
