@@ -16,26 +16,23 @@
   <div id="loader-words"></div>
 </div>
 
-</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
 <script>
 (function() {
 
   const isAlwaysShow = {{ is_always_show | jsonify }};
-
   const loader = document.getElementById("page-loader");
   const container = document.getElementById("loader-words");
 
-  // ambil teks dari config
+  /* Ambil teks dari config */
   {% if site.app.loader.custom_teks and site.app.loader.custom_teks.size > 0 %}
     let words = {{ site.app.loader.custom_teks | jsonify }};
   {% else %}
     let words = ["Loading", "Please wait"];
   {% endif %}
 
-  // skip loader jika pernah ditampilkan di session ini (bukan always_show)
+  /* Skip loader kalau sudah muncul sebelumnya (kecuali always_show) */
   if (!isAlwaysShow) {
     try {
       if (sessionStorage.getItem("loaderShown") === "true") {
@@ -45,7 +42,7 @@
     } catch (e) {}
   }
 
-  // generate elemen teks
+  /* Generate elemen teks */
   words.forEach(t => {
     const h1 = document.createElement("h1");
     h1.className = "header-text";
@@ -53,12 +50,24 @@
     container.appendChild(h1);
   });
 
-  // jalankan animasi setelah page fully load (agar smooth)
   window.addEventListener("load", function() {
 
     const tl = gsap.timeline();
 
-    // animasi teks SAMA PERSIS versi index.html
+    /* ---------------------------------------------
+       OPENING ANIMATION (baru ditambah)
+       Loader fade-in + scale (kayak index.html)
+    --------------------------------------------- */
+    tl.from("#page-loader", {
+      opacity: 0,
+      scale: 0.90,
+      duration: 0.6,
+      ease: "power2.out"
+    });
+
+    /* ---------------------------------------------
+       ANIMASI TEKS (SAMA dengan index.html)
+    --------------------------------------------- */
     tl.to(".header-text", {
       y: "-100%",
       opacity: 1,
@@ -77,15 +86,17 @@
       }
     });
 
-    // fade out loader smooth
+    /* ---------------------------------------------
+       FADE OUT LOADER
+    --------------------------------------------- */
     tl.to("#page-loader", {
       opacity: 0,
       duration: 0.75,
-      ease: "power1.inOut",
+      ease: "power2.inOut",
       onComplete() {
         loader.remove();
         if (!isAlwaysShow) {
-          try { sessionStorage.setItem("loaderShown","true"); } catch (e) {}
+          try { sessionStorage.setItem("loaderShown", "true"); } catch (e) {}
         }
       }
     }, "+=0.4");

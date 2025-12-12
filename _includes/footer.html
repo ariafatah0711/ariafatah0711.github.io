@@ -26,5 +26,9 @@
       gtag('config', '{{site.google_analytics}}');
     </script>
 	{% endif %}
+
+	{% if site.app.cursor_splash.active %}
+	<script src="/assets/js/cursor/splashCursor.js" defer></script>
+	{% endif %}
 </body>
 </html>

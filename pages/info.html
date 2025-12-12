@@ -21,3 +21,217 @@ permalink: /info/
     <button onclick="clearCacheAndReload();" class="reset-btn">Reset Cache</button>
     {% include theme_toggle.html %}
 </div>
+
+<!-- Custom Confirmation Modal -->
+<div id="confirmModal" class="confirm-modal" style="display: none;">
+    <div class="confirm-content">
+        <h3 id="confirmTitle">Konfirmasi</h3>
+        <p id="confirmMessage"></p>
+        <div class="confirm-buttons">
+            <button id="confirmYes" class="confirm-btn confirm-yes">Ya</button>
+            <button id="confirmNo" class="confirm-btn confirm-no">Tidak</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.confirm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.confirm-content {
+    background: var(--bg-color);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 400px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.confirm-content h3 {
+    margin: 0 0 15px 0;
+    color: var(--text-color);
+}
+
+.confirm-content p {
+    margin: 0 0 25px 0;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.confirm-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.confirm-yes {
+    background: #ff6b6b;
+    color: white;
+}
+
+.confirm-yes:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+}
+
+.confirm-no {
+    background: var(--border-color);
+    color: var(--text-color);
+}
+
+.confirm-no:hover {
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+</style>
+
+<script>
+let confirmCallback = null;
+
+function showConfirm(title, message, callback) {
+    const modal = document.getElementById('confirmModal');
+    const titleEl = document.getElementById('confirmTitle');
+    const messageEl = document.getElementById('confirmMessage');
+    const yesBtn = document.getElementById('confirmYes');
+    const noBtn = document.getElementById('confirmNo');
+
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    modal.style.display = 'flex';
+    confirmCallback = callback;
+
+    const handleYes = () => {
+        modal.style.display = 'none';
+        if (confirmCallback) confirmCallback(true);
+        cleanup();
+    };
+
+    const handleNo = () => {
+        modal.style.display = 'none';
+        if (confirmCallback) confirmCallback(false);
+        cleanup();
+    };
+
+    const cleanup = () => {
+        yesBtn.removeEventListener('click', handleYes);
+        noBtn.removeEventListener('click', handleNo);
+        document.removeEventListener('keydown', handleKeydown);
+    };
+
+    const handleKeydown = (e) => {
+        if (e.key === 'Enter') handleYes();
+        if (e.key === 'Escape') handleNo();
+    };
+
+    yesBtn.addEventListener('click', handleYes);
+    noBtn.addEventListener('click', handleNo);
+    document.addEventListener('keydown', handleKeydown);
+}
+
+function toggleResetData() {
+    showConfirm(
+        'Reset Data Lokal',
+        'Ini akan menghapus semua data lokal (localStorage & sessionStorage). Lanjutkan?',
+        (confirmed) => {
+            if (confirmed) {
+                localStorage.clear();
+                sessionStorage.clear();
+                showAlert('✓ Data lokal berhasil dihapus!', () => {
+                    location.reload();
+                });
+            }
+        }
+    );
+}
+
+function clearCacheAndReload() {
+    showConfirm(
+        'Reset Cache & Service Worker',
+        'Ini akan menghapus cache browser dan unregister service worker. Lanjutkan?',
+        (confirmed) => {
+            if (confirmed) {
+                if ('caches' in window) {
+                    caches.keys().then(function(cacheNames) {
+                        return Promise.all(
+                            cacheNames.map(function(cacheName) {
+                                return caches.delete(cacheName);
+                            })
+                        );
+                    }).then(() => {
+                        if ('serviceWorker' in navigator) {
+                            navigator.serviceWorker.getRegistrations().then(registrations => {
+                                for (let registration of registrations) {
+                                    registration.unregister();
+                                }
+                                showAlert('✓ Cache dan service worker berhasil dihapus!', () => {
+                                    location.reload(true);
+                                });
+                            });
+                        } else {
+                            showAlert('✓ Cache berhasil dihapus!', () => {
+                                location.reload(true);
+                            });
+                        }
+                    });
+                } else {
+                    showAlert('✗ Browser tidak mendukung cache API', () => {
+                        location.reload(true);
+                    });
+                }
+            }
+        }
+    );
+}
+
+function showAlert(message, callback) {
+    const modal = document.getElementById('confirmModal');
+    const titleEl = document.getElementById('confirmTitle');
+    const messageEl = document.getElementById('confirmMessage');
+    const buttonsEl = document.querySelector('.confirm-buttons');
+
+    titleEl.textContent = '';
+    messageEl.textContent = message;
+    buttonsEl.innerHTML = '<button class="confirm-btn confirm-no" id="alertBtn">OK</button>';
+    modal.style.display = 'flex';
+
+    const alertBtn = document.getElementById('alertBtn');
+    const handleClick = () => {
+        modal.style.display = 'none';
+        if (callback) callback();
+        alertBtn.removeEventListener('click', handleClick);
+    };
+    alertBtn.addEventListener('click', handleClick);
+}
+</script>

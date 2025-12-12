@@ -92,6 +92,8 @@ app:
       - "Fokus di Cyber Security & Networking"
       - "Belajar Web Dev & DevOps"
       - "Mahasiswa STT Nurul Fikri"
+  cursor_splash:
+    active: True
 
 # pwa (opsional)
 # pwa:
