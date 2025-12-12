@@ -19,11 +19,18 @@
 	<!-- Navbar dengan Toggle Buttons di Samping -->
 	<div class="about-navbar-wrapper">
 		<div class="about-navbar">
-			<a href="{{ site.baseurl }}">home</a>
+			<a href="{{ site.baseurl }}" style="margin-right: 20px;">home</a>
 			{% for item in site.app.navbar %}
 				<a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
 			{% endfor %}
 		</div>
+
+		<!-- Hamburger Menu Button (Mobile) -->
+		<button class="hamburger-menu" id="hamburgerBtn" onclick="toggleMobileMenu(event); return false;" title="Menu">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
 
 		<!-- Toggle Buttons -->
 		<div class="about-navbar-toggles">
@@ -32,6 +39,14 @@
 			{% endif %}
 			{% include theme_toggle.html %}
 		</div>
+	</div>
+
+	<!-- Mobile Menu (Hidden by default) -->
+	<div class="mobile-menu" id="mobileMenu">
+		<a href="{{ site.baseurl }}">home</a>
+		{% for item in site.app.navbar %}
+			<a href="{{ item.url }}">{{ item.name }}</a>
+		{% endfor %}
 	</div>
 
 	<!-- Main Content -->
@@ -45,6 +60,47 @@
 </div>
 
 {% include footer.html %}
+
+<script>
+	function toggleMobileMenu(event) {
+		event.stopPropagation();
+		const hamburger = document.getElementById('hamburgerBtn');
+		const mobileMenu = document.getElementById('mobileMenu');
+
+		hamburger.classList.toggle('active');
+		mobileMenu.classList.toggle('active');
+	}
+
+	// Close mobile menu when clicking on a link
+	document.addEventListener('DOMContentLoaded', () => {
+		const mobileLinks = document.querySelectorAll('.mobile-menu a');
+		mobileLinks.forEach(link => {
+			link.addEventListener('click', () => {
+				document.getElementById('hamburgerBtn').classList.remove('active');
+				document.getElementById('mobileMenu').classList.remove('active');
+			});
+		});
+
+		// Close menu when clicking outside
+		document.addEventListener('click', (e) => {
+			const hamburger = document.getElementById('hamburgerBtn');
+			const mobileMenu = document.getElementById('mobileMenu');
+
+			if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+				hamburger.classList.remove('active');
+				mobileMenu.classList.remove('active');
+			}
+		});
+
+		// Close menu on ESC key
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				document.getElementById('hamburgerBtn').classList.remove('active');
+				document.getElementById('mobileMenu').classList.remove('active');
+			}
+		});
+	});
+</script>
 
 <style>
 	.about-layout {
@@ -60,6 +116,8 @@
 		border-bottom: 1px solid var(--border-color, #e0e0e0);
 		width: 100%;
 		box-sizing: border-box;
+		position: relative;
+		flex-wrap: wrap;
 	}
 
 	.about-navbar {
@@ -85,7 +143,8 @@
 	}
 
 	.about-navbar-toggles .linktree-toggle,
-	.about-navbar-toggles .theme-toggle {
+	.about-navbar-toggles .theme-toggle,
+	.about-navbar-toggles .cv-toggle {
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -106,6 +165,101 @@
 		stroke-width: 2;
 	}
 
+	/* Hamburger Menu */
+	.hamburger-menu {
+		display: none;
+		flex-direction: column;
+		background: none;
+		border: none;
+		cursor: pointer;
+		gap: 4px;
+		padding: 6px;
+		border-radius: 6px;
+		transition: background-color 0.3s ease;
+		z-index: 1001;
+		position: relative;
+		width: 30px;
+		height: 30px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.hamburger-menu:hover {
+		background-color: var(--bg-hover-color);
+	}
+
+	.hamburger-menu span {
+		width: 20px;
+		height: 2px;
+		background-color: var(--primary-font-color);
+		border-radius: 2px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		display: block;
+		transform-origin: center;
+		position: relative;
+	}
+
+	.hamburger-menu.active span:nth-child(1) {
+		transform: translateY(6px) rotate(45deg);
+	}
+
+	.hamburger-menu.active span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.hamburger-menu.active span:nth-child(3) {
+		transform: translateY(-6px) rotate(-45deg);
+	}
+
+	/* Mobile Menu */
+	.mobile-menu {
+		display: none;
+		flex-direction: column;
+		gap: 0;
+		background: var(--bg-color);
+		border: 1px solid var(--border-color);
+		overflow: hidden;
+		animation: slideDown 0.3s ease;
+		width: 100%;
+		box-sizing: border-box;
+		order: 3;
+		flex-basis: 100%;
+		margin-top: 20px;
+		border-radius: 8px;
+	}
+
+	.mobile-menu.active {
+		display: flex;
+	}
+
+	.mobile-menu a {
+		padding: 12px 20px;
+		color: var(--primary-font-color);
+		text-decoration: none;
+		transition: background-color 0.2s ease;
+		border-bottom: 1px solid var(--border-color);
+		cursor: pointer;
+	}
+
+	.mobile-menu a:last-child {
+		border-bottom: none;
+	}
+
+	.mobile-menu a:hover {
+		background-color: var(--bg-hover-color);
+	}
+
+	@keyframes slideDown {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
 	.about-content {
 		max-width: 900px;
 		margin: 0 auto;
@@ -115,19 +269,87 @@
 
 	@media (max-width: 768px) {
 		.about-navbar-wrapper {
-			flex-direction: column;
-			gap: 15px;
-			align-items: flex-start;
+			flex-direction: row;
+			gap: 10px;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 0;
+			padding: 10px 12px;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 1000;
+			background: var(--body-bg);
+			border-bottom: 1px solid var(--border-color);
+			width: 100%;
+			box-sizing: border-box;
 		}
 
 		.about-navbar {
-			width: 100%;
-			flex-wrap: wrap;
+			display: none;
+		}
+
+		.hamburger-menu {
+			display: flex;
+			order: 2;
 		}
 
 		.about-navbar-toggles {
-			width: 100%;
-			justify-content: flex-start;
+			width: auto;
+			justify-content: flex-end;
+			order: 3;
+		}
+
+		.about-layout {
+			padding-top: 60px;
+		}
+
+		.mobile-menu {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100vw;
+			height: 100vh;
+			background: var(--body-bg);
+			border: none;
+			border-radius: 0;
+			order: unset;
+			flex-basis: unset;
+			margin: 0;
+			padding-top: 70px;
+			z-index: 999;
+			animation: fadeInSlideDown 0.3s ease;
+			flex-direction: column;
+		}
+
+		.mobile-menu.active {
+			display: flex;
+		}
+
+		.mobile-menu a {
+			padding: 16px 20px;
+			border-bottom: 1px solid var(--border-color);
+			border-radius: 0;
+			font-size: 16px;
+		}
+
+		.mobile-menu a:last-child {
+			border-bottom: none;
+		}
+	}
+
+	@keyframes fadeInSlideDown {
+		from {
+			opacity: 0;
+			transform: translateY(-20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
 		}
 	}
 </style>

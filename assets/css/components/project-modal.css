@@ -12,6 +12,10 @@
     align-items: center;
 }
 
+[data-theme="dark"] .modal {
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
 .modal-content {
     max-width: 90%;
     max-height: 80%;
@@ -42,6 +46,11 @@
     text-align: center;
     max-width: 80%;
     z-index: 1300;
+}
+
+[data-theme="dark"] .modal-info {
+    background: linear-gradient(135deg, rgba(26, 35, 50, 0.95) 0%, rgba(13, 17, 23, 0.98) 100%);
+    border: 1px solid rgba(88, 166, 255, 0.2);
 }
 
 .modal-title {

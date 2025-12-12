@@ -73,11 +73,12 @@
 }
 
 [data-theme="dark"] .blog-post-content a {
-    color: #66b3ff;
+    color: #58a6ff;
 }
 
 [data-theme="dark"] .blog-post-content a:hover {
-    color: #99ccff;
+    color: #79c0ff;
+    text-decoration: underline;
 }
 
 /* Clickable images in post content */
@@ -131,9 +132,20 @@
     border: 1px solid var(--border-color);
 }
 
+[data-theme="dark"] .post-tag {
+    background-color: rgba(88, 166, 255, 0.1);
+    color: #79c0ff;
+    border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
 .post-tag:hover {
     background-color: var(--bg-hover-color);
     transform: translateY(-2px);
+}
+
+[data-theme="dark"] .post-tag:hover {
+    background-color: rgba(88, 166, 255, 0.2);
+    border-color: rgba(88, 166, 255, 0.5);
 }
 
 /* Pagination/Navigation - matches main pagination style */

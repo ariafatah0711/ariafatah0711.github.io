@@ -33,13 +33,15 @@
 }
 
 [data-theme="dark"] {
-  --bg-color: #1e2736;
-  --bg-hover-color: #2d3748;
-  --body-bg: #0f1419;
-  --primary-font-color: #e0e0e0;
-  --border-color: #404854;
-  --loader-bg: #111;
+  --bg-color: #1a2332;
+  --bg-hover-color: #253447;
+  --body-bg: #0d1117;
+  --primary-font-color: #e8eef5;
+  --border-color: #3d444d;
+  --loader-bg: #0d1117;
   --loader-color: #fff;
+  --accent-color: #58a6ff;
+  --accent-hover: #79c0ff;
 }
 
 [data-theme="light"] {
@@ -612,7 +614,8 @@ pre {
 }
 
 .profile-action-row .linktree-toggle,
-.profile-action-row .theme-toggle {
+.profile-action-row .theme-toggle,
+.profile-action-row .cv-toggle {
   background: none;
   border: none;
   cursor: pointer;
@@ -632,13 +635,15 @@ pre {
 }
 
 .profile-action-row .linktree-toggle:hover,
-.profile-action-row .theme-toggle:hover {
+.profile-action-row .theme-toggle:hover,
+.profile-action-row .cv-toggle:hover {
   background: var(--bg-hover-color, #f0f0f0);
   /* transform: scale(1.05); */
 }
 
 .profile-action-row .linktree-toggle svg,
-.profile-action-row .theme-toggle svg {
+.profile-action-row .theme-toggle svg,
+.profile-action-row .cv-toggle svg {
   width: 18px;
   height: 18px;
   stroke: currentColor;

@@ -12,6 +12,10 @@
     align-items: center;
 }
 
+[data-theme="dark"] .modal {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
 .modal-content {
     max-width: 90%;
     max-height: 80%;

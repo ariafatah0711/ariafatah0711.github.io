@@ -67,10 +67,20 @@
   border: 2px solid var(--border-color);
 }
 
+[data-theme="dark"] .gallery-item {
+  border: 2px solid rgba(61, 68, 77, 0.6);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
 .gallery-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   border-color: var(--primary-font-color);
+}
+
+[data-theme="dark"] .gallery-item:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: rgba(88, 166, 255, 0.6);
 }
 
 .gallery-item img {

@@ -278,7 +278,10 @@
 /* Dark mode adjustments */
 [data-theme="dark"] .highlight {
   color: #e0e0e0;
-  background-color: #1e1e1e;
+  background-color: #0d1117;
+  border: 1px solid rgba(61, 68, 77, 0.4);
+  border-radius: 6px;
+  padding: 12px;
 }
 
 [data-theme="dark"] .highlight .vc,

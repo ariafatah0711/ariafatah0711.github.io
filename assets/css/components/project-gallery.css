@@ -19,17 +19,20 @@
     overflow: hidden;
 }
 
+[data-theme="dark"] .project-item {
+    background: linear-gradient(135deg, rgba(26, 35, 50, 0.6) 0%, rgba(37, 52, 71, 0.4) 100%);
+    border: 1px solid rgba(61, 68, 77, 0.5);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
 .project-item:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     transform: translateY(-2px);
 }
 
-[data-theme="dark"] .project-item {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
 [data-theme="dark"] .project-item:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border-color: rgba(88, 166, 255, 0.4);
 }
 
 .project-thumb {

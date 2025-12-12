@@ -26,6 +26,12 @@
     border: 1px solid var(--border-color);
 }
 
+[data-theme="dark"] .linktree-inner {
+    background: linear-gradient(135deg, rgba(26, 35, 50, 0.95) 0%, rgba(13, 17, 23, 0.98) 100%);
+    border: 1px solid rgba(61, 68, 77, 0.6);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
 .linktree-divider {
     height: 1px;
     width: 100%;
@@ -52,6 +58,11 @@
     transition: color 0.3s ease;
 }
 
+[data-theme="dark"] .linktree-inner a {
+    color: #79c0ff;
+    transition: all 0.3s ease;
+}
+
 .linktree-inner a::after {
     content: "";
     position: absolute;
@@ -66,6 +77,11 @@
 .linktree-inner a:hover {
     color: var(--primary-font-color);
     opacity: 0.8;
+}
+
+[data-theme="dark"] .linktree-inner a:hover {
+    color: #b3d9ff;
+    opacity: 1;
 }
 
 .linktree-inner a:hover::after {
@@ -92,4 +108,40 @@ body.linktree-lock-scroll {
     overflow: hidden !important;
     height: 100vh;
     touch-action: none;
+}
+
+/* CV Button Styles */
+.cv-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    color: var(--primary-font-color);
+}
+
+.cv-toggle:hover {
+    background: var(--bg-color);
+}
+
+[data-theme="dark"] .cv-toggle:hover {
+    background: rgba(88, 166, 255, 0.1);
+    color: #79c0ff;
+}
+
+.cv-toggle svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    transition: all 0.3s ease;
+}
+
+.cv-toggle:hover svg {
+    stroke-width: 2.5;
 }

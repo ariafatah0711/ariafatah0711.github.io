@@ -1,10 +1,19 @@
 {% comment %}Linktree tombol dan popup, siap di-include di mana saja{% endcomment %}
 
-<!-- Tombol Linktree (SVG only, tanpa label) -->
+<!-- Tombol Linktree & CV (SVG only, tanpa label) -->
 <button class="linktree-toggle" onclick="openLinktree(); return false;" title="Linktree">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
     <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</button>
+
+<button class="cv-toggle" onclick="downloadCV(); return false;" title="Download CV">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+    <line x1="12" y1="19" x2="12" y2="11"></line>
+    <polyline points="9 14 12 11 15 14"></polyline>
   </svg>
 </button>
 
@@ -49,6 +58,27 @@
       toggleLinktree(null, true);
     }
   }
+
+  // CV Download Function
+  function downloadCV() {
+    // Ubah path sesuai lokasi CV kamu
+    const cvUrl = "{{ site.baseurl }}/{{ site.author.cv }}"; // atau ke link langsung
+
+    // Cek dulu apakah CV ada, kalau ga ada muncul alert
+    fetch(cvUrl, { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          // Download atau buka di tab baru
+          window.open(cvUrl, '_blank');
+        } else {
+          alert('CV tidak ditemukan. Hubungi admin untuk setup.');
+        }
+      })
+      .catch(() => {
+        alert('Gagal load CV. Silakan coba lagi.');
+      });
+  }
+
   window.addEventListener("DOMContentLoaded", () => {
     handleHashChange();
     const box = document.getElementById("linktreeBox");
