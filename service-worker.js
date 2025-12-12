@@ -1,4 +1,3 @@
-
 importScripts("/assets/js/workbox-sw.js");
 
 workbox.core.setCacheNameDetails({
@@ -37,9 +36,7 @@ workbox.routing.registerRoute(
   /\.css$/,
   new workbox.strategies.CacheFirst({
     cacheName: "css-cache",
-    plugins: [
-      new workbox.expiration.ExpirationPlugin({ maxEntries: 20, maxAgeSeconds: 30 * 24 * 60 * 60 })
-    ],
+    plugins: [new workbox.expiration.ExpirationPlugin({ maxEntries: 20, maxAgeSeconds: 30 * 24 * 60 * 60 })],
   })
 );
 workbox.routing.registerRoute(/\.js$/, new workbox.strategies.StaleWhileRevalidate());

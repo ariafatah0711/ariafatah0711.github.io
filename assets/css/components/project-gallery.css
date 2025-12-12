@@ -1,21 +1,22 @@
 /* Basic grid matching site styles */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
     padding-bottom: 20px;
 }
 
 .project-item {
     background: var(--bg-color);
-    border-radius: 8px;
-    padding: 8px;
+    border-radius: 12px;
+    padding: 16px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    min-height: 360px;
+    min-height: auto;
     transition: all 0.3s ease;
+    overflow: hidden;
 }
 
 .project-item:hover {
@@ -31,12 +32,26 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+.project-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
 .project-thumb img {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.project-item:hover .project-thumb img {
+    transform: scale(1.03);
 }
 
 .play-overlay {
@@ -51,12 +66,8 @@
     border-radius: 50%;
 }
 
-.project-thumb {
-    position: relative;
-}
-
 .project-meta {
-    padding-top: 12px;
+    padding-top: 16px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -66,52 +77,55 @@
 
 .gallery-title {
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
     text-align: left;
     color: var(--primary-font-color);
+    margin-bottom: 8px;
+    line-height: 1.3;
 }
 
 .gallery-description {
-    font-size: 0.9rem;
-    opacity: 0.85;
+    font-size: 0.95rem;
+    opacity: 0.8;
     margin: 8px 0;
     text-align: left;
     color: var(--primary-font-color);
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 3.6em;
+    line-height: 1.4;
 }
 
 .project-links {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     align-items: flex-start;
     justify-content: flex-end;
-    margin-top: 8px;
+    margin-top: 12px;
 }
 
 .project-links .links-row {
     display: flex;
-    gap: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .btn.small {
     background: var(--bg-hover-color);
     color: var(--primary-font-color);
-    padding: 8px 12px;
+    padding: 10px 14px;
     border-radius: 6px;
     text-decoration: none;
-    font-size: 0.9rem;
-    min-width: 88px;
+    font-size: 0.95rem;
     text-align: center;
     display: inline-block;
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .btn.small.primary {
@@ -154,22 +168,61 @@
     right: 10px;
 }
 
+.project-thumbs-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.project-thumb-img {
+    width: 60px !important;
+    height: 38px !important;
+    aspect-ratio: 16 / 10 !important;
+    object-fit: cover !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    flex-shrink: 0;
+}
+
 @media (max-width: 900px) {
     .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    .project-thumb img {
-        height: 160px;
+    .project-thumb {
+        aspect-ratio: 16 / 10;
     }
 }
 
 @media (max-width: 480px) {
     .projects-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
-    .project-thumb img {
-        height: 120px;
+    .project-item {
+        padding: 12px;
+    }
+
+    .project-thumb {
+        aspect-ratio: 16 / 10;
+    }
+
+    .gallery-title {
+        font-size: 1rem;
+    }
+
+    .gallery-description {
+        font-size: 0.9rem;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .project-thumb-img {
+        width: 50px !important;
+        height: 31px !important;
     }
 }

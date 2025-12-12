@@ -44,24 +44,24 @@
           <div class="stars-overlay github-stars" data-repo="{{ project.repo }}" title="GitHub stars">
             ★ <span class="star-count">-</span>
           </div>
-
-          {%- comment -%} thumbnails row if multiple images provided in project.images {%- endcomment -%}
-          {% if project.images %}
-            <div class="project-thumbs-row" style="display:flex; gap:6px; margin-top:8px; justify-content:flex-start;">
-              {% for thumb in img_list %}
-                {% assign t = thumb %}
-                {% if t contains 'http' %}
-                  <img class="project-thumb-img" src="{{ t }}" alt="thumb" style="width:56px;height:42px;object-fit:cover;border-radius:6px;cursor:pointer;" data-thumb-src="{{ t }}">
-                {% elsif t contains '.' %}
-                  <img class="project-thumb-img" src="/{{ t | relative_url }}" alt="thumb" style="width:56px;height:42px;object-fit:cover;border-radius:6px;cursor:pointer;" data-thumb-src="/{{ t | relative_url }}">
-                {% endif %}
-              {% endfor %}
-            </div>
-          {% endif %}
         {% else %}
           <img src="/assets/images/profile2-128.avif" alt="{{ project.title }}" class="clickable-image" loading="lazy">
         {% endif %}
       </div>
+
+      {%- comment -%} thumbnails row if multiple images provided in project.images {%- endcomment -%}
+      {% if project.images %}
+        <div class="project-thumbs-row">
+          {% for thumb in img_list %}
+            {% assign t = thumb %}
+            {% if t contains 'http' %}
+              <img class="project-thumb-img" src="{{ t }}" alt="thumb" data-thumb-src="{{ t }}">
+            {% elsif t contains '.' %}
+              <img class="project-thumb-img" src="/{{ t | relative_url }}" alt="thumb" data-thumb-src="/{{ t | relative_url }}">
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
       <div class="project-meta">
         <div class="gallery-title">{{ project.title }}</div>
         <div class="gallery-description">{{ project.description }}</div>

@@ -1028,7 +1028,6 @@
         hasInteracted = true;
         startAnimation();
         updatePointerDownData(pointer, -1, posX, posY);
-        deferredClickSplat(pointer); // Use deferred version
       },
       PASSIVE
     );
