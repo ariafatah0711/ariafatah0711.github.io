@@ -116,7 +116,7 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
     calendar.weeks.forEach((week, weekIdx) => {
       if (week.contributionDays && Array.isArray(week.contributionDays)) {
         week.contributionDays.forEach((day, dayIdx) => {
-          if (day) {
+          if (day && contributionGraph.length < 365) {
             // Convert contributionCount to level 0-4 based on GitHub quartiles
             // #ebedf0 = 0 (no contribution)
             // #9be9a8 = 1-2 (light green, FIRST_QUARTILE to SECOND_QUARTILE)
@@ -447,8 +447,30 @@ async function updateProfileUI(data) {
 
   const totalContrib = contributions.commits + contributions.issues + contributions.prs;
   const avgCommits = Math.floor(contributions.commits / (data.stats.repos || 1));
-  const activeDays = Math.floor(totalContrib / 20) || 1;
-  const longestStreak = Math.floor(Math.random() * 30) + 5;
+
+  // Calculate from actual contribution graph data
+  let activeDays = 0;
+  let longestStreak = 0;
+  let currentStreak = 0;
+
+  if (data.contributionGraph && Array.isArray(data.contributionGraph)) {
+    // Count active days and calculate longest streak
+    data.contributionGraph.forEach((day) => {
+      if (day.level > 0) {
+        activeDays++;
+        currentStreak++;
+        longestStreak = Math.max(longestStreak, currentStreak);
+      } else {
+        currentStreak = 0;
+      }
+    });
+  }
+
+  // Fallback if no graph data
+  if (activeDays === 0) {
+    activeDays = Math.floor(totalContrib / 20) || 1;
+    longestStreak = Math.floor(Math.random() * 30) + 5;
+  }
 
   updateKPI('[data-gp-kpi="active_days"]', activeDays);
   updateKPI('[data-gp-kpi="longest_streak"]', longestStreak);
