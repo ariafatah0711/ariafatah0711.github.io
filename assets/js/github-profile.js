@@ -117,33 +117,46 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
       if (week.contributionDays && Array.isArray(week.contributionDays)) {
         week.contributionDays.forEach((day, dayIdx) => {
           if (day) {
-            // Convert contributionCount to level 0-4
+            // Convert contributionCount to level 0-4 based on GitHub quartiles
+            // #ebedf0 = 0 (no contribution)
+            // #9be9a8 = 1-2 (light green, FIRST_QUARTILE to SECOND_QUARTILE)
+            // #40c463 = 3 (medium green, THIRD_QUARTILE)
+            // #30a14e = 4 (dark green, highest)
             let level = 0;
-            if (day.contributionCount === 0) {
+            const count = day.contributionCount || 0;
+
+            if (count === 0) {
               level = 0;
-            } else if (day.contributionCount <= 5) {
-              level = 1;
-            } else if (day.contributionCount <= 12) {
-              level = 2;
-            } else if (day.contributionCount <= 30) {
-              level = 3;
+            } else if (count <= 3) {
+              level = 1; // Very light activity
+            } else if (count <= 8) {
+              level = 2; // Light activity
+            } else if (count <= 15) {
+              level = 3; // Medium activity
             } else {
-              level = 4;
+              level = 4; // High activity
             }
 
+            // Validate level against color if available
+            const color = day.color || "#ebedf0";
+            const colorBasedLevel =
+              color === "#ebedf0" ? 0 : color === "#9be9a8" ? 2 : color === "#40c463" ? 3 : color === "#30a14e" ? 4 : level;
+
             // Debug first few days
-            if (weekIdx < 2 && dayIdx < 3) {
+            if (weekIdx < 2 && dayIdx < 7) {
               console.log(`[GitHub Profile] Week ${weekIdx} Day ${dayIdx}:`, {
                 date: day.date,
                 contributionCount: day.contributionCount,
                 color: day.color,
                 calculatedLevel: level,
+                colorBasedLevel: colorBasedLevel,
+                finalLevel: colorBasedLevel || level,
               });
             }
 
             contributionGraph.push({
               date: day.date || new Date().toLocaleDateString(),
-              level: level,
+              level: colorBasedLevel || level,
             });
           }
         });
@@ -451,6 +464,8 @@ function renderContributionGraph(graphData) {
 
   container.innerHTML = "";
 
+  // With grid-auto-flow: column, just append days in order
+  // CSS Grid akan otomatis fill column-by-column (top-to-bottom, lalu next column)
   graphData.forEach((day) => {
     const dayEl = document.createElement("div");
     dayEl.className = "gp-graph-day";

@@ -272,11 +272,12 @@
 }
 
 .gp-graph-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(53, 13px);
+    grid-template-rows: repeat(7, 13px);
     gap: 2px;
-    flex-wrap: wrap;
-    min-height: 120px;
-    padding: 8px 0;
+    grid-auto-flow: column;
+    overflow-x: auto;
 }
 
 .gp-graph-day {
