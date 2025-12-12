@@ -33,7 +33,7 @@
 }
 
 [data-theme="dark"] {
-  --bg-color: #1a2332;
+  --bg-color: rgba(0, 0, 0, 0.25);
   --bg-hover-color: #253447;
   --body-bg: #0d1117;
   --primary-font-color: #e8eef5;

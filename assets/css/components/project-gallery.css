@@ -20,7 +20,8 @@
 }
 
 [data-theme="dark"] .project-item {
-    background: linear-gradient(135deg, rgba(26, 35, 50, 0.6) 0%, rgba(37, 52, 71, 0.4) 100%);
+    /* background: linear-gradient(135deg, rgba(26, 35, 50, 0.6) 0%, rgba(37, 52, 71, 0.4) 100%); */
+    background: rgba(0, 0, 0, 0.25);
     border: 1px solid rgba(61, 68, 77, 0.5);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
