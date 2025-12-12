@@ -6,7 +6,11 @@
 </button>
 
 <script>
-document.addEventListener('DOMContentLoaded', updateThemeIcon);
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof updateThemeIcon === 'function') {
+    updateThemeIcon();
+  }
+});
 </script>
 
 <style>

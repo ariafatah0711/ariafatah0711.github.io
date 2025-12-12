@@ -2,7 +2,8 @@
     <span class="close">&times;</span>
     <div class="modal-nav prev" id="prevBtn">&#10094;</div>
     <div class="modal-nav next" id="nextBtn">&#10095;</div>
-    <img class="modal-content" id="modalImg">
+    <img class="modal-content" id="modalImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
+    <div class="image-fallback" style="display:none;"></div>
     <!-- video element for project/video previews -->
     <video class="modal-content" id="modalVideo" controls style="display:none; background: black;"></video>
     <div class="modal-info" id="modalInfo">

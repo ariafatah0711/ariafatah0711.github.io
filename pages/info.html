@@ -235,5 +235,9 @@ function showAlert(message, callback) {
     alertBtn.addEventListener('click', handleClick);
 }
 
-document.addEventListener('DOMContentLoaded', updateThemeIcon);
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof updateThemeIcon === 'function') {
+    updateThemeIcon();
+  }
+});
 </script>

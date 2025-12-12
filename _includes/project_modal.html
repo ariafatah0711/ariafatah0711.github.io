@@ -2,7 +2,8 @@
   <span class="close" id="projectClose">&times;</span>
   <div class="modal-nav prev" id="projectPrev">&#10094;</div>
   <div class="modal-nav next" id="projectNext">&#10095;</div>
-  <img class="modal-content" id="projectModalImg">
+  <img class="modal-content" id="projectModalImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
+  <div class="image-fallback" style="display:none;"></div>
   <div class="modal-info" id="projectModalInfo">
     <div class="modal-title" id="projectModalTitle"></div>
     <div class="modal-description" id="projectModalDescription"></div>

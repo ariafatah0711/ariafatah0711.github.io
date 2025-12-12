@@ -40,7 +40,9 @@ permalink: /gallery/
           decoding="async"
           fetchpriority="low"
           class="clickable-image"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
         >
+        <div class="image-fallback" style="display:none;"></div>
         <div class="gallery-overlay">
           <span class="gallery-title">{{ photo.title }}</span>
           <span class="gallery-description">{{ photo.description }}</span>

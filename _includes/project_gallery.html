@@ -29,12 +29,12 @@
         {% if project.image or project.images %}
           {% assign img = project.image | default: (project.images | first) %}
           {% if img contains 'http' %}
-            <img src="{{ img }}" alt="{{ project.title }}" class="clickable-image" loading="lazy">
+            {% include image.html src=img alt=project.title class="clickable-image" %}
           {% elsif img contains '.' %}
-            <img src="/{{ img | relative_url }}" alt="{{ project.title }}" class="clickable-image" loading="lazy">
+            {% include image.html src=img alt=project.title class="clickable-image" %}
           {% else %}
             {%- comment -%} fallback to site profile image when project.image has no extension {%- endcomment -%}
-            <img src="/assets/images/profile2-128.avif" alt="{{ project.title }}" class="clickable-image" loading="lazy">
+            {% include image.html src="/assets/images/profile2-128.avif" alt=project.title class="clickable-image" %}
           {% endif %}
           {% if project.videos or project.video %}
             <div class="play-overlay">▶</div>
@@ -45,7 +45,7 @@
             ★ <span class="star-count">-</span>
           </div>
         {% else %}
-          <img src="/assets/images/profile2-128.avif" alt="{{ project.title }}" class="clickable-image" loading="lazy">
+          <div class="image-fallback"></div>
         {% endif %}
       </div>
 
@@ -55,9 +55,9 @@
           {% for thumb in img_list %}
             {% assign t = thumb %}
             {% if t contains 'http' %}
-              <img class="project-thumb-img" src="{{ t }}" alt="thumb" data-thumb-src="{{ t }}">
+              {% include image.html src=t alt="thumb" class="project-thumb-img" onerror="this.style.display='none';" no_fallback=true %}
             {% elsif t contains '.' %}
-              <img class="project-thumb-img" src="/{{ t | relative_url }}" alt="thumb" data-thumb-src="/{{ t | relative_url }}">
+              {% include image.html src=t alt="thumb" class="project-thumb-img" onerror="this.style.display='none';" no_fallback=true %}
             {% endif %}
           {% endfor %}
         </div>

@@ -80,6 +80,11 @@ document.addEventListener("DOMContentLoaded", function () {
       modalCounter.textContent = "";
       return;
     }
+    // Reset fallback display when loading new image
+    var fallback = modalImg.nextElementSibling;
+    if (fallback) {
+      fallback.style.display = "none";
+    }
     modalImg.style.display = "block";
     modalImg.src = images[currentIndex];
     modalCounter.textContent = currentIndex + 1 + " / " + images.length;
