@@ -1,30 +1,57 @@
-name: Update GitHub Profile Data
+name: Generate GitHub Profile Data
 
-# Run setiap hari jam 00:00 UTC (jam 7 pagi Jakarta)
 on:
   schedule:
-    - cron: '0 0 * * *'
-  # Bisa juga trigger manual dari GitHub Actions tab
+    - cron: "0 0 * * *"
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  update-data:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # STEP 1 — Checkout full repo (bukan sparse)
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Generate GitHub Profile Data
-        env:
-          GITHUB_USERNAME: ariafatah0711
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node .github/scripts/generate-profile-data.js
+      # STEP 2 — Setup Node
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
 
-      - name: Commit and push if changed
+      # STEP 3 — Generate data
+      - name: Generate Profile JSON
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ariafatah0711
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git checkout -b data-cache origin/data-cache 2>/dev/null || git checkout -b data-cache
-          git add _data/github-profile.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update github profile data" && git push origin data-cache)
+          mkdir -p data
+          node .github/scripts/fetch-graphql.js
+
+          mkdir -p /tmp/data
+          cp -r data /tmp/data/data
+
+      # STEP 4 — Clean data-cache branch
+      - name: Commit to data-cache
+        run: |
+          git fetch origin data-cache || true
+          git checkout --orphan data-cache
+
+          # Bersihkan semua file tracked & untracked
+          git rm -rf . || true
+          rm -rf ./* || true
+
+          # restore hanya profile.json
+          mkdir -p data
+          cp /tmp/data/data/profile.json ./data/profile.json
+
+          git add data/profile.json
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+
+          git commit -m "update: profile data" || true
+          git push origin data-cache --force
