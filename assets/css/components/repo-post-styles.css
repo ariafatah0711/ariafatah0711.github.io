@@ -50,14 +50,13 @@
     border-radius: 12px;
     border: 2px solid var(--border-color);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
     cursor: pointer !important;
 }
 
 .clickable-image:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    border-color: var(--primary-font-color);
 }
 
 @media (max-width: 600px) {

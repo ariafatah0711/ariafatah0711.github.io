@@ -19,7 +19,7 @@
     border-radius: 6px;
     font-size: 0.875rem;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color var(--ui-dur) var(--ui-ease), transform var(--ui-dur) var(--ui-ease), border-color var(--ui-dur) var(--ui-ease);
     border: 1px solid var(--border-color);
     margin-bottom: 5px;
 }

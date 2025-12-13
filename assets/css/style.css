@@ -30,6 +30,11 @@
   --border-color: #d0d0d0;
   --loader-bg: #212121;
   --loader-color: #fff;
+
+  /* Shared motion tokens (keep transitions consistent site-wide) */
+  --ui-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-dur: 260ms;
+  --ui-dur-fast: 180ms;
 }
 
 [data-theme="dark"] {
@@ -52,7 +57,7 @@
 html {
   scrollbar-gutter: stable !important;
   overflow-x: hidden !important;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease);
 }
 
 body {
@@ -63,7 +68,7 @@ body {
   color: var(--primary-font-color);
   margin: 0;
   padding: 5px 12px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease);
 }
 
 .container {

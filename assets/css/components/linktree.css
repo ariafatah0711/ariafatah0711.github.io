@@ -57,12 +57,11 @@
     color: var(--primary-font-color);
     font-weight: bold;
     display: inline-block;
-    transition: color 0.3s ease;
+    transition: color var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
 }
 
 [data-theme="dark"] .linktree-inner a {
     color: #79c0ff;
-    transition: all 0.3s ease;
 }
 
 .linktree-inner a::after {
@@ -73,7 +72,7 @@
     width: 0%;
     height: 2px;
     background-color: var(--primary-font-color);
-    transition: width 0.3s ease;
+    transition: width var(--ui-dur) var(--ui-ease);
 }
 
 .linktree-inner a:hover {
@@ -99,7 +98,7 @@
     color: var(--primary-font-color);
     opacity: 0.7;
     cursor: pointer;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--ui-dur) var(--ui-ease);
 }
 
 .close-btn:hover {
@@ -122,7 +121,7 @@ body.linktree-lock-scroll {
     align-items: center;
     justify-content: center;
     border-radius: 6px;
-    transition: all 0.3s ease;
+    transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease), transform var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
     color: var(--primary-font-color);
 }
 
@@ -141,7 +140,7 @@ body.linktree-lock-scroll {
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
-    transition: all 0.3s ease;
+    transition: stroke-width var(--ui-dur) var(--ui-ease), transform var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
 }
 
 .cv-toggle:hover svg {

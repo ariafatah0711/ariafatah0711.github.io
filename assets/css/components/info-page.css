@@ -15,7 +15,7 @@
     font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease), border-color var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
     display: inline-block;
 }
@@ -50,7 +50,7 @@
     padding: 30px;
     max-width: 400px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    animation: slideIn 0.3s ease-out;
+    animation: slideIn var(--ui-dur) var(--ui-ease);
 }
 
 @keyframes slideIn {
@@ -89,7 +89,7 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.2s;
+    transition: transform var(--ui-dur-fast) var(--ui-ease), box-shadow var(--ui-dur-fast) var(--ui-ease), background-color var(--ui-dur-fast) var(--ui-ease), color var(--ui-dur-fast) var(--ui-ease), border-color var(--ui-dur-fast) var(--ui-ease), opacity var(--ui-dur-fast) var(--ui-ease);
 }
 
 .confirm-yes {

@@ -20,7 +20,7 @@
     text-align: center;
     display: inline-block;
     border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease), border-color var(--ui-dur) var(--ui-ease);
     cursor: pointer;
 }
 

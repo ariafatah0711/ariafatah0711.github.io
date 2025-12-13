@@ -36,7 +36,7 @@
     color: var(--primary-font-color);
     border-radius: 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease), border-color var(--ui-dur) var(--ui-ease), transform var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease);
     font-size: 0.9rem;
     font-weight: 500;
 }
@@ -78,7 +78,7 @@
     border-radius: 15px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border-color);
 }
@@ -89,27 +89,26 @@
 }
 
 .gallery-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 [data-theme="dark"] .gallery-item:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    border-color: rgba(88, 166, 255, 0.4);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease);
     /* Kurangi biaya rendering offscreen */
     content-visibility: auto;
     contain-intrinsic-size: 300px 200px;
 }
 
 .gallery-item:hover img {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .gallery-overlay {
@@ -121,7 +120,7 @@
     color: #ffffff;
     padding: 20px 15px 15px;
     transform: translateY(100%);
-    transition: transform 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease);
 }
 
 [data-theme="dark"] .gallery-overlay {

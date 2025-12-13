@@ -17,7 +17,7 @@
     flex-direction: column;
     min-height: auto;
     height: 100%;
-    transition: all 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease);
     overflow: hidden;
 }
 
@@ -56,7 +56,7 @@
     border-radius: 10px;
     cursor: pointer;
     display: block;
-    transition: transform 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease);
 }
 
 /*
@@ -107,7 +107,7 @@
 }
 
 .project-thumb {
-    transition: transform 0.35s ease;
+    transition: transform var(--ui-dur) var(--ui-ease);
     will-change: transform;
 }
 
@@ -185,7 +185,7 @@
     text-align: center;
     display: inline-block;
     border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease), background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease), border-color var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
     cursor: pointer;
 }
 

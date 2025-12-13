@@ -30,7 +30,7 @@
 .blog-post-content a {
     color: #0066cc;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--ui-dur) var(--ui-ease);
 }
 
 .blog-post-content a:hover {
@@ -58,7 +58,7 @@
 
 .blog-post-content .clickable-image {
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform var(--ui-dur) var(--ui-ease), box-shadow var(--ui-dur) var(--ui-ease);
     /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); */
 }
 

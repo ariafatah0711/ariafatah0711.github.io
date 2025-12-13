@@ -1,6 +1,6 @@
 /* Song/Music Player Styles */
 #music-switcher {
-    transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
+    transition: transform var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
 }
 
 #music-switcher:hover {
@@ -9,7 +9,7 @@
 }
 
 #music-icon svg {
-    transition: fill 0.3s ease, transform 0.2s ease;
+    transition: fill var(--ui-dur) var(--ui-ease), transform var(--ui-dur) var(--ui-ease);
     color: var(--primary-font-color);
 }
 

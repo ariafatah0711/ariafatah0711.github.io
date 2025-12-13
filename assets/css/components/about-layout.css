@@ -16,8 +16,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
+    margin-bottom: 15px;
+    padding: 10px;
     border-bottom: 1px solid var(--border-color, #e0e0e0);
     width: 100%;
     box-sizing: border-box;
@@ -34,7 +34,7 @@
     text-decoration: none;
     color: inherit;
     font-weight: 500;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--ui-dur) var(--ui-ease);
 }
 
 .about-navbar a:hover {
@@ -57,14 +57,14 @@
     align-items: center;
     justify-content: center;
     border-radius: 6px;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--ui-dur) var(--ui-ease);
     color: inherit;
 }
 
 .about-navbar-toggles .theme-toggle {
     padding: 8px;
     border-radius: 6px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color var(--ui-dur) var(--ui-ease), transform var(--ui-dur) var(--ui-ease);
     color: inherit;
 }
 
@@ -90,7 +90,7 @@
     gap: 4px;
     padding: 6px;
     border-radius: 6px;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--ui-dur) var(--ui-ease);
     z-index: 101;
     position: relative;
     width: 30px;
@@ -108,7 +108,7 @@
     height: 2px;
     background-color: var(--primary-font-color);
     border-radius: 2px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
     display: block;
     transform-origin: center;
     position: relative;
@@ -134,7 +134,7 @@
     background: var(--bg-color);
     border: 1px solid var(--border-color);
     overflow: hidden;
-    animation: slideDown 0.3s ease;
+    animation: slideDown var(--ui-dur) var(--ui-ease);
     width: 100%;
     box-sizing: border-box;
     order: 3;
@@ -151,7 +151,7 @@
     padding: 12px 20px;
     color: var(--primary-font-color);
     text-decoration: none;
-    transition: background-color 0.2s ease;
+    transition: background-color var(--ui-dur-fast) var(--ui-ease);
     border-bottom: 1px solid var(--border-color);
     cursor: pointer;
 }
@@ -212,7 +212,7 @@
     }
 
     .about-layout {
-        padding-top: 60px;
+        padding-top: 70px;
     }
 
     .mobile-menu {

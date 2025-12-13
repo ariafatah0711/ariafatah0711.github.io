@@ -63,7 +63,7 @@
     font-weight: bold;
     cursor: pointer;
     z-index: 1100;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--ui-dur) var(--ui-ease);
 }
 
 .close:hover {
@@ -88,7 +88,7 @@
 }
 
 .modal-nav:hover {
-    color: rgb(0, 0, 0, 0.7);
+    opacity: 0.7;
 }
 
 .modal-nav:active {

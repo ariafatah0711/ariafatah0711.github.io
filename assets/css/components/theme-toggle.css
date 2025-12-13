@@ -5,7 +5,7 @@
     border: none;
     cursor: pointer;
     padding: 8px;
-    transition: transform 0.2s ease;
+    transition: transform var(--ui-dur) var(--ui-ease);
     color: var(--primary-font-color);
     display: flex;
     align-items: center;

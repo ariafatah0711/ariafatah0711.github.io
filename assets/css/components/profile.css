@@ -18,7 +18,7 @@
     /* width: 128px; */
     /* height: 128px; */
     border-radius: 50%;
-    transition: transform .2s;
+    transition: transform var(--ui-dur) var(--ui-ease);
 }
 
 .profile-image:hover {
@@ -63,7 +63,7 @@
     cursor: pointer;
     padding: 6px;
     border-radius: 50%;
-    transition: background 0.2s, transform 0.2s;
+    transition: background-color var(--ui-dur-fast) var(--ui-ease), transform var(--ui-dur-fast) var(--ui-ease);
     color: var(--primary-font-color);
     display: flex;
     align-items: center;
