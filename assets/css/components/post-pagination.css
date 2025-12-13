@@ -1,0 +1,46 @@
+/* Post Pagination Styles */
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    margin: 1rem 0;
+    margin-top: 1.5rem;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.pagination .prev,
+.pagination .next {
+    color: var(--primary-font-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+}
+
+.pagination .prev:hover,
+.pagination .next:hover {
+    background-color: var(--bg-hover-color);
+    transform: translateX(0);
+}
+
+.pagination .prev {
+    text-align: left;
+}
+
+.pagination .next {
+    text-align: right;
+}
+
+.pagination .page-number {
+    color: var(--primary-font-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    padding: 0 8px;
+}

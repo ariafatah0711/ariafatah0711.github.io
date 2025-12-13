@@ -1,0 +1,23 @@
+/* Post Header Styles */
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.post-date {
+    font-size: 0.875rem;
+    color: var(--primary-font-color);
+    opacity: 0.8;
+    font-weight: 600;
+}
+
+.post-header .post-date {
+    font-weight: 600;
+}

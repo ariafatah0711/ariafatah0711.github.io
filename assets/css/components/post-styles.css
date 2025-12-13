@@ -1,41 +1,5 @@
 /* Post Layout Styles */
 
-.post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--border-color);
-    flex-wrap: wrap;
-    gap: 0.75rem;
-}
-
-.post-date {
-    font-size: 0.875rem;
-    color: var(--primary-font-color);
-    opacity: 0.8;
-}
-
-.post-share {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    font-size: 0.875rem;
-}
-
-.social-icon {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    margin: 0 0.25rem;
-    transition: opacity 0.3s ease;
-    filter: var(--icon-filter);
-}
-
-.social-icon:hover {
-    opacity: 0.7;
-}
-
 .blog-post-content {
     margin: 0.75rem 0;
     line-height: 1.65;
@@ -110,45 +74,6 @@
 }
 
 /* Tags container */
-.tags-container {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin: 0.75rem 0;
-    padding: 0.5rem 0;
-    border-top: 2px solid var(--border-color);
-    border-bottom: 2px solid var(--border-color);
-}
-
-.post-tag {
-    display: inline-block;
-    padding: 0.3rem 0.6rem;
-    background-color: var(--bg-color);
-    color: var(--primary-font-color);
-    border-radius: 6px;
-    font-size: 0.875rem;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    border: 1px solid var(--border-color);
-}
-
-[data-theme="dark"] .post-tag {
-    background-color: rgba(88, 166, 255, 0.1);
-    color: #79c0ff;
-    border: 1px solid rgba(88, 166, 255, 0.3);
-}
-
-.post-tag:hover {
-    background-color: var(--bg-hover-color);
-    transform: translateY(-2px);
-}
-
-[data-theme="dark"] .post-tag:hover {
-    background-color: rgba(88, 166, 255, 0.2);
-    border-color: rgba(88, 166, 255, 0.5);
-}
-
-/* Pagination/Navigation - matches main pagination style */
 /* .pagination {
     width: 100%;
     display: flex;
@@ -164,38 +89,6 @@
     min-height: 24px;
     gap: 0.5rem;
 } */
-
-.pagination .prev,
-.pagination .next {
-    color: var(--primary-font-color);
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-}
-
-.pagination .prev:hover,
-.pagination .next:hover {
-    background-color: var(--bg-hover-color);
-    transform: translateX(0);
-}
-
-.pagination .prev {
-    text-align: left;
-}
-
-.pagination .next {
-    text-align: right;
-}
-
-.pagination .page-number {
-    color: var(--primary-font-color);
-    font-weight: 500;
-    font-size: 0.9rem;
-    opacity: 0.8;
-    padding: 0 8px;
-}
 
 .pagination span.prev,
 .pagination span.next {

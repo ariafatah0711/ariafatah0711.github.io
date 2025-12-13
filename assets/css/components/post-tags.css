@@ -1,0 +1,41 @@
+/* Post Tags Styles */
+
+.tags-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.75rem 0;
+    padding: 0.5rem 0;
+    border-top: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+    width: 100%;
+}
+
+.post-tag {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    background-color: var(--bg-color);
+    color: var(--primary-font-color);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: 1px solid var(--border-color);
+    margin-bottom: 5px;
+}
+
+[data-theme="dark"] .post-tag {
+    background-color: rgba(88, 166, 255, 0.1);
+    color: #79c0ff;
+    border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
+.post-tag:hover {
+    background-color: var(--bg-hover-color);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .post-tag:hover {
+    background-color: rgba(88, 166, 255, 0.2);
+    border-color: rgba(88, 166, 255, 0.5);
+}

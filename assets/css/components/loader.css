@@ -2,7 +2,7 @@
     position: fixed;
     inset: 0;
     background: var(--loader-bg, #212121);
-    z-index: 49;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;

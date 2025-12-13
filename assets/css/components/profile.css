@@ -1,0 +1,106 @@
+/* Profile Styles */
+
+.profile {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 10px 10px;
+}
+
+.profile-header {
+    width: 65%;
+    flex-grow: 1;
+}
+
+.profile-image {
+    /* width: 128px; */
+    /* height: 128px; */
+    border-radius: 50%;
+    transition: transform .2s;
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+}
+
+.profile-about {
+    width: 35%;
+    text-align: right;
+}
+
+.profile-bio {
+    width: 100%;
+    text-align: right;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.profile-image-container {
+    width: 40%;
+}
+
+/* Responsive Styles untuk Profile */
+@media only screen and (max-width: 768px) {
+    .profile-image {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .profile {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .profile-header {
+        width: 100%;
+        display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: column !important;
+        text-align: center !important;
+    }
+
+    .profile-action-row {
+        justify-content: center !important;
+    }
+
+    .profile-image-container {
+        width: 100%;
+        display: flex;
+        justify-content: center !important;
+        margin-bottom: 10px;
+        order: -1;
+    }
+
+    .profile-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile-about {
+        width: 100% !important;
+        text-align: center !important;
+        display: -webkit-box;
+        /* -webkit-line-clamp: 1;
+        line-clamp: 1; */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+
+    .profile-bio {
+        text-align: center !important;
+        -webkit-line-clamp: 1 !important;
+        line-clamp: 1 !important;
+    }
+}
