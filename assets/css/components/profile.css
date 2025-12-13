@@ -46,6 +46,62 @@
     width: 40%;
 }
 
+/* profile action row */
+.profile-action-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.profile-action-row .linktree-toggle,
+.profile-action-row .theme-toggle,
+.profile-action-row .cv-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    transition: background 0.2s, transform 0.2s;
+    color: var(--primary-font-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+}
+
+.profile-action-row .linktree-toggle:hover,
+.profile-action-row .theme-toggle:hover,
+.profile-action-row .cv-toggle:hover {
+    background: var(--bg-hover-color, #f0f0f0);
+    /* transform: scale(1.05); */
+}
+
+.profile-action-row .linktree-toggle svg,
+.profile-action-row .theme-toggle svg,
+.profile-action-row .cv-toggle svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    display: block;
+    margin: auto;
+}
+
+.profile-action-row .theme-toggle svg path {
+    fill: currentColor;
+}
+
 /* Responsive Styles untuk Profile */
 @media only screen and (max-width: 768px) {
     .profile-image {

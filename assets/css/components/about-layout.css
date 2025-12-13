@@ -11,17 +11,7 @@
     color: inherit;
 }
 
-@media (max-width: 768px) {
-    .about-layout {
-        padding-top: 60px;
-    }
-}
-
-/* navbar */
-.about-layout {
-    padding: 0;
-}
-
+/* About Navbar Wrapper */
 .about-navbar-wrapper {
     display: flex;
     justify-content: space-between;
@@ -80,7 +70,7 @@
     stroke-width: 2;
 }
 
-/* Hamburger Menu */
+/* Hamburger Menu & Mobile Menu */
 .hamburger-menu {
     display: none;
     flex-direction: column;
@@ -91,7 +81,7 @@
     padding: 6px;
     border-radius: 6px;
     transition: background-color 0.3s ease;
-    z-index: 50;
+    z-index: 101;
     position: relative;
     width: 30px;
     height: 30px;
@@ -174,13 +164,6 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.about-content {
-    max-width: 900px;
-    margin: 0 auto;
-    line-height: 1.6;
-    color: inherit;
 }
 
 @media (max-width: 768px) {
