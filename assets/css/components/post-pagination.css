@@ -1,16 +1,15 @@
 /* Post Pagination Styles */
-
 .pagination {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 0;
-    margin: 1rem 0;
-    margin-top: 1.5rem;
     width: 100%;
     gap: 0.5rem;
+    margin-bottom: 5px;
+    background: var(--bg-color);
+    border: 1px dashed var(--border-color);
 }
 
 .pagination .prev,

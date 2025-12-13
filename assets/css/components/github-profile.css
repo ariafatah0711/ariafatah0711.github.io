@@ -526,9 +526,3 @@
         max-height: 100px;
     }
 }
-
-/* footer */
-[data-theme="dark"] .footer {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px dashed rgba(255, 255, 255, 0.08);
-}
