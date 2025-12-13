@@ -153,42 +153,39 @@ body {
   width: auto;
 } */
 
+/* container activity */
 .discord-status,
 .discord-activity {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   max-width: 100%;
+  min-width: 0;
+  white-space: nowrap;
 }
 
-.discord-activity strong {
-  display: block;
+/* judul lagu → PRIORITAS */
+.song-title {
+  flex: 1 1 auto;
   min-width: 0;
-  /* PENTING di flex */
-  max-width: 100%;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.discord-status,
-.discord-activity {
-  min-width: 0;
+/* artis → KALAH DULUAN */
+.song-artist {
+  flex: 0 1 auto;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.discord-status svg,
-.discord-activity svg {
-  flex-shrink: 0;
-  min-width: 12px;
-  min-height: 12px;
-}
-
+/* icon aman */
+.discord-activity svg,
 .discord-app-icon {
+  flex-shrink: 0;
   width: 12px;
   height: 12px;
-  border-radius: 2px;
-  flex-shrink: 0;
-  object-fit: cover;
 }
 
 h1,

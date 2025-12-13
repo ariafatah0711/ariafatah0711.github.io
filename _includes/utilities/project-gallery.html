@@ -41,6 +41,17 @@ Displays project gallery grid from _data/projects.yml
             <div class="play-overlay">▶</div>
           {% endif %}
 
+          {%- comment -%} thumbnails strip (only if multiple images) {%- endcomment -%}
+          {% if project.images %}
+            <div class="project-thumbs-row" aria-hidden="true">
+              {% for thumb in img_list %}
+                {% assign thumb_trimmed = thumb | strip %}
+                <img class="project-thumb-img" src="{{ thumb_trimmed }}" alt="Thumbnail" loading="lazy"
+                  onerror="this.style.display='none';">
+              {% endfor %}
+            </div>
+          {% endif %}
+
           <!-- Stars overlay in top-right -->
           <div class="stars-overlay github-stars" data-repo="{{ project.repo }}" title="GitHub stars">
             ★ <span class="star-count">-</span>
@@ -49,23 +60,12 @@ Displays project gallery grid from _data/projects.yml
           <div class="image-fallback"></div>
         {% endif %}
       </div>
-
-      {%- comment -%} thumbnails row if multiple images provided in project.images {%- endcomment -%}
-      {% if project.images %}
-        <div class="project-thumbs-row">
-          {% for thumb in img_list %}
-            {% assign thumb_trimmed = thumb | strip %}
-            <img class="project-thumb-img" src="{{ thumb_trimmed }}" alt="Thumbnail" loading="lazy"
-              onerror="this.style.display='none';">
-          {% endfor %}
-        </div>
-      {% endif %}
       <div class="project-meta">
         <div class="gallery-title">{{ project.title }}</div>
         <div class="gallery-description">{{ project.description }}</div>
         <div class="project-links">
-          {% if project.source_url %}<a href="{{ project.source_url }}" target="_blank">Source</a>{% endif %}
-          {% if project.demo_url %}<a href="{{ project.demo_url }}" target="_blank">Demo</a>{% endif %}
+          {% if project.source_url %}<a class="btn small secondary" href="{{ project.source_url }}" target="_blank" rel="noopener">Source</a>{% endif %}
+          {% if project.demo_url %}<a class="btn small primary" href="{{ project.demo_url }}" target="_blank" rel="noopener">Demo</a>{% endif %}
         </div>
       </div>
     </div>

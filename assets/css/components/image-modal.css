@@ -10,6 +10,7 @@
     background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
+    padding: 0;
 }
 
 [data-theme="dark"] .modal {
@@ -190,18 +191,47 @@ body.modal-open {
 
 /* Project Modal Styles */
 #projectModal {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 70px 16px 22px;
+    overflow-y: auto;
+}
+
+/* Project modal: stack image + info, avoid fixed info bar */
+#projectModal .modal-content,
+#projectModal .image-fallback {
+    max-width: min(1100px, 92vw);
+    max-height: 65vh;
+    width: min(1100px, 92vw);
+}
+
+#projectModal .modal-info {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: min(1100px, 92vw);
+    max-width: min(1100px, 92vw);
+    margin-top: 0;
+}
+
+#projectModal .modal-title {
+    text-align: center;
+}
+
+#projectModal .modal-description {
+    max-width: 80ch;
 }
 
 #projectModal .image-fallback {
-    max-width: 90%;
-    max-height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
     background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
-    order: 2;
 }
 
 #projectModal .image-fallback::before {

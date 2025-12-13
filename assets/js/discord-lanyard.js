@@ -62,7 +62,13 @@ function updateStatus(data) {
   let spotifyMessage = "";
   if (data.listening_to_spotify) {
     console.log("Spotify detected:", data.spotify);
-    spotifyMessage = `<span class="discord-activity">${svgIcons.music}<strong>${data.spotify.song}</strong> - ${data.spotify.artist}</span>`;
+    spotifyMessage = `
+      <span class="discord-activity">
+        ${svgIcons.music}
+        <strong class="song-title">${data.spotify.song}</strong>
+        <span class="song-artist"> - ${data.spotify.artist}</span>
+      </span>
+    `;
   }
 
   let activityMessage = "";

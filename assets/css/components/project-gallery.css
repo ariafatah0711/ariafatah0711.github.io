@@ -4,6 +4,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     padding-bottom: 20px;
+    align-items: stretch;
 }
 
 .project-item {
@@ -15,6 +16,7 @@
     display: flex;
     flex-direction: column;
     min-height: auto;
+    height: 100%;
     transition: all 0.3s ease;
     overflow: hidden;
 }
@@ -57,7 +59,59 @@
     transition: transform 0.3s ease;
 }
 
-.project-item:hover .project-thumb img {
+/*
+  The site has a global `.clickable-image` style (used in repo posts)
+  that adds a border on hover. Projects gallery images also use
+  `.clickable-image`, so we neutralize that here.
+*/
+.projects-gallery .clickable-image {
+    border: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.projects-gallery .clickable-image:hover {
+    border: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* thumbnails overlay strip (doesn't change card height) */
+.project-thumbs-row {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    align-items: center;
+    /* background: rgba(0, 0, 0, 0.45); */
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.project-thumbs-row::-webkit-scrollbar {
+    height: 6px;
+}
+
+.project-thumbs-row::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+}
+
+.project-thumb {
+    transition: transform 0.35s ease;
+    will-change: transform;
+}
+
+.project-item:hover .project-thumb {
     transform: scale(1.03);
 }
 
@@ -80,6 +134,7 @@
     flex: 1;
     justify-content: space-between;
     align-items: stretch;
+    gap: 8px;
 }
 
 .project-item .gallery-title {
@@ -93,7 +148,7 @@
 .project-item .gallery-description {
     font-size: 0.95rem;
     opacity: 0.8;
-    margin: 8px 0;
+    margin: 0;
     text-align: left;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -106,8 +161,9 @@
 
 .project-links {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
+    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: flex-end;
     margin-top: 12px;
@@ -173,22 +229,15 @@
     right: 10px;
 }
 
-.project-thumbs-row {
-    display: flex;
-    gap: 6px;
-    margin-top: 8px;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
-
 .project-thumb-img {
-    width: 60px !important;
-    height: 38px !important;
+    width: 56px !important;
+    height: 36px !important;
     aspect-ratio: 16 / 10 !important;
     object-fit: cover !important;
     border-radius: 6px !important;
     cursor: pointer !important;
     flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 @media (max-width: 900px) {
@@ -227,7 +276,7 @@
     }
 
     .project-thumb-img {
-        width: 50px !important;
-        height: 31px !important;
+        width: 48px !important;
+        height: 30px !important;
     }
 }
