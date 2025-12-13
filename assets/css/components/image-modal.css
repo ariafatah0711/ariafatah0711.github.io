@@ -181,6 +181,42 @@ body.modal-open {
     flex-wrap: wrap;
 }
 
+/* Gallery stacked mode: match project modal layout (image + info stacked) */
+#imageModal.modal--stacked {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 70px 16px 22px;
+    overflow-y: auto;
+}
+
+#imageModal.modal--stacked .modal-content,
+#imageModal.modal--stacked .image-fallback {
+    max-width: min(1100px, 92vw);
+    max-height: 55vh;
+    width: min(1100px, 92vw);
+}
+
+#imageModal.modal--stacked .modal-info {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: min(1100px, 92vw);
+    max-width: min(1100px, 92vw);
+    margin-top: 0;
+}
+
+#imageModal.modal--stacked .modal-description {
+    max-width: 80ch;
+}
+
+#imageModal.modal--stacked .modal-title {
+    text-align: center;
+}
+
 #imageModal .image-fallback {
     font-size: 5rem;
 }

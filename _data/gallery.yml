@@ -149,16 +149,16 @@ photos:
     description: "Dokumentasi kegiatan MikroTik Competition di Compiler UBakrie"
 
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/tidakada.png"
-    title: "Test Gambar Tidak Ada"
+    title: "dummy gallery"
     size: "medium"
     category: "personal"
-    description: "Test Gambar Tidak Ada"
+    description: "dummy gallery"
 
   - path: "https://raw.githubusercontent.com/ariafatah0711/files-attachments/refs/heads/main/gallery/tidakada.png"
-    title: "Test Gambar Tidak Ada"
+    title: "dummy gallery"
     size: "small"
     category: "personal"
-    description: "Test Gambar Tidak Ada"
+    description: "dummy gallery"
 
 # Categories for filtering
 categories:

@@ -32,35 +32,94 @@ Handles gallery images, repo images, and video previews
 
     // Array untuk menyimpan data gambar
     var imageData = [];
+    var metaData = [];
     var currentIndex = 0;
     var isGalleryMode = false;
 
+    function applyModalMode() {
+        if (isGalleryMode) {
+            modal.classList.add('modal--stacked');
+        } else {
+            modal.classList.remove('modal--stacked');
+        }
+    }
+
     // Event delegation untuk gallery items dan repo post images
     document.addEventListener('click', function(event) {
+        // Gallery page: allow clicking overlay/text area to open modal too
+        var galleryItem = event.target.closest && event.target.closest('.gallery-item');
+        if (galleryItem) {
+            var galleryImg = galleryItem.querySelector('.clickable-image');
+            if (galleryImg) {
+                setupPhotoGalleryMode(galleryImg);
+                return;
+            }
+        }
+
         if (event.target.classList.contains('clickable-image')) {
             var img = event.target;
 
-            // Deteksi mode: gallery atau single repo image
-            var parentContainer = img.closest('.project-item, .blog-post-content');
+            // 1) Gallery page (photos)
+            if (img.closest('.gallery-item')) {
+                setupPhotoGalleryMode(img);
+                return;
+            }
 
+            // 2) Project-item image gallery (legacy / other pages)
             if (img.closest('.project-item')) {
-                setupGalleryMode(img);
-                isGalleryMode = true;
-            } else if (img.closest('.blog-post-content')) {
+                setupProjectItemMode(img);
+                return;
+            }
+
+            // 3) Single image inside blog post content
+            if (img.closest('.blog-post-content')) {
                 setupRepoMode(img);
-                isGalleryMode = false;
+                return;
             }
         }
     });
 
-    function setupGalleryMode(img) {
+    function setupPhotoGalleryMode(img) {
+        isGalleryMode = true;
+        applyModalMode();
+
+        // Build carousel from ALL gallery images on the page (DOM order)
+        var allGalleryImages = Array.prototype.slice.call(document.querySelectorAll('.gallery-item .clickable-image'));
+        imageData = allGalleryImages.map(function(el) {
+            return el.currentSrc || el.src;
+        });
+
+        metaData = allGalleryImages.map(function(el) {
+            var item = el.closest('.gallery-item');
+            var titleEl = item ? item.querySelector('.gallery-title') : null;
+            var descEl = item ? item.querySelector('.gallery-description') : null;
+            return {
+                title: (titleEl ? titleEl.textContent : '') || el.getAttribute('alt') || '',
+                description: (descEl ? descEl.textContent : '') || ''
+            };
+        });
+
+        var clickedIndex = allGalleryImages.indexOf(img);
+        currentIndex = clickedIndex >= 0 ? clickedIndex : 0;
+
+        if (imageData.length > 0) {
+            openModal(currentIndex, imageData.length > 1);
+            preloadAdjacent(currentIndex);
+        }
+    }
+
+    function setupProjectItemMode(img) {
         var projectItem = img.closest('.project-item');
         var imagesAttr = projectItem.getAttribute('data-images');
         imageData = imagesAttr ? JSON.parse(imagesAttr) : [];
+        metaData = [];
         currentIndex = 0;
 
         // Trim whitespace dari setiap image URL
         imageData = imageData.map(img => img.trim());
+
+        isGalleryMode = false;
+        applyModalMode();
 
         if (imageData.length > 0) {
             openModal(0, imageData.length > 1);
@@ -69,7 +128,11 @@ Handles gallery images, repo images, and video previews
     }
 
     function setupRepoMode(img) {
+        isGalleryMode = false;
+        applyModalMode();
+
         imageData = [img.src];
+        metaData = [{ title: '', description: '' }];
         currentIndex = 0;
         openModal(0, false); // No navigation untuk single image
     }
@@ -109,6 +172,11 @@ Handles gallery images, repo images, and video previews
             modalImg.src = currentImage;
         }
 
+        // Update title/description (only description is shown in stacked gallery mode via CSS)
+        var meta = metaData[currentIndex] || { title: '', description: '' };
+        modalTitle.textContent = meta.title || '';
+        modalDescription.textContent = meta.description || '';
+
         // Update counter
         if (imageData.length > 1) {
             modalCounter.textContent = (currentIndex + 1) + ' / ' + imageData.length;
@@ -123,6 +191,11 @@ Handles gallery images, repo images, and video previews
         document.body.style.overflow = 'auto';
         window.scrollTo(0, scrollPosition);
         imageData = [];
+        metaData = [];
+        isGalleryMode = false;
+        applyModalMode();
+        modalTitle.textContent = '';
+        modalDescription.textContent = '';
     }
 
     function showPrev() {
@@ -138,6 +211,9 @@ Handles gallery images, repo images, and video previews
     }
 
     function openVideoModal(src, title, description) {
+        isGalleryMode = false;
+        applyModalMode();
+
         openModal(0, false);
         modalTitle.textContent = title || '';
         modalDescription.textContent = description || '';

@@ -56,6 +56,22 @@
     grid-auto-flow: dense;
 }
 
+/*
+  Neutralize global `.clickable-image` styles (repo posts) for the gallery.
+  The gallery tiles already have their own framing.
+*/
+.gallery-container .clickable-image {
+    border: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.gallery-container .clickable-image:hover {
+    border: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
 .gallery-item {
     position: relative;
     display: flex;
@@ -64,23 +80,22 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
 }
 
 [data-theme="dark"] .gallery-item {
-    border: 2px solid rgba(61, 68, 77, 0.6);
+    border: 1px solid rgba(61, 68, 77, 0.5);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .gallery-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    border-color: var(--primary-font-color);
 }
 
 [data-theme="dark"] .gallery-item:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    border-color: rgba(88, 166, 255, 0.6);
+    border-color: rgba(88, 166, 255, 0.4);
 }
 
 .gallery-item img {

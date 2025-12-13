@@ -701,6 +701,73 @@
     let colorUpdateTimer = 0.0;
     let animationHandle = null;
     let hasInteracted = false;
+    let hasUserInteracted = false;
+
+    let autoLoaderSplashTimer = null;
+
+    function isLoaderPresent() {
+      const loader = document.getElementById("page-loader");
+      return !!loader && loader.isConnected;
+    }
+
+    function clearSimulation() {
+      // Clear velocity
+      clearProgram.bind();
+      gl.uniform1i(clearProgram.uniforms.uTexture, velocity.read.attach(0));
+      gl.uniform1f(clearProgram.uniforms.value, 0.0);
+      blit(velocity.write);
+      velocity.swap();
+
+      // Clear dye
+      clearProgram.bind();
+      gl.uniform1i(clearProgram.uniforms.uTexture, dye.read.attach(0));
+      gl.uniform1f(clearProgram.uniforms.value, 0.0);
+      blit(dye.write);
+      dye.swap();
+    }
+
+    function autoLoaderSplatOnce() {
+      // Random splats around the center area so it looks intentional
+      const x = 0.15 + Math.random() * 0.7;
+      const y = 0.15 + Math.random() * 0.7;
+      const color = generateColor();
+      color.r *= 6.0;
+      color.g *= 6.0;
+      color.b *= 6.0;
+      const dx = 18 * (Math.random() - 0.5);
+      const dy = 24 * (Math.random() - 0.5);
+      splat(x, y, dx, dy, color);
+    }
+
+    function startAutoLoaderSplash() {
+      if (!isLoaderPresent() || autoLoaderSplashTimer != null) return;
+
+      // Start the simulation even without mouse/touch interaction
+      hasInteracted = true;
+      startAnimation();
+
+      autoLoaderSplashTimer = window.setInterval(() => {
+        if (!isLoaderPresent()) {
+          stopAutoLoaderSplash();
+          return;
+        }
+        autoLoaderSplatOnce();
+      }, 140);
+    }
+
+    function stopAutoLoaderSplash() {
+      if (autoLoaderSplashTimer != null) {
+        window.clearInterval(autoLoaderSplashTimer);
+        autoLoaderSplashTimer = null;
+      }
+
+      // If the user never interacted, stop + clear so it doesn't stay on the page
+      if (!hasUserInteracted) {
+        stopAnimation();
+        hasInteracted = false;
+        clearSimulation();
+      }
+    }
 
     function updateFrame() {
       const dt = calcDeltaTime();
@@ -1027,6 +1094,7 @@
         let posX = scaleByPixelRatio(e.clientX);
         let posY = scaleByPixelRatio(e.clientY);
         hasInteracted = true;
+        hasUserInteracted = true;
         startAnimation();
         updatePointerDownData(pointer, -1, posX, posY);
       },
@@ -1039,6 +1107,7 @@
       let posY = scaleByPixelRatio(e.clientY);
       let color = generateColor();
       hasInteracted = true;
+      hasUserInteracted = true;
       startAnimation();
       updatePointerMoveData(pointer, posX, posY, color);
     };
@@ -1060,6 +1129,7 @@
         let posX = scaleByPixelRatio(touches[i].clientX);
         let posY = scaleByPixelRatio(touches[i].clientY);
         hasInteracted = true;
+        hasUserInteracted = true;
         startAnimation();
         updatePointerDownData(pointer, touches[i].identifier, posX, posY);
       }
@@ -1070,6 +1140,7 @@
       const touches = e.targetTouches;
       let pointer = pointers[0];
       hasInteracted = true;
+      hasUserInteracted = true;
       startAnimation();
       for (let i = 0; i < touches.length; i++) {
         let posX = scaleByPixelRatio(touches[i].clientX);
@@ -1111,6 +1182,7 @@
     // Cleanup on page unload
     const handleUnload = () => {
       stopAnimation();
+      stopAutoLoaderSplash();
       cleanupListeners();
       if (canvas.parentNode) {
         canvas.parentNode.removeChild(canvas);
@@ -1121,5 +1193,8 @@
     };
     addListenerWithCleanup(window, "beforeunload", handleUnload);
     addListenerWithCleanup(window, "pagehide", handleUnload);
+
+    // Auto splash during page loader (if present)
+    startAutoLoaderSplash();
   });
 })();
