@@ -1,4 +1,11 @@
 /* linktree-toggle styles dipindahkan ke default.html di .profile-action-row section */
+.linktree-divider,
+.linktree-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .linktree-box {
     position: fixed;
     top: 0;

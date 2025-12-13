@@ -6,9 +6,10 @@
 @import url('/assets/css/components/about-layout.css');
 /* @import url('/assets/css/components/about-nav-wrapper.css'); */
 /* @import url('/assets/css/components/about-mobile-handler.css'); */
-@import url('/assets/css/components/project-gallery.css');
-@import url('/assets/css/components/project-modal.css');
+@import url('/assets/css/components/gallery.css');
 @import url('/assets/css/components/image-modal.css');
+@import url('/assets/css/components/project-gallery.css');
+/* @import url('/assets/css/components/project-modal.css'); */
 @import url('/assets/css/components/song.css');
 @import url('/assets/css/components/post-styles.css');
 @import url('/assets/css/components/post-header.css');
@@ -22,5 +23,4 @@
 @import url('/assets/css/components/repo-tags.css');
 @import url('/assets/css/components/repo-preview.css');
 @import url('/assets/css/components/linktree.css');
-@import url('/assets/css/components/gallery.css');
 @import url('/assets/css/components/github-profile.css');

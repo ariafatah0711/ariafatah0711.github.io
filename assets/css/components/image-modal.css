@@ -112,7 +112,8 @@
     padding: 15px 25px;
     border-radius: 10px;
     text-align: center;
-    max-width: 80%;
+    width: 90%;
+    max-width: 90%;
     z-index: 1100;
     display: flex;
     flex-direction: column;

@@ -23,6 +23,13 @@ Shows loading animation on page transitions
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
+<style>
+  body.loader-active,
+  html.loader-active {
+    overflow: hidden;
+  }
+</style>
+
 <script>
 (function() {
 
@@ -44,6 +51,10 @@ Shows loading animation on page transitions
       }
     } catch (e) {}
   }
+
+  // Hide overflow while loader is active
+  document.documentElement.classList.add("loader-active");
+  document.body.classList.add("loader-active");
 
   words.forEach(t => {
     const h1 = document.createElement("h1");
@@ -88,6 +99,9 @@ Shows loading animation on page transitions
       ease: "cubic.inOut",
       onComplete() {
         loader.remove();
+        // Remove overflow hidden when loader is done
+        document.documentElement.classList.remove("loader-active");
+        document.body.classList.remove("loader-active");
         if (!isAlwaysShow) {
           try { sessionStorage.setItem("loaderShown", "true"); } catch (e) {}
         }

@@ -86,7 +86,6 @@
     font-weight: 700;
     font-size: 1.1rem;
     text-align: left;
-    color: var(--primary-font-color);
     margin-bottom: 8px;
     line-height: 1.3;
 }
@@ -96,7 +95,6 @@
     opacity: 0.8;
     margin: 8px 0;
     text-align: left;
-    color: var(--primary-font-color);
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;

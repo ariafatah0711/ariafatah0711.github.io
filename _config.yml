@@ -61,13 +61,13 @@ app:
     active: true
     groups:
       - title: Linktree
-        items:
+        links:
           - name: WhatsApp
             url: https://wa.me/+6289509221496
           # - name: GitHub
           #   url: https://github.com/ariafatah0711
       - title: My Web
-        items:
+        links:
           - name: notes
             url: https://ariaf.my.id/notes
           - name: files
