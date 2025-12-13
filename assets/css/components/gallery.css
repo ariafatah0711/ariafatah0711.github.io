@@ -1,7 +1,6 @@
 .gallery-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
 }
 
 .gallery-header {
@@ -222,7 +221,7 @@
 /* Loading animation */
 .gallery-item img {
     opacity: 0;
-    animation: fadeIn 0.5s ease-in-out forwards;
+    animation: fadeIn var(--ui-dur) var(--ui-ease) forwards;
 }
 
 @keyframes fadeIn {

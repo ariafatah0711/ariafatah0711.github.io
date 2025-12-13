@@ -30,6 +30,7 @@ author:
   email: calhounsgt07@gmail.com
   discord: https://s.id/dev-universe
   cv: assets/data/cv.pdf
+  data_profile_github_json: https://raw.githubusercontent.com/ariafatah0711/ariafatah0711.github.io/refs/heads/data-cache/data/profile.json
 
 app:
   theme: white
@@ -85,6 +86,7 @@ app:
     active: True
     path:
       - /
+      - /*
       - /about/
     always_show:
       - /about/

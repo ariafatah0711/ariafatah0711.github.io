@@ -1,5 +1,21 @@
 // projects.js - project modal handling
 document.addEventListener("DOMContentLoaded", function () {
+  // Prefer pre-generated JSON (data-cache) to avoid GitHub API calls.
+  // Falls back to GitHub API only if JSON can't be loaded or repo is missing.
+  var DEFAULT_PROFILE_DATA_URL =
+    "https://raw.githubusercontent.com/ariafatah0711/ariafatah0711.github.io/refs/heads/data-cache/data/profile.json";
+
+  function getProfileDataUrl() {
+    try {
+      var meta = document.querySelector('meta[name="github-profile-json-url"]');
+      var fromMeta = meta && meta.getAttribute("content");
+      if (fromMeta && String(fromMeta).trim()) return String(fromMeta).trim();
+    } catch (e) {}
+    return DEFAULT_PROFILE_DATA_URL;
+  }
+
+  var PROFILE_DATA_FALLBACK_URL = getProfileDataUrl();
+
   var projectModal = document.getElementById("projectModal");
   var modalImg = document.getElementById("projectModalImg");
   var modalTitle = document.getElementById("projectModalTitle");
@@ -15,6 +31,132 @@ document.addEventListener("DOMContentLoaded", function () {
   var currentIndex = 0;
   var images = [];
   var scrollPosition = 0;
+
+  var repoStatsCache = Object.create(null); // { "owner/name": { stars, forks } }
+  var repoStatsLoadPromise = null;
+
+  function normalizeRepoKey(repo) {
+    if (!repo) return null;
+    return String(repo).trim().toLowerCase();
+  }
+
+  function repoKeyFromUrl(url) {
+    if (!url) return null;
+    var m = String(url).match(/github\.com\/([^/]+\/[^/?#]+)/i);
+    return m ? normalizeRepoKey(m[1]) : null;
+  }
+
+  function setRepoStatsOnElement(el, stats) {
+    if (!el || !stats) return;
+    var starEl = el.querySelector(".star-count");
+    if (starEl) starEl.textContent = String(stats.stars ?? "-");
+    var forkEl = el.querySelector(".fork-count");
+    if (forkEl) forkEl.textContent = String(stats.forks ?? "-");
+  }
+
+  function clearRepoStatsOnElement(el) {
+    if (!el) return;
+    var starEl = el.querySelector(".star-count");
+    if (starEl) starEl.textContent = "-";
+    var forkEl = el.querySelector(".fork-count");
+    if (forkEl) forkEl.textContent = "-";
+  }
+
+  function loadRepoStatsFromProfileJson() {
+    if (repoStatsLoadPromise) return repoStatsLoadPromise;
+
+    repoStatsLoadPromise = fetch(PROFILE_DATA_FALLBACK_URL)
+      .then(function (res) {
+        if (!res.ok) throw new Error("Profile JSON not available");
+        return res.json();
+      })
+      .then(function (data) {
+        var nodes =
+          (data && data.user && data.user.repositories && data.user.repositories.nodes) ||
+          (data && data.repositories && data.repositories.nodes) ||
+          [];
+
+        if (!Array.isArray(nodes)) nodes = [];
+
+        nodes.forEach(function (repo) {
+          if (!repo) return;
+          var url = repo.url || repo.html_url;
+          var key = repo.nameWithOwner || repoKeyFromUrl(url);
+          key = normalizeRepoKey(key);
+
+          // fallback: if we only have name and not owner, can't safely map
+          if (!key || key.indexOf("/") === -1) return;
+
+          var stars =
+            repo.stargazerCount != null ? repo.stargazerCount : repo.stargazers_count != null ? repo.stargazers_count : null;
+          var forks = repo.forkCount != null ? repo.forkCount : repo.forks_count != null ? repo.forks_count : null;
+
+          if (stars == null && forks == null) return;
+
+          repoStatsCache[key] = {
+            stars: stars != null ? stars : "-",
+            forks: forks != null ? forks : "-",
+          };
+        });
+      })
+      .catch(function () {
+        // ignore; API fallback will handle
+      });
+
+    return repoStatsLoadPromise;
+  }
+
+  function fetchRepoStatsFromApi(repo) {
+    repo = normalizeRepoKey(repo);
+    if (!repo) return Promise.resolve(null);
+    var api = "https://api.github.com/repos/" + repo;
+    return fetch(api)
+      .then(function (res) {
+        if (!res.ok) throw new Error("no");
+        return res.json();
+      })
+      .then(function (data) {
+        return {
+          stars: data.stargazers_count || 0,
+          forks: data.forks_count || 0,
+        };
+      })
+      .catch(function () {
+        return null;
+      });
+  }
+
+  function fetchStarCount(repo, el) {
+    // Backwards-compatible wrapper; now sets stars + forks.
+    if (!repo || !el) return;
+
+    var repoKey = normalizeRepoKey(repo);
+    if (!repoKey) return;
+
+    // kick off JSON load early (no await needed here)
+    loadRepoStatsFromProfileJson();
+
+    // if already cached from JSON/API, use immediately
+    if (repoStatsCache[repoKey]) {
+      setRepoStatsOnElement(el, repoStatsCache[repoKey]);
+      return;
+    }
+
+    // otherwise wait for JSON (best case), then fall back to API
+    Promise.resolve(repoStatsLoadPromise)
+      .then(function () {
+        if (repoStatsCache[repoKey]) {
+          setRepoStatsOnElement(el, repoStatsCache[repoKey]);
+          return null;
+        }
+        return fetchRepoStatsFromApi(repoKey);
+      })
+      .then(function (stats) {
+        if (!stats) return;
+        repoStatsCache[repoKey] = stats;
+        setRepoStatsOnElement(el, stats);
+      });
+  }
 
   function openProjectModal(imgArray, title, description, sourceUrl, demoUrl, repo) {
     // force-close global image modal if open
@@ -51,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
       starsEl.setAttribute("data-repo", repo);
       fetchStarCount(repo, starsEl);
     } else {
-      starsEl.querySelector(".star-count").textContent = "-";
+      clearRepoStatsOnElement(starsEl);
     }
 
     updateProjectModalImage();
@@ -207,20 +349,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .filter(Boolean);
   }
 
-  // GitHub stars fetch
-  function fetchStarCount(repo, el) {
-    if (!repo) return;
-    var api = "https://api.github.com/repos/" + repo;
-    fetch(api)
-      .then(function (res) {
-        if (!res.ok) throw new Error("no");
-        return res.json();
-      })
-      .then(function (data) {
-        var count = data.stargazers_count || 0;
-        var sc = el.querySelector(".star-count");
-        if (sc) sc.textContent = count;
-      })
-      .catch(function () {});
-  }
+  // start loading JSON cache ASAP
+  loadRepoStatsFromProfileJson();
 });

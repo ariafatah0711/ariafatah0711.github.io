@@ -31,6 +31,10 @@
   --loader-bg: #212121;
   --loader-color: #fff;
 
+  /* Accent tokens (shared across themes) */
+  --accent-color: #0066cc;
+  --accent-hover: #0052a3;
+
   /* Shared motion tokens (keep transitions consistent site-wide) */
   --ui-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --ui-dur: 260ms;

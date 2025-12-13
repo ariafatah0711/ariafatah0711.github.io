@@ -26,7 +26,7 @@
 
 [data-theme="dark"] .post-tag {
     background-color: rgba(88, 166, 255, 0.1);
-    color: #79c0ff;
+    color: var(--accent-hover);
     border: 1px solid rgba(88, 166, 255, 0.3);
 }
 

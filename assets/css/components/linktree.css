@@ -37,6 +37,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .linktree-group h3 {
@@ -57,11 +58,13 @@
     color: var(--primary-font-color);
     font-weight: bold;
     display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     transition: color var(--ui-dur) var(--ui-ease), opacity var(--ui-dur) var(--ui-ease);
 }
 
 [data-theme="dark"] .linktree-inner a {
-    color: #79c0ff;
+    color: var(--accent-hover);
 }
 
 .linktree-inner a::after {
@@ -131,7 +134,7 @@ body.linktree-lock-scroll {
 
 [data-theme="dark"] .cv-toggle:hover {
     background: rgba(88, 166, 255, 0.1);
-    color: #79c0ff;
+    color: var(--accent-hover);
 }
 
 .cv-toggle svg {

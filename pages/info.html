@@ -22,71 +22,36 @@ permalink: /info/
     {% include components/theme-toggle.html %}
 </div>
 
-<!-- Custom Confirmation Modal -->
-<div id="confirmModal" class="confirm-modal" style="display: none;">
-    <div class="confirm-content">
-        <h3 id="confirmTitle">Konfirmasi</h3>
-        <p id="confirmMessage"></p>
-        <div class="confirm-buttons">
-            <button id="confirmYes" class="confirm-btn confirm-yes">Ya</button>
-            <button id="confirmNo" class="confirm-btn confirm-no">Tidak</button>
-        </div>
-    </div>
-</div>
-
 <script>
-let confirmCallback = null;
+function showConfirmCompat(title, message, callback) {
+    if (typeof window.showConfirm === 'function') {
+        window.showConfirm(title, message, callback);
+        return;
+    }
+    const confirmed = window.confirm((title ? title + "\n\n" : "") + (message || ""));
+    if (typeof callback === 'function') callback(confirmed);
+}
 
-function showConfirm(title, message, callback) {
-    const modal = document.getElementById('confirmModal');
-    const titleEl = document.getElementById('confirmTitle');
-    const messageEl = document.getElementById('confirmMessage');
-    const yesBtn = document.getElementById('confirmYes');
-    const noBtn = document.getElementById('confirmNo');
-
-    titleEl.textContent = title;
-    messageEl.textContent = message;
-    modal.style.display = 'flex';
-    confirmCallback = callback;
-
-    const handleYes = () => {
-        modal.style.display = 'none';
-        if (confirmCallback) confirmCallback(true);
-        cleanup();
-    };
-
-    const handleNo = () => {
-        modal.style.display = 'none';
-        if (confirmCallback) confirmCallback(false);
-        cleanup();
-    };
-
-    const cleanup = () => {
-        yesBtn.removeEventListener('click', handleYes);
-        noBtn.removeEventListener('click', handleNo);
-        document.removeEventListener('keydown', handleKeydown);
-    };
-
-    const handleKeydown = (e) => {
-        if (e.key === 'Enter') handleYes();
-        if (e.key === 'Escape') handleNo();
-    };
-
-    yesBtn.addEventListener('click', handleYes);
-    noBtn.addEventListener('click', handleNo);
-    document.addEventListener('keydown', handleKeydown);
+function showAlertCompat(message, callback) {
+    if (typeof window.showAlert === 'function') {
+        window.showAlert(message, callback);
+        return;
+    }
+    window.alert(message || "");
+    if (typeof callback === 'function') callback();
 }
 
 function toggleResetData() {
-    showConfirm(
+    showConfirmCompat(
         'Reset Data Lokal',
         'Ini akan menghapus semua data lokal (localStorage & sessionStorage). Lanjutkan?',
         (confirmed) => {
             if (confirmed) {
                 localStorage.clear();
                 sessionStorage.clear();
-                showAlert('✓ Data lokal berhasil dihapus!', () => {
-                    location.reload();
+                showAlertCompat('✓ Data lokal berhasil dihapus!', () => {
+                    // location.reload();
+                    window.location.href = '/';
                 });
             }
         }
@@ -94,7 +59,7 @@ function toggleResetData() {
 }
 
 function clearCacheAndReload() {
-    showConfirm(
+    showConfirmCompat(
         'Reset Cache & Service Worker',
         'Ini akan menghapus cache browser dan unregister service worker. Lanjutkan?',
         (confirmed) => {
@@ -112,44 +77,24 @@ function clearCacheAndReload() {
                                 for (let registration of registrations) {
                                     registration.unregister();
                                 }
-                                showAlert('✓ Cache dan service worker berhasil dihapus!', () => {
+                                showAlertCompat('✓ Cache dan service worker berhasil dihapus!', () => {
                                     location.reload(true);
                                 });
                             });
                         } else {
-                            showAlert('✓ Cache berhasil dihapus!', () => {
+                            showAlertCompat('✓ Cache berhasil dihapus!', () => {
                                 location.reload(true);
                             });
                         }
                     });
                 } else {
-                    showAlert('✗ Browser tidak mendukung cache API', () => {
+                    showAlertCompat('✗ Browser tidak mendukung cache API', () => {
                         location.reload(true);
                     });
                 }
             }
         }
     );
-}
-
-function showAlert(message, callback) {
-    const modal = document.getElementById('confirmModal');
-    const titleEl = document.getElementById('confirmTitle');
-    const messageEl = document.getElementById('confirmMessage');
-    const buttonsEl = document.querySelector('.confirm-buttons');
-
-    titleEl.textContent = '';
-    messageEl.textContent = message;
-    buttonsEl.innerHTML = '<button class="confirm-btn confirm-no" id="alertBtn">OK</button>';
-    modal.style.display = 'flex';
-
-    const alertBtn = document.getElementById('alertBtn');
-    const handleClick = () => {
-        modal.style.display = 'none';
-        if (callback) callback();
-        alertBtn.removeEventListener('click', handleClick);
-    };
-    alertBtn.addEventListener('click', handleClick);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

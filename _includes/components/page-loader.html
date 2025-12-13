@@ -5,10 +5,22 @@ Shows loader based on configuration
 
 {% if site.app.loader.active %}
 	{% assign show_loader = false %}
-	{% assign current_url = page.url | remove_first: '/' | remove: 'index.html' %}
+	{% assign normalized_current = page.url | replace: "/index.html","" | replace: "index.html","" | remove_first: "/" %}
+	{% if normalized_current != "" %}
+		{% assign normalized_current = normalized_current | remove_last: "/" %}
+	{% endif %}
 	{% for loader_path in site.app.loader.path %}
-		{% assign check_path = loader_path | remove_first: '/' %}
-		{% if current_url == check_path or page.url == loader_path or page.permalink == loader_path %}
+		{% if loader_path == '/*' %}
+			{% assign show_loader = true %}
+			{% break %}
+		{% endif %}
+
+		{% assign normalized_check = loader_path | replace: "/index.html","" | replace: "index.html","" | remove_first: "/" %}
+		{% if normalized_check != "" %}
+			{% assign normalized_check = normalized_check | remove_last: "/" %}
+		{% endif %}
+
+		{% if normalized_current == normalized_check %}
 			{% assign show_loader = true %}
 			{% break %}
 		{% endif %}

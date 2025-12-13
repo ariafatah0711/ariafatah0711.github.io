@@ -223,6 +223,11 @@
     margin-left: 4px;
 }
 
+.github-stars .fork-count {
+    font-weight: 700;
+    margin-left: 4px;
+}
+
 .stars-overlay {
     position: absolute;
     top: 10px;

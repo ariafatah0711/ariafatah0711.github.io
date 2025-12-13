@@ -6,6 +6,23 @@ Displays project gallery grid from _data/projects.yml
 <div class="projects-gallery">
   <div class="projects-grid">
     {% for project in site.data.projects %}
+    {% assign source_url = project.source_url | default: '' | strip %}
+    {% assign demo_url = project.demo_url | default: '' | strip %}
+    {% assign has_source = false %}
+    {% assign has_demo = false %}
+    {% if source_url != '' %}{% assign has_source = true %}{% endif %}
+    {% if demo_url != '' %}{% assign has_demo = true %}{% endif %}
+    {% assign has_links = has_source or has_demo %}
+    {% assign has_media = false %}
+    {% if project.image != blank or project.images != blank or project.video != blank or project.videos != blank %}
+      {% assign has_media = true %}
+    {% endif %}
+
+    {% comment %} If a project has neither links nor preview media, don't render an unusable card {% endcomment %}
+    {% unless has_links or has_media %}
+      {% continue %}
+    {% endunless %}
+
     {% comment %} normalize images into img_list array {% endcomment %}
     {% if project.images %}
       {% if project.images.size %}
@@ -25,7 +42,7 @@ Displays project gallery grid from _data/projects.yml
     {% else %}
       {% assign img_list_json = img_list | jsonify %}
     {% endif %}
-  <div class="project-item" data-repo="{{ project.repo }}" data-source="{{ project.source_url | default: '' }}" data-demo="{{ project.demo_url | default: '' }}" data-images='{{ img_list_json }}' {% if project.videos or project.video %}data-video="{{ project.videos | default: project.video }}"{% endif %}>
+  <div class="project-item" data-repo="{{ project.repo | default: '' }}" data-source="{{ source_url }}" data-demo="{{ demo_url }}" data-images='{{ img_list_json }}' {% if project.videos or project.video %}data-video="{{ project.videos | default: project.video }}"{% endif %}>
       <div class="project-thumb">
         {% if project.image or project.images %}
           {% assign img = project.image | default: (project.images | first) %}
@@ -53,9 +70,11 @@ Displays project gallery grid from _data/projects.yml
           {% endif %}
 
           <!-- Stars overlay in top-right -->
-          <div class="stars-overlay github-stars" data-repo="{{ project.repo }}" title="GitHub stars">
-            ★ <span class="star-count">-</span>
-          </div>
+          {% if project.repo != blank %}
+            <div class="stars-overlay github-stars" data-repo="{{ project.repo }}" title="GitHub stars">
+              ★ <span class="star-count">-</span> · Forks <span class="fork-count">-</span>
+            </div>
+          {% endif %}
         {% else %}
           <div class="image-fallback"></div>
         {% endif %}
@@ -63,10 +82,12 @@ Displays project gallery grid from _data/projects.yml
       <div class="project-meta">
         <div class="gallery-title">{{ project.title }}</div>
         <div class="gallery-description">{{ project.description }}</div>
-        <div class="project-links">
-          {% if project.source_url %}<a class="btn small secondary" href="{{ project.source_url }}" target="_blank" rel="noopener">Source</a>{% endif %}
-          {% if project.demo_url %}<a class="btn small primary" href="{{ project.demo_url }}" target="_blank" rel="noopener">Demo</a>{% endif %}
-        </div>
+        {% if has_links %}
+          <div class="project-links">
+            {% if has_source %}<a class="btn small secondary" href="{{ source_url }}" target="_blank" rel="noopener">Source</a>{% endif %}
+            {% if has_demo %}<a class="btn small primary" href="{{ demo_url }}" target="_blank" rel="noopener">Demo</a>{% endif %}
+          </div>
+        {% endif %}
       </div>
     </div>
     {% endfor %}

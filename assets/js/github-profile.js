@@ -4,23 +4,38 @@
  * No API calls needed on client-side!
  */
 
-const PROFILE_DATA_FALLBACK_URL =
+const DEFAULT_PROFILE_DATA_URL =
   "https://raw.githubusercontent.com/ariafatah0711/ariafatah0711.github.io/refs/heads/data-cache/data/profile.json";
+
+// Debug logging toggle (set to true only when troubleshooting)
+const DEBUG_GITHUB_PROFILE = false;
+const debugLog = DEBUG_GITHUB_PROFILE ? console.log.bind(console) : function () {};
+
+function getProfileDataUrl() {
+  try {
+    const meta = document.querySelector('meta[name="github-profile-json-url"]');
+    const fromMeta = meta && meta.getAttribute("content");
+    if (fromMeta && String(fromMeta).trim()) return String(fromMeta).trim();
+  } catch (e) {}
+  return DEFAULT_PROFILE_DATA_URL;
+}
+
+const PROFILE_DATA_FALLBACK_URL = getProfileDataUrl();
 
 async function loadProfileData() {
   try {
-    console.log("[GitHub Profile] Loading data from data-cache branch...");
+    debugLog("[GitHub Profile] Loading data from data-cache branch...");
 
     // Load from data-cache branch
     const response = await fetch(PROFILE_DATA_FALLBACK_URL);
     if (response.ok) {
       const data = await response.json();
-      console.log("[GitHub Profile] Data loaded from data-cache branch");
-      console.log("[GitHub Profile] Raw data:", data);
+      debugLog("[GitHub Profile] Data loaded from data-cache branch");
+      debugLog("[GitHub Profile] Raw data:", data);
       // Convert GraphQL format to profile format
       const converted = convertGraphQLDataToProfileFormat(data);
       if (converted) {
-        console.log("[GitHub Profile] Successfully converted data");
+        debugLog("[GitHub Profile] Successfully converted data");
         return converted;
       }
       throw new Error("Failed to convert data");
@@ -44,11 +59,11 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
   }
 
   const user = graphqlData.user;
-  console.log("[GitHub Profile] User object:", user);
+  debugLog("[GitHub Profile] User object:", user);
 
   // Handle both: repositories at top level OR inside user object
   const repos = graphqlData.repositories?.nodes || user.repositories?.nodes || [];
-  console.log("[GitHub Profile] Found repos count:", repos.length);
+  debugLog("[GitHub Profile] Found repos count:", repos.length);
 
   let totalStars = 0;
   let totalForks = 0;
@@ -62,8 +77,8 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
     }
   });
 
-  console.log("[GitHub Profile] Language map:", langMap);
-  console.log("[GitHub Profile] Total stars:", totalStars, "Total forks:", totalForks);
+  debugLog("[GitHub Profile] Language map:", langMap);
+  debugLog("[GitHub Profile] Total stars:", totalStars, "Total forks:", totalForks);
 
   // Extract featured repos (top 6 by stars)
   const featuredRepos = repos
@@ -78,22 +93,22 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
       language: repo.primaryLanguage?.name || "Unknown",
     }));
 
-  console.log("[GitHub Profile] Featured repos:", featuredRepos);
+  debugLog("[GitHub Profile] Featured repos:", featuredRepos);
 
   // Convert contribution calendar data
   const contributionGraph = [];
   const calendar = user.contributionsCollection?.contributionCalendar;
-  console.log("[GitHub Profile] Calendar data:", calendar);
-  console.log("[GitHub Profile] Calendar weeks count:", calendar?.weeks?.length);
+  debugLog("[GitHub Profile] Calendar data:", calendar);
+  debugLog("[GitHub Profile] Calendar weeks count:", calendar?.weeks?.length);
 
   // Debug: Log first week structure
   if (calendar?.weeks && calendar.weeks[0]) {
-    console.log("[GitHub Profile] First week structure:", calendar.weeks[0]);
+    debugLog("[GitHub Profile] First week structure:", calendar.weeks[0]);
     if (calendar.weeks[0].contributionDays && calendar.weeks[0].contributionDays[0]) {
-      console.log("[GitHub Profile] First day structure:", calendar.weeks[0].contributionDays[0]);
-      console.log("[GitHub Profile] First day keys:", Object.keys(calendar.weeks[0].contributionDays[0]));
+      debugLog("[GitHub Profile] First day structure:", calendar.weeks[0].contributionDays[0]);
+      debugLog("[GitHub Profile] First day keys:", Object.keys(calendar.weeks[0].contributionDays[0]));
     }
-    console.log("[GitHub Profile] Week 0 all days:", calendar.weeks[0].contributionDays);
+    debugLog("[GitHub Profile] Week 0 all days:", calendar.weeks[0].contributionDays);
   }
 
   // Check all unique contribution levels
@@ -109,10 +124,10 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
       }
     });
   }
-  console.log("[GitHub Profile] All unique contribution levels in data:", Array.from(allLevels));
+  debugLog("[GitHub Profile] All unique contribution levels in data:", Array.from(allLevels));
 
   if (calendar?.weeks && Array.isArray(calendar.weeks)) {
-    console.log("[GitHub Profile] Processing", calendar.weeks.length, "weeks");
+    debugLog("[GitHub Profile] Processing", calendar.weeks.length, "weeks");
     calendar.weeks.forEach((week, weekIdx) => {
       if (week.contributionDays && Array.isArray(week.contributionDays)) {
         week.contributionDays.forEach((day, dayIdx) => {
@@ -144,7 +159,7 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
 
             // Debug first few days
             if (weekIdx < 2 && dayIdx < 7) {
-              console.log(`[GitHub Profile] Week ${weekIdx} Day ${dayIdx}:`, {
+              debugLog(`[GitHub Profile] Week ${weekIdx} Day ${dayIdx}:`, {
                 date: day.date,
                 contributionCount: day.contributionCount,
                 color: day.color,
@@ -164,9 +179,9 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
     });
   }
 
-  console.log("[GitHub Profile] Contribution graph entries:", contributionGraph.length);
-  console.log("[GitHub Profile] First 10 contributions:", contributionGraph.slice(0, 10));
-  console.log("[GitHub Profile] Level distribution:", {
+  debugLog("[GitHub Profile] Contribution graph entries:", contributionGraph.length);
+  debugLog("[GitHub Profile] First 10 contributions:", contributionGraph.slice(0, 10));
+  debugLog("[GitHub Profile] Level distribution:", {
     level0: contributionGraph.filter((d) => d.level === 0).length,
     level1: contributionGraph.filter((d) => d.level === 1).length,
     level2: contributionGraph.filter((d) => d.level === 2).length,
@@ -203,7 +218,7 @@ function convertGraphQLDataToProfileFormat(graphqlData) {
     lastUpdated: new Date().toISOString(),
   };
 
-  console.log("[GitHub Profile] Converted result:", result);
+  debugLog("[GitHub Profile] Converted result:", result);
   return result;
 }
 
@@ -294,7 +309,7 @@ function generateContributionGraph(repos) {
     container.appendChild(dayEl);
   }
 
-  console.log("[GitHub Profile] Contribution graph generated with realistic data");
+  debugLog("[GitHub Profile] Contribution graph generated with realistic data");
 }
 
 async function renderPinnedRepos(profileData) {
@@ -351,7 +366,7 @@ async function renderPinnedRepos(profileData) {
       })
       .join("");
 
-    console.log("[GitHub Profile] Featured repositories rendered");
+    debugLog("[GitHub Profile] Featured repositories rendered");
   } catch (error) {
     console.error("[GitHub Profile] Error rendering repositories:", error.message);
     container.innerHTML = '<p class="gp-loading">Failed to load repositories</p>';
@@ -386,7 +401,7 @@ async function updateProfileUI(data) {
     return;
   }
 
-  console.log("[GitHub Profile] Updating UI with data");
+  debugLog("[GitHub Profile] Updating UI with data");
 
   // Update stats
   const update = (selector, value) => {
@@ -477,7 +492,7 @@ async function updateProfileUI(data) {
   updateKPI('[data-gp-kpi="avg_commits"]', avgCommits);
   updateKPI('[data-gp-kpi="total_contrib"]', totalContrib);
 
-  console.log("[GitHub Profile] UI updated successfully");
+  debugLog("[GitHub Profile] UI updated successfully");
 }
 
 function renderContributionGraph(graphData) {
@@ -496,7 +511,7 @@ function renderContributionGraph(graphData) {
     container.appendChild(dayEl);
   });
 
-  console.log("[GitHub Profile] Contribution graph rendered from JSON data");
+  debugLog("[GitHub Profile] Contribution graph rendered from JSON data");
 }
 
 // Auto-init when DOM ready
@@ -507,7 +522,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  console.log("[GitHub Profile] Initializing profile...");
+  debugLog("[GitHub Profile] Initializing profile...");
 
   // Load data from JSON (or fallback to API)
   const profileData = await loadProfileData();

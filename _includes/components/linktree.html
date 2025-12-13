@@ -71,11 +71,11 @@ Link tree toggle button dan popup menu
         if (response.ok) {
           window.location.href = cvUrl;
         } else {
-          alert('CV file not found');
+          showAlert('CV file not found');
         }
       })
       .catch(() => {
-        alert('Could not download CV');
+        showAlert('Could not download CV');
       });
   }
 

@@ -11,62 +11,16 @@ Displays navigation links at top of page
 </div>
 
 <script>
-  function toggleLinktree(event, forceShow = null) {
-    if (event) event.preventDefault();
-
-    const box = document.getElementById("linktreeBox");
-    const show = forceShow !== null ? forceShow : box.style.display !== "flex";
-
-    box.style.display = show ? "flex" : "none";
-
-    if (show) {
-      document.body.classList.add("linktree-lock-scroll");
-      console.log("Popup opened — hash preserved");
-    } else {
-      document.body.classList.remove("linktree-lock-scroll");
-      history.replaceState(null, null, location.pathname + location.search);
-      console.log("Popup closed — hash removed");
-    }
-  }
-
-  function openLinktree() {
-    location.hash = "linktree";
-  }
-
-  function handleHashChange() {
-    if (window.location.hash === "#linktree") {
-      toggleLinktree(null, true);
-    }
-  }
-
   window.addEventListener("DOMContentLoaded", () => {
-    handleHashChange();
-
-    const box = document.getElementById("linktreeBox");
-    const inner = document.querySelector(".linktree-inner");
-
-    // Close popup if clicked outside of the box
-    box.addEventListener("click", (e) => {
-      if (!inner.contains(e.target)) {
-        toggleLinktree(null, false);
-      }
-    });
-
     document.addEventListener("keydown", function (event) {
-      const box = document.getElementById("linktreeBox");
-
-      // ESC untuk close popup
-      if (event.key === "Escape" && box.style.display === "flex") {
-        toggleLinktree(null, false);
-      }
-
       // Tekan L untuk buka popup
       if (!event.ctrlKey && event.key.toLowerCase() === "l") {
+        const box = document.getElementById("linktreeBox");
+        if (!box) return;
         event.preventDefault();
-        openLinktree();
+        location.hash = "linktree";
       }
     });
   });
-  window.addEventListener("hashchange", handleHashChange);
 </script>
 {% endif %}
