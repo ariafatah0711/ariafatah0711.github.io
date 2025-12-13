@@ -2,48 +2,9 @@
 layout: post
 ---
 
-{% if page.repo.preview_type == "image" or page.repo.preview contains ".png" or page.repo.preview contains ".jpg" or page.repo.preview contains ".jpeg" %}
-
-<p align="center">
-  <img src="{{ page.repo.preview }}" alt="Preview" class="clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
-  <div class="image-fallback" style="display:none;"></div>
-</p>
-
-{% elsif page.repo.preview_type == "video" or page.repo.preview contains ".mp4" or page.repo.preview contains ".webm" or page.repo.preview contains ".mov" or page.repo.preview contains "user-attachments/assets" %}
-<p align="center">
-  <video controls class="video-player" style="max-width:100%; border-radius: 12px;">
-    <source src="{{ page.repo.preview }}">
-    Browser kamu tidak mendukung video tag.
-  </video>
-</p>
-
-{% elsif page.repo.preview_type == "youtube" or page.repo.preview contains "youtube.com/embed" %}
-<div class="video-container">
-  <iframe src="{{ page.repo.preview }}" title="YouTube video player" frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>
-</div>
-{% endif %}
-
-<div class="repo-buttons-container">
-  {% if page.repo.source %}
-      <a href="{{ page.repo.source }}" class="btn repo-btn secondary" target="_blank" rel="noopener">Source</a>
-  {% endif %}
-  {% if page.repo.demo %}
-      <a href="{{ page.repo.demo }}" class="btn repo-btn primary" target="_blank" rel="noopener">Demo</a>
-  {% endif %}
-  {% if page.repo.jt %}
-      <a href="{{ page.repo.jt }}" class="btn repo-btn tertiary" target="_blank" rel="noopener">Jekyll Theme</a>
-  {% endif %}
-</div>
+{% include components/repo-preview.html %}
+{% include components/repo-buttons.html %}
 
 {{ content }}
 
-{% if page.repo.tags %}
-  <p class="repo_tags">
-    {% for tag in page.repo.tags %}
-      <span class="repo_tag">{{ tag }}</span>
-    {% endfor %}
-  </p>
-{% endif %}
+{% include components/repo-tags.html %}

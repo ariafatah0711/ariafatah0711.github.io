@@ -1,0 +1,45 @@
+{% comment %}
+About Mobile Menu Handler
+JavaScript untuk mobile menu functionality
+{% endcomment %}
+
+<script>
+	function toggleMobileMenu(event) {
+		event.stopPropagation();
+		const hamburger = document.getElementById('hamburgerBtn');
+		const mobileMenu = document.getElementById('mobileMenu');
+
+		hamburger.classList.toggle('active');
+		mobileMenu.classList.toggle('active');
+	}
+
+	// Close mobile menu when clicking on a link
+	document.addEventListener('DOMContentLoaded', () => {
+		const mobileLinks = document.querySelectorAll('.mobile-menu a');
+		mobileLinks.forEach(link => {
+			link.addEventListener('click', () => {
+				document.getElementById('hamburgerBtn').classList.remove('active');
+				document.getElementById('mobileMenu').classList.remove('active');
+			});
+		});
+
+		// Close menu when clicking outside
+		document.addEventListener('click', (e) => {
+			const hamburger = document.getElementById('hamburgerBtn');
+			const mobileMenu = document.getElementById('mobileMenu');
+
+			if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+				hamburger.classList.remove('active');
+				mobileMenu.classList.remove('active');
+			}
+		});
+
+		// Close menu on ESC key
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				document.getElementById('hamburgerBtn').classList.remove('active');
+				document.getElementById('mobileMenu').classList.remove('active');
+			}
+		});
+	});
+</script>

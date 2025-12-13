@@ -1,0 +1,11 @@
+{% comment %}
+About Navbar Component
+Navigation bar for about layout
+{% endcomment %}
+
+<nav class="about-navbar">
+	<a href="{{ site.baseurl }}">home</a>
+	{% for item in site.app.navbar %}
+		<a href="{{ item.url }}">{{ item.name }}</a>
+	{% endfor %}
+</nav>

@@ -1,0 +1,22 @@
+{% comment %}
+Posts by Tag Component
+Displays posts that have a specific tag
+Usage: {% assign tag_name = page.tag %} {% include utilities/posts-by-tag.html %}
+{% endcomment %}
+
+<section class="posts">
+	<div class="flex-row-between">
+		<h1>Tag #{{ include.tag_name | default: page.tag }}</h1>
+		<a href="{{ site.url }}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+	</div>
+	<ul>
+		{% for post in site.posts %}
+		{% if post.tags contains include.tag_name or post.tags contains page.tag %}
+		<li>
+			<a class="post" href="{{ site.url }}/{{ post.url }}">{{ post.title }}</a>
+			<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+		</li>
+		{% endif %}
+		{% endfor %}
+	</ul>
+</section>

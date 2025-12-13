@@ -6,85 +6,34 @@ layout: default
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 {% endif %}
-<div class="post-header">
-	<div class="post-date">{{ page.date | date: "%d.%m.%Y" }}</div>
-	<div class="post-share">
-		Share:&nbsp;
-		<!-- <a href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}/{{page.slug}}" target="_blank"><img src="assets/images/icon/facebook.svg" class="social-icon"></a>
-		<a href="https://twitter.com/intent/tweet?source=tweetbutton&amp;original_referer={{site.url}}/{{page.slug}}&amp;text={{page.title}} - {{site.url}}/{{page.slug}}" target="_blank"><img src="assets/images/icon/twitter.svg" class="social-icon"></a> -->
-		<a href="https://api.whatsapp.com/send?text={{site.url}}/{{page.slug}}" target="_blank"><img src="assets/images/icon/whatsapp.svg" class="social-icon"></a>
-	</div>
-</div>
+
+{% include components/post-header.html %}
 
 <div class="blog-post-content">
 	<h1>{{page.title}}</h1>
 	{{ content }}
 </div>
-<div class="tags-container">
-	{% for tag in page.tags %}
-		<a href="{{ site.url }}/tags/#{{tag | cgi_escape}}" class="post-tag">{{tag}}</a>{% unless forloop.last %}, {% endunless %}
-	{% endfor %}
-</div>
-<!-- <div class="navigation">
-    {% if page.previous %}
-        <a class="prev" href="{{ page.previous | relative_url }}">< {{ page.previous.title }}</a>
-    {% else %}
-        <span class="prev"></span>
-    {% endif %}
 
-    {% if page.next %}
-        <a class="next" href="{{ page.next | relative_url }}">{{ page.next.title }} ></a>
-    {% else %}
-        <span class="next"></span>
-    {% endif %}
-</div> -->
-
-<div class="pagination">
-    {% if page.next %}
-        <a class="prev" href="{{ page.next | relative_url }}#next">< Previous</a>
-    {% else %}
-        <span class="prev"></span>
-    {% endif %}
-
-    {% if page.previous %}
-        <a class="next" href="{{ page.previous | relative_url }}#prev">Next ></a>
-    {% else %}
-        <span class="next"></span>
-    {% endif %}
-</div>
-
-<!-- <div class="navigation">
-    {% if page.previous and page.previous.layout != "link" %}
-        <a class="prev" href="{{ page.previous | relative_url }}#prev">{{ page.previous.title }} →</a>
-    {% else %}
-        <span class="prev">Prev →</span>
-    {% endif %}
-
-    {% if page.next and page.next.layout != "link" %}
-        <a class="next" href="{{ page.next | relative_url }}#next">← {{ page.next.title }}</a>
-    {% else %}
-        <span class="next">← Next</span>
-    {% endif %}
-</div> -->
-
+{% include components/post-tags.html %}
+{% include components/post-pagination.html %}
 {% include components/disqus.html %}
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add clickable-image class to all images in blog post content
-        const postContent = document.querySelector('.blog-post-content');
-        if (postContent) {
-            const images = postContent.querySelectorAll('img');
-            images.forEach(img => {
-                // Skip images that are already in a link
-                if (!img.closest('a')) {
-                    img.classList.add('clickable-image');
-                    // Set alt text if empty to avoid "Preview" showing in modal
-                    if (!img.alt || img.alt === 'Preview') {
-                        img.alt = '';
-                    }
-                }
-            });
-        }
-    });
+	document.addEventListener('DOMContentLoaded', function() {
+		// Add clickable-image class to all images in blog post content
+		const postContent = document.querySelector('.blog-post-content');
+		if (postContent) {
+			const images = postContent.querySelectorAll('img');
+			images.forEach(img => {
+				// Skip images that are already in a link
+				if (!img.closest('a')) {
+					img.classList.add('clickable-image');
+					// Set alt text if empty to avoid "Preview" showing in modal
+					if (!img.alt || img.alt === 'Preview') {
+						img.alt = '';
+					}
+				}
+			});
+		}
+	});
 </script>

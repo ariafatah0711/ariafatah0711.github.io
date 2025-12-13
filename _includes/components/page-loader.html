@@ -1,0 +1,19 @@
+{% comment %}
+Page Loader Component
+Shows loader based on configuration
+{% endcomment %}
+
+{% if site.app.loader.active %}
+	{% assign show_loader = false %}
+	{% assign current_url = page.url | remove_first: '/' | remove: 'index.html' %}
+	{% for loader_path in site.app.loader.path %}
+		{% assign check_path = loader_path | remove_first: '/' %}
+		{% if current_url == check_path or page.url == loader_path or page.permalink == loader_path %}
+			{% assign show_loader = true %}
+			{% break %}
+		{% endif %}
+	{% endfor %}
+	{% if show_loader %}
+		{% include utilities/loader.html %}
+	{% endif %}
+{% endif %}

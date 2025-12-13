@@ -1,0 +1,12 @@
+{% comment %}
+Post Header Component
+Displays post date and share buttons
+{% endcomment %}
+
+<div class="post-header">
+	<div class="post-date">{{ page.date | date: "%d.%m.%Y" }}</div>
+	<div class="post-share">
+		Share:&nbsp;
+		<a href="https://api.whatsapp.com/send?text={{site.url}}/{{page.slug}}" target="_blank"><img src="assets/images/icon/whatsapp.svg" class="social-icon"></a>
+	</div>
+</div>

@@ -1,0 +1,12 @@
+{% comment %}
+Repository Tags Component
+Display tags for repository post
+{% endcomment %}
+
+{% if page.repo.tags %}
+	<p class="repo_tags">
+		{% for tag in page.repo.tags %}
+			<span class="repo_tag">{{ tag }}</span>
+		{% endfor %}
+	</p>
+{% endif %}

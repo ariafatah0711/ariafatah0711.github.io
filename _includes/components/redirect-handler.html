@@ -1,0 +1,23 @@
+{% comment %}
+Redirect Handler Component
+Handles page redirects
+{% endcomment %}
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		const hash = window.location.hash;
+		const nextPage = "{{ page.next.url | relative_url }}#next";
+		const prevPage = "{{ page.previous.url | relative_url }}#prev";
+		const redirectPage = "{{ page.url_to_redirect }}";
+
+		if (hash === "#no-redirect") {
+			console.log("Redirect dibatalkan.");
+		} else if (hash === "#next" && nextPage !== "") {
+			window.location.href = nextPage;
+		} else if (hash === "#prev" && prevPage !== "") {
+			window.location.href = prevPage;
+		} else if (redirectPage !== "") {
+			window.location.href = redirectPage;
+		}
+	});
+</script>

@@ -1,0 +1,39 @@
+{% comment %}
+Profile Component
+Displays user profile section with bio and social icons
+{% endcomment %}
+
+<div class="profile">
+	<div class="profile-header">
+		<a href="{{ site.url }}">
+			<img src="{{ site.author.picture }}" class="profile-image" alt="profile-image" height="128px" width="128px" loading="lazy">
+		</a>
+		{% if site.app.show_discord.active %}
+			<script>
+				document.addEventListener("DOMContentLoaded", () => {
+					let discordId = "{{ site.app.show_discord.discord_id }}"
+					let cacheTime = "{{ site.app.show_discord.cacheTime }}";
+					if (!cacheTime) cacheTime = undefined;
+					checkDiscordStatus(discordId, cacheTime);
+				});
+			</script>
+			<span id="status">Memeriksa status...</span>
+		{% endif %}
+	</div>
+	<div class="profile-about">
+		<h2 style="margin: 0; font-weight: 700;">{{site.author.name}}</h2>
+		{% include components/social-icons.html %}
+		<div class="profile-bio">
+			{{ site.author.bio }}
+		</div>
+		<div class="profile-action-row">
+			{% if site.app.linktree.active %}
+				{% include components/linktree.html %}
+			{% endif %}
+			{% include components/theme-toggle.html %}
+		</div>
+		{% if site.app.toggle_song.active %}
+		{% include components/song.html %}
+		{% endif %}
+	</div>
+</div>

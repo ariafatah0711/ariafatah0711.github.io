@@ -1,0 +1,18 @@
+{% comment %}
+Post Pagination Component
+Previous/Next post navigation
+{% endcomment %}
+
+<div class="pagination">
+	{% if page.next %}
+		<a class="prev" href="{{ page.next | relative_url }}#next">< Previous</a>
+	{% else %}
+		<span class="prev"></span>
+	{% endif %}
+
+	{% if page.previous %}
+		<a class="next" href="{{ page.previous | relative_url }}#prev">Next ></a>
+	{% else %}
+		<span class="next"></span>
+	{% endif %}
+</div>
