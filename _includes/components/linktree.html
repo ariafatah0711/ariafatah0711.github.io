@@ -1,6 +1,9 @@
-{% comment %}Linktree tombol dan popup, siap di-include di mana saja{% endcomment %}
+{% comment %}
+Linktree Component
+Link tree toggle button dan popup menu
+{% endcomment %}
 
-<!-- Tombol Linktree & CV (SVG only, tanpa label) -->
+<!-- Tombol Linktree & CV -->
 <button class="linktree-toggle" onclick="openLinktree(); return false;" title="Linktree">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
@@ -23,12 +26,12 @@
     <span class="close-btn" onclick="toggleLinktree(event)">&times;</span>
     {% for group in site.app.linktree.groups %}
       <div class="linktree-group">
-        <h3>{{ group.title }}</h3>
-        <ul>
-          {% for item in group.items %}
-            <li><a href="{{ item.url }}" target="_blank">{{ item.name }}</a></li>
-          {% endfor %}
-        </ul>
+        {% if group.title %}
+          <h3>{{ group.title }}</h3>
+        {% endif %}
+        {% for link in group.links %}
+          <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.name }}</a>
+        {% endfor %}
       </div>
       {% if forloop.last == false %}
         <div class="linktree-divider"></div>
@@ -61,21 +64,18 @@
 
   // CV Download Function
   function downloadCV() {
-    // Ubah path sesuai lokasi CV kamu
-    const cvUrl = "{{ site.baseurl }}/{{ site.author.cv }}"; // atau ke link langsung
+    const cvUrl = "{{ site.baseurl }}/{{ site.author.cv }}";
 
-    // Cek dulu apakah CV ada, kalau ga ada muncul alert
     fetch(cvUrl, { method: 'HEAD' })
       .then(response => {
         if (response.ok) {
-          // Download atau buka di tab baru
-          window.open(cvUrl, '_blank');
+          window.location.href = cvUrl;
         } else {
-          alert('CV tidak ditemukan. Hubungi admin untuk setup.');
+          alert('CV file not found');
         }
       })
       .catch(() => {
-        alert('Gagal load CV. Silakan coba lagi.');
+        alert('Could not download CV');
       });
   }
 
@@ -89,13 +89,8 @@
       }
     });
     document.addEventListener("keydown", function (event) {
-      const box = document.getElementById("linktreeBox");
       if (event.key === "Escape" && box.style.display === "flex") {
         toggleLinktree(null, false);
-      }
-      if (!event.ctrlKey && event.key.toLowerCase() === "l") {
-        event.preventDefault();
-        openLinktree();
       }
     });
   });

@@ -1,11 +1,16 @@
+{% comment %}
+Song Player Component
+Music toggle button dan audio player
+{% endcomment %}
+
 <div class="mode_music" id="music-switcher" onclick="toggleMusic();" style="display: inline; cursor: pointer;">
     <span id="music-icon">
-        <!-- Ikon Play tanpa shadow -->
+        <!-- Play Icon -->
         <svg id="play-icon" viewBox="0 0 24 24" width="30" height="25">
             <path fill="currentColor" d="M4 2l16 10-16 10V2z"></path>
         </svg>
 
-        <!-- Ikon Pause tanpa shadow -->
+        <!-- Pause Icon -->
         <svg id="pause-icon" viewBox="0 0 24 24" width="30" height="25" style="display: none;">
             <path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z" stroke="currentColor" stroke-width="2"></path>
         </svg>

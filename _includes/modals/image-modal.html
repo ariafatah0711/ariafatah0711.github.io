@@ -1,0 +1,205 @@
+{% comment %}
+Image Modal Component
+Handles gallery images, repo images, and video previews
+{% endcomment %}
+
+<div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <div class="modal-nav prev" id="prevBtn">&#10094;</div>
+    <div class="modal-nav next" id="nextBtn">&#10095;</div>
+    <img class="modal-content" id="modalImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
+    <div class="image-fallback" style="display:none;"></div>
+    <!-- video element for project/video previews -->
+    <video class="modal-content" id="modalVideo" controls style="display:none; background: black;"></video>
+    <div class="modal-info" id="modalInfo">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-description" id="modalDescription"></div>
+        <div class="modal-counter" id="modalCounter"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var modal = document.getElementById("imageModal");
+    var modalImg = document.getElementById("modalImg");
+    var modalVideo = document.getElementById("modalVideo");
+    var modalTitle = document.getElementById("modalTitle");
+    var modalDescription = document.getElementById("modalDescription");
+    var modalCounter = document.getElementById("modalCounter");
+    var prevBtn = document.getElementById("prevBtn");
+    var nextBtn = document.getElementById("nextBtn");
+    var scrollPosition = 0;
+
+    // Array untuk menyimpan data gambar
+    var imageData = [];
+    var currentIndex = 0;
+    var isGalleryMode = false;
+
+    // Event delegation untuk gallery items dan repo post images
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('clickable-image')) {
+            var img = event.target;
+
+            // Deteksi mode: gallery atau single repo image
+            var parentContainer = img.closest('.project-item, .blog-post-content');
+
+            if (img.closest('.project-item')) {
+                setupGalleryMode(img);
+                isGalleryMode = true;
+            } else if (img.closest('.blog-post-content')) {
+                setupRepoMode(img);
+                isGalleryMode = false;
+            }
+        }
+    });
+
+    function setupGalleryMode(img) {
+        var projectItem = img.closest('.project-item');
+        var imagesAttr = projectItem.getAttribute('data-images');
+        imageData = imagesAttr ? JSON.parse(imagesAttr) : [];
+        currentIndex = 0;
+
+        // Trim whitespace dari setiap image URL
+        imageData = imageData.map(img => img.trim());
+
+        if (imageData.length > 0) {
+            openModal(0, imageData.length > 1);
+            preloadAdjacent(0);
+        }
+    }
+
+    function setupRepoMode(img) {
+        imageData = [img.src];
+        currentIndex = 0;
+        openModal(0, false); // No navigation untuk single image
+    }
+
+    function openModal(index, showNav) {
+        scrollPosition = window.scrollY;
+        document.body.style.overflow = 'hidden';
+
+        currentIndex = index;
+        modal.style.display = "flex";
+        prevBtn.style.display = showNav ? "flex" : "none";
+        nextBtn.style.display = showNav ? "flex" : "none";
+        updateModalContent();
+    }
+
+    function preloadAdjacent(index) {
+        if (index > 0) {
+            var prevImg = new Image();
+            prevImg.src = imageData[index - 1];
+        }
+        if (index < imageData.length - 1) {
+            var nextImg = new Image();
+            nextImg.src = imageData[index + 1];
+        }
+    }
+
+    function updateModalContent() {
+        var currentImage = imageData[currentIndex];
+
+        if (currentImage.includes('.mp4') || currentImage.includes('.webm') || currentImage.includes('.mov')) {
+            modalImg.style.display = 'none';
+            modalVideo.style.display = 'block';
+            modalVideo.src = currentImage;
+        } else {
+            modalImg.style.display = 'block';
+            modalVideo.style.display = 'none';
+            modalImg.src = currentImage;
+        }
+
+        // Update counter
+        if (imageData.length > 1) {
+            modalCounter.textContent = (currentIndex + 1) + ' / ' + imageData.length;
+            modalCounter.style.display = 'block';
+        } else {
+            modalCounter.style.display = 'none';
+        }
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+        document.body.style.overflow = 'auto';
+        window.scrollTo(0, scrollPosition);
+        imageData = [];
+    }
+
+    function showPrev() {
+        currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
+        updateModalContent();
+        preloadAdjacent(currentIndex);
+    }
+
+    function showNext() {
+        currentIndex = (currentIndex + 1) % imageData.length;
+        updateModalContent();
+        preloadAdjacent(currentIndex);
+    }
+
+    function openVideoModal(src, title, description) {
+        openModal(0, false);
+        modalTitle.textContent = title || '';
+        modalDescription.textContent = description || '';
+        modalImg.style.display = 'none';
+        modalVideo.style.display = 'block';
+        modalVideo.src = src;
+    }
+
+    // Event listeners (scoped to this modal to avoid conflicts)
+    var modalCloseBtn = modal.querySelector('.close');
+    if (modalCloseBtn) modalCloseBtn.onclick = closeModal;
+    prevBtn.onclick = showPrev;
+    nextBtn.onclick = showNext;
+
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+        if (modal.style.display === 'flex') {
+            if (event.key === 'ArrowLeft') showPrev();
+            if (event.key === 'ArrowRight') showNext();
+            if (event.key === 'Escape') closeModal();
+        }
+    });
+
+    // Swipe gesture untuk mobile
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchMoved = false;
+    var SWIPE_THRESHOLD = 40; // px
+    modal.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchMoved = false;
+    }, { passive: true });
+
+    modal.addEventListener('touchmove', function(e) {
+        if (!touchMoved) {
+            var deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+            var deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+
+            // Jika mostly horizontal movement
+            if (deltaX > deltaY) {
+                touchMoved = true;
+                e.preventDefault();
+            }
+        }
+    }, { passive: false });
+
+    modal.addEventListener('touchend', function(e) {
+        if (touchMoved) {
+            var endX = e.changedTouches[0].clientX;
+            if (endX < touchStartX - SWIPE_THRESHOLD) {
+                showNext(); // Swipe left -> next image
+            } else if (endX > touchStartX + SWIPE_THRESHOLD) {
+                showPrev(); // Swipe right -> prev image
+            }
+        }
+    }, { passive: true });
+});
+</script>

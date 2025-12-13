@@ -1,9 +1,14 @@
+{% comment %}
+Pagination Component
+Previous/Next page navigation
+{% endcomment %}
+
 <div class="pagination">
 	{% if paginator.previous_page %}
 		{% if paginator.previous_page == 1 %}
 			<a class="prev" href="/">< Previous</a>
 		{% else %}
-			<a class="prev" href="/page/{{ paginator.previous_page }}/">< Previous</i></a>
+			<a class="prev" href="/page/{{ paginator.previous_page }}/">< Previous</a>
 		{% endif %}
 	{% endif %}
 	<span class="page-number">Page {{paginator.page}} of {{paginator.total_pages}}</span>

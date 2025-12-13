@@ -1,0 +1,30 @@
+<!-- SEO & Social Meta Tags -->
+<title>{% if page.title %}{{page.title}} - {{site.title}}{% else %}{{site.title}}{% endif %}</title>
+<meta name="description" content="{% if page.description %}{{page.description}}{% else %}{{site.description}}{% endif %}">
+<meta name="keywords" content="{% if page.tags %}{{page.tags}}{% else %}{{site.keywords}}{% endif %}">
+
+<!-- Article Meta Tags -->
+{% if page.date %}
+<meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time">
+<meta content="{{ site.url }}/about/" property="article:author">
+{% endif %}
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:site_name" content="{{site.title}}">
+<meta property="og:type" content="{% if page.title %}article{% else %}website{% endif %}" />
+<meta property="og:url" content="{{ site.url }}{{page.url}}"/>
+<meta property="og:title" content="{% if page.title %}{{page.title}} - {{site.title}}{% else %}{{site.title}}{% endif %}" />
+<meta property="og:description" content="{% if page.description %}{{page.description}} {% else %}{{site.description}}{% endif %}" />
+<meta property="og:image" content="{{ site.url }}/{% if page.image %}{{page.image}}{% else %}assets/images/favicon.png{% endif %}"/>
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary"/>
+<meta property="twitter:title" content="{% if page.title %}{{page.title}} - {{site.title}}{% else %}{{site.title}}{% endif %}" />
+<meta property="twitter:description" content="{% if page.description %}{{page.description}} {% else %}{{site.description}}{% endif %}" />
+<meta property="twitter:image" content="{{ site.url }}/{% if page.image %}{{page.image}}{% else %}assets/images/favicon.png{% endif %}" />
+
+<!-- Verification & Manifest -->
+{% if site.google_verify %}
+<meta name="google-site-verification" content="{{site.google_verify}}" />
+{% endif %}
+<link rel="manifest" href="/manifest.json">

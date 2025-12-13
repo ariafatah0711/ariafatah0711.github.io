@@ -10,7 +10,7 @@
     {% endif %}
   {% endfor %}
   {% if show_loader %}
-    {% include loader.html %}
+    {% include utilities/loader.html %}
   {% endif %}
 {% endif %}
 
@@ -68,19 +68,19 @@
 			<!-- Tombol Linktree dan Theme Toggle di bawah bio -->
 			<div class="profile-action-row">
 				{% if site.app.linktree.active %}
-					{% include linktree.html %}
+					{% include components/linktree.html %}
 				{% endif %}
-				{% include theme_toggle.html %}
+				{% include components/theme-toggle.html %}
 			</div>
 			<!-- <br> -->
 
 			{% if site.app.toggle_song.active %}
-			{% include song.html %}
+			{% include components/song.html %}
 			{% endif %}
 		</div>
 	</div>
 
-	{% include navbar.html %}
+	{% include components/navbar.html %}
 
 	{{ content }}
 	<div class="footer">

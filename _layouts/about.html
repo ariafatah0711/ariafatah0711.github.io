@@ -11,7 +11,7 @@
     {% endif %}
   {% endfor %}
   {% if show_loader %}
-    {% include loader.html %}
+    {% include utilities/loader.html %}
   {% endif %}
 {% endif %}
 
@@ -35,9 +35,9 @@
 		<!-- Toggle Buttons -->
 		<div class="about-navbar-toggles">
 			{% if site.app.linktree.active %}
-				{% include linktree.html %}
-			{% endif %}
-			{% include theme_toggle.html %}
+					{% include components/linktree.html %}
+				{% endif %}
+				{% include components/theme-toggle.html %}
 		</div>
 	</div>
 
@@ -279,7 +279,6 @@
 			top: 0;
 			left: 0;
 			right: 0;
-			z-index: 1000;
 			background: var(--body-bg);
 			border-bottom: 1px solid var(--border-color);
 			width: 100%;

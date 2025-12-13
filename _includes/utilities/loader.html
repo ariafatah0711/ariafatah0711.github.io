@@ -1,3 +1,8 @@
+{% comment %}
+Page Loader Component
+Shows loading animation on page transitions
+{% endcomment %}
+
 {% assign is_always_show = false %}
 
 {% if site.app.loader.always_show %}
@@ -25,14 +30,12 @@
   const loader = document.getElementById("page-loader");
   const container = document.getElementById("loader-words");
 
-  /* Ambil teks dari config */
   {% if site.app.loader.custom_teks and site.app.loader.custom_teks.size > 0 %}
     let words = {{ site.app.loader.custom_teks | jsonify }};
   {% else %}
     let words = ["Loading", "Please wait"];
   {% endif %}
 
-  /* Skip loader kalau sudah muncul sebelumnya (kecuali always_show) */
   if (!isAlwaysShow) {
     try {
       if (sessionStorage.getItem("loaderShown") === "true") {
@@ -42,7 +45,6 @@
     } catch (e) {}
   }
 
-  /* Generate elemen teks */
   words.forEach(t => {
     const h1 = document.createElement("h1");
     h1.className = "header-text";
@@ -54,10 +56,6 @@
 
     const tl = gsap.timeline();
 
-    /* ---------------------------------------------
-       OPENING ANIMATION (baru ditambah)
-       Loader fade-in + scale (kayak index.html)
-    --------------------------------------------- */
     tl.from("#page-loader", {
       opacity: 0,
       scale: 0.95,
@@ -65,12 +63,8 @@
       ease: "cubic.inOut"
     });
 
-    /* Delay sebelum animasi teks */
     tl.to({}, {duration: 0.2});
 
-    /* ---------------------------------------------
-       ANIMASI TEKS (SAMA dengan index.html)
-    --------------------------------------------- */
     tl.to(".header-text", {
       y: "-100%",
       opacity: 1,
@@ -80,18 +74,14 @@
         each: 0.8,
         onComplete() {
           gsap.to(this.targets()[0], {
-            y: "-200%",
             opacity: 0,
-            duration: 0.8,
+            duration: 0.3,
             ease: "cubic.inOut"
           });
         }
       }
     });
 
-    /* ---------------------------------------------
-       FADE OUT LOADER
-    --------------------------------------------- */
     tl.to("#page-loader", {
       opacity: 0,
       duration: 0.8,

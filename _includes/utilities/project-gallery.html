@@ -1,5 +1,6 @@
-{% comment %} Project gallery include
-   Expects `_data/projects.yml` with: title, description, image, source_url, demo_url, repo
+{% comment %}
+Project Gallery Component
+Displays project gallery grid from _data/projects.yml
 {% endcomment %}
 
 <div class="projects-gallery">
@@ -29,12 +30,12 @@
         {% if project.image or project.images %}
           {% assign img = project.image | default: (project.images | first) %}
           {% if img contains 'http' %}
-            {% include image.html src=img alt=project.title class="clickable-image" %}
+            {% include utilities/image.html src=img alt=project.title class="clickable-image" %}
           {% elsif img contains '.' %}
-            {% include image.html src=img alt=project.title class="clickable-image" %}
+            {% include utilities/image.html src=img alt=project.title class="clickable-image" %}
           {% else %}
-            {%- comment -%} fallback to site profile image when project.image has no extension {%- endcomment -%}
-            {% include image.html src="/assets/images/profile2-128.avif" alt=project.title class="clickable-image" %}
+            {% comment %} fallback to default image {% endcomment %}
+            {% include utilities/image.html src="/assets/images/profile2-128.avif" alt=project.title class="clickable-image" %}
           {% endif %}
           {% if project.videos or project.video %}
             <div class="play-overlay">▶</div>
@@ -53,12 +54,9 @@
       {% if project.images %}
         <div class="project-thumbs-row">
           {% for thumb in img_list %}
-            {% assign t = thumb %}
-            {% if t contains 'http' %}
-              {% include image.html src=t alt="thumb" class="project-thumb-img" onerror="this.style.display='none';" no_fallback=true %}
-            {% elsif t contains '.' %}
-              {% include image.html src=t alt="thumb" class="project-thumb-img" onerror="this.style.display='none';" no_fallback=true %}
-            {% endif %}
+            {% assign thumb_trimmed = thumb | strip %}
+            <img class="project-thumb-img" src="{{ thumb_trimmed }}" alt="Thumbnail" loading="lazy"
+              onerror="this.style.display='none';">
           {% endfor %}
         </div>
       {% endif %}
@@ -66,10 +64,8 @@
         <div class="gallery-title">{{ project.title }}</div>
         <div class="gallery-description">{{ project.description }}</div>
         <div class="project-links">
-          <div class="links-row">
-            {% if project.source_url %}<a class="btn small secondary" href="{{ project.source_url }}" target="_blank" rel="noopener">Source</a>{% endif %}
-            {% if project.demo_url and project.demo_url != "" %}<a class="btn small primary" href="{{ project.demo_url }}" target="_blank" rel="noopener">Demo</a>{% endif %}
-          </div>
+          {% if project.source_url %}<a href="{{ project.source_url }}" target="_blank">Source</a>{% endif %}
+          {% if project.demo_url %}<a href="{{ project.demo_url }}" target="_blank">Demo</a>{% endif %}
         </div>
       </div>
     </div>
