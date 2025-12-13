@@ -18,7 +18,7 @@
 	<script type="text/javascript">
 		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: {{ site.app.theme }})').matches)) {
 			document.documentElement.setAttribute('data-theme', 'dark');
-			document.getElementById('mode-switcher').classList.add('active');
+			document.getElementById('mode-switcher')?.classList.add('active');
 			document.getElementById("mode-switcher-info")?.classList.add("active");
 		}
 	</script>

@@ -1,7 +1,9 @@
 /* Post Layout Styles */
 
 .blog-post-content {
+    width: 100%;
     margin: 0.75rem 0;
+    font-size: 18px;
     line-height: 1.65;
 }
 
@@ -165,19 +167,6 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .post-header {
-        align-items: flex-start;
-    }
-
-    .navigation {
-        flex-direction: column;
-    }
-
-    .navigation .prev,
-    .navigation .next {
-        width: 100%;
-    }
-
     .blog-post-content {
         margin: 1rem 0;
     }

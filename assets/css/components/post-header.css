@@ -21,3 +21,28 @@
 .post-header .post-date {
     font-weight: 600;
 }
+
+.post-share {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.post-header .post-share {
+    font-weight: 600;
+    color: var(--primary-font-color);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.post-header .post-share a {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .post-header {
+        align-items: flex-start;
+    }
+}

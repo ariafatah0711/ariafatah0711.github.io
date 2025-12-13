@@ -46,7 +46,8 @@
     canvas.style.position = "fixed";
     canvas.style.top = "0";
     canvas.style.left = "0";
-    canvas.style.zIndex = "50";
+    // Keep above the page loader (.page-loader uses z-index: 1000)
+    canvas.style.zIndex = "9999";
     canvas.style.pointerEvents = "none";
     canvas.style.width = "100vw";
     canvas.style.height = "100vh";

@@ -127,50 +127,6 @@ body {
   align-items: center;
 }
 
-.navigation {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-  background: var(--bg-color);
-  border: 1px dashed var(--border-color);
-}
-
-.navigation .prev {
-  width: 45%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--primary-font-color);
-  font-weight: 600;
-  padding: 5px 10px;
-}
-
-.navigation .next {
-  width: 45%;
-  color: var(--primary-font-color);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  text-align: right;
-  padding: 5px 10px;
-}
-
-.blog-post-content {
-  width: 100%;
-  font-size: 18px;
-}
-
-.post-tag {
-  background: var(--bg-color);
-  color: var(--primary-font-color);
-  padding: 5px 10px;
-}
-
 /* status */
 #status {
   display: flex;
@@ -183,9 +139,10 @@ body {
   justify-content: flex-start;
   align-items: flex-start;
   text-align: left;
+  min-width: 0;
 }
 
-.discord-status,
+/* .discord-status,
 .discord-activity {
   display: inline-flex;
   align-items: center;
@@ -194,6 +151,29 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   width: auto;
+} */
+
+.discord-status,
+.discord-activity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 100%;
+}
+
+.discord-activity strong {
+  display: block;
+  min-width: 0;
+  /* PENTING di flex */
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.discord-status,
+.discord-activity {
+  min-width: 0;
 }
 
 .discord-status svg,
@@ -305,11 +285,6 @@ pre {
     width: 100%;
   }
 
-  .mode:after {
-    line-height: 22px;
-    left: 1px;
-  }
-
   h1 {
     font-size: 1.5rem;
   }
@@ -331,125 +306,6 @@ pre {
   .hide480 {
     display: none
   }
-
-  .mode {
-    /* left */
-    /* margin-left: auto !important; */
-
-    background-color: var(--bg-hover-color);
-  }
-}
-
-[data-theme="dark"] .social-icon {
-  filter: invert(100%) sepia(50%) saturate(0%) hue-rotate(360deg) brightness(100%) contrast(100%);
-}
-
-.mode {
-  float: right;
-  position: relative;
-  margin: auto;
-  width: 42px;
-  height: 22px;
-  background: var(--bg-hover-color);
-  border-radius: 20px;
-  cursor: pointer;
-
-  /* left */
-  margin-left: 10px;
-}
-
-.mode:after {
-  content: "☀️";
-  position: absolute;
-  top: 0;
-  left: 4px;
-  font-size: 14px;
-  height: 22px;
-  line-height: 23px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.mode.active {
-  background: var(--primary-font-color);
-  opacity: 0.8;
-}
-
-.mode.active:after {
-  content: "🌛";
-  transform: translateX(20px);
-}
-
-.mode.active span {
-  transform: translateX(0);
-}
-
-.mode span {
-  position: absolute;
-  z-index: 1;
-  margin: 2px;
-  display: block;
-  width: 18px;
-  height: 18px;
-  background: var(--body-bg);
-  border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transform: translateX(20px);
-  transition: all 0.4s ease;
-}
-
-/* reset */
-.reset-btn {
-  background-color: var(--primary-font-color);
-  color: var(--body-bg);
-  border: 1px solid var(--border-color);
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-  display: inline-block;
-}
-
-.reset-btn:hover {
-  background-color: var(--bg-hover-color);
-  transform: translateY(-2px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.reset-btn:active {
-  transform: scale(0.95);
-}
-
-.info-footer {
-  display: flex;
-  margin-bottom: 25px;
-  gap: 10px;
-}
-
-/* song */
-#music-switcher {
-  transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-#music-switcher:hover {
-  transform: scale(1.1);
-  /* Membesarkan ikon saat hover */
-  opacity: 0.8;
-  /* Memberikan efek transparansi */
-}
-
-#music-icon svg {
-  transition: fill 0.3s ease, transform 0.2s ease;
-}
-
-#music-switcher:hover #music-icon svg {
-  fill: #ff4081;
-  /* Ganti warna ikon saat hover */
-  transform: rotate(15deg);
-  /* Putar ikon sedikit saat hover */
 }
 
 /* menghilangkan efek biru pada mobile */

@@ -57,7 +57,6 @@
 }
 
 .profile-action-row .linktree-toggle,
-.profile-action-row .theme-toggle,
 .profile-action-row .cv-toggle {
     background: none;
     border: none;
@@ -77,11 +76,29 @@
     max-height: 28px;
 }
 
+.profile-action-row .theme-toggle {
+    padding: 6px;
+    border-radius: 50%;
+    color: var(--primary-font-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+}
+
 .profile-action-row .linktree-toggle:hover,
-.profile-action-row .theme-toggle:hover,
 .profile-action-row .cv-toggle:hover {
     background: var(--bg-hover-color, #f0f0f0);
     /* transform: scale(1.05); */
+}
+
+.profile-action-row .theme-toggle:hover {
+    background: var(--bg-hover-color, #f0f0f0);
 }
 
 .profile-action-row .linktree-toggle svg,

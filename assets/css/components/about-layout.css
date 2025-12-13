@@ -48,7 +48,6 @@
 }
 
 .about-navbar-toggles .linktree-toggle,
-.about-navbar-toggles .theme-toggle,
 .about-navbar-toggles .cv-toggle {
     background: none;
     border: none;
@@ -60,6 +59,17 @@
     border-radius: 6px;
     transition: background-color 0.3s ease;
     color: inherit;
+}
+
+.about-navbar-toggles .theme-toggle {
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: inherit;
+}
+
+.about-navbar-toggles .theme-toggle:hover {
+    background-color: var(--bg-hover-color, #f0f0f0);
 }
 
 .about-navbar-toggles svg {
