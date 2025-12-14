@@ -26,6 +26,25 @@ permalink: /gallery/
     {% endfor %}
   </div>
 
+  <!-- Mobile Filter Select -->
+  <div class="gallery-filters-mobile">
+    <select id="gallery-filter-select" class="filter-select">
+      {% for category in site.data.gallery.categories %}
+        {% if category.slug == "all" %}
+          {% assign count = site.data.gallery.photos.size %}
+        {% else %}
+          {% assign count = 0 %}
+          {% for photo in site.data.gallery.photos %}
+            {% if photo.category == category.slug %}
+              {% assign count = count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        <option value="{{ category.slug }}">{{ category.name }} ({{ count }})</option>
+      {% endfor %}
+    </select>
+  </div>
+
   <div class="gallery-grid" id="gallery-grid">
     {% for photo in site.data.gallery.photos %}
       <div class="gallery-item {{ photo.size }}" data-category="{{ photo.category }}">

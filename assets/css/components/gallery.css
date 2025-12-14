@@ -208,6 +208,40 @@
     .gallery-header h1 {
         font-size: 2rem;
     }
+
+    /* Hide button filters on mobile, show select */
+    .gallery-filters {
+        display: none;
+    }
+
+    .gallery-filters-mobile {
+        display: block;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .filter-select {
+        padding: 10px 16px;
+        border: 2px solid var(--border-color);
+        background: var(--body-bg);
+        color: var(--primary-font-color);
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: border-color var(--ui-dur) var(--ui-ease);
+        min-width: 100%;
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: var(--accent-color);
+    }
+}
+
+@media (min-width: 769px) {
+    .gallery-filters-mobile {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
