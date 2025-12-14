@@ -4,14 +4,14 @@ Link tree toggle button dan popup menu
 {% endcomment %}
 
 <!-- Tombol Linktree & CV -->
-<button class="linktree-toggle" onclick="openLinktree(); return false;" title="Linktree">
+<button class="linktree-toggle" type="button" data-action="open-linktree" title="Linktree" aria-controls="linktreeBox">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
     <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
   </svg>
 </button>
 
-<button class="cv-toggle" onclick="downloadCV(); return false;" title="Download CV">
+<button class="cv-toggle" type="button" data-action="download-cv" title="Download CV" data-cv-url="{{ site.baseurl }}/{{ site.author.cv }}">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
     <polyline points="14 2 14 8 20 8"></polyline>
@@ -23,7 +23,7 @@ Link tree toggle button dan popup menu
 <!-- Popup Linktree -->
 <div id="linktreeBox" class="linktree-box" style="display: none;">
   <div class="linktree-inner">
-    <span class="close-btn" onclick="toggleLinktree(event)">&times;</span>
+    <span class="close-btn" role="button" tabindex="0" data-action="close-linktree">&times;</span>
     {% for group in site.app.linktree.groups %}
       <div class="linktree-group">
         {% if group.title %}
@@ -39,60 +39,3 @@ Link tree toggle button dan popup menu
     {% endfor %}
   </div>
 </div>
-
-<script>
-  function toggleLinktree(event, forceShow = null) {
-    if (event) event.preventDefault();
-    const box = document.getElementById("linktreeBox");
-    const show = forceShow !== null ? forceShow : box.style.display !== "flex";
-    box.style.display = show ? "flex" : "none";
-    if (show) {
-      document.body.classList.add("linktree-lock-scroll");
-    } else {
-      document.body.classList.remove("linktree-lock-scroll");
-      history.replaceState(null, null, location.pathname + location.search);
-    }
-  }
-  function openLinktree() {
-    location.hash = "linktree";
-  }
-  function handleHashChange() {
-    if (window.location.hash === "#linktree") {
-      toggleLinktree(null, true);
-    }
-  }
-
-  // CV Download Function
-  function downloadCV() {
-    const cvUrl = "{{ site.baseurl }}/{{ site.author.cv }}";
-
-    fetch(cvUrl, { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          window.location.href = cvUrl;
-        } else {
-          showAlert('CV file not found');
-        }
-      })
-      .catch(() => {
-        showAlert('Could not download CV');
-      });
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    handleHashChange();
-    const box = document.getElementById("linktreeBox");
-    const inner = document.querySelector(".linktree-inner");
-    box.addEventListener("click", (e) => {
-      if (!inner.contains(e.target)) {
-        toggleLinktree(null, false);
-      }
-    });
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && box.style.display === "flex") {
-        toggleLinktree(null, false);
-      }
-    });
-  });
-  window.addEventListener("hashchange", handleHashChange);
-</script>

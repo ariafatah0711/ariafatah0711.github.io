@@ -37,6 +37,29 @@ function toggleNightMode() {
   }
 }
 
+function initThemeIcon() {
+  if (typeof updateThemeIcon === "function") {
+    updateThemeIcon();
+  }
+}
+
+function bindThemeToggle() {
+  const buttons = document.querySelectorAll('[data-action="toggle-theme"]');
+  buttons.forEach((btn) => {
+    if (btn.dataset.bound === "true") return;
+    btn.dataset.bound = "true";
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      toggleNightMode();
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initThemeIcon);
+document.addEventListener("app:page-load", initThemeIcon);
+document.addEventListener("DOMContentLoaded", bindThemeToggle);
+document.addEventListener("app:page-load", bindThemeToggle);
+
 // mencegah drag image
 document.addEventListener("dragstart", function (event) {
   event.preventDefault();

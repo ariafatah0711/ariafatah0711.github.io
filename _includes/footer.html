@@ -1,6 +1,13 @@
 		<!-- ========== App Scripts ========== -->
 	<script src="assets/js/main.js" defer></script>
 
+	<!-- ========== Page-specific Scripts (opt-in) ========== -->
+	{% if page.scripts %}
+		{% for script_path in page.scripts %}
+			<script src="{{ script_path | relative_url }}" defer></script>
+		{% endfor %}
+	{% endif %}
+
 	<!-- ========== Modals & Components ========== -->
 	{% include modals/image-modal.html %}
 	{% include components/confirm-modal.html %}

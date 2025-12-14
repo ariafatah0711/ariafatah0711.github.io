@@ -18,22 +18,4 @@ layout: default
 {% include components/post-pagination.html %}
 {% include components/disqus.html %}
 
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-		// Add clickable-image class to all images in blog post content
-		const postContent = document.querySelector('.blog-post-content');
-		if (postContent) {
-			const images = postContent.querySelectorAll('img');
-			images.forEach(img => {
-				// Skip images that are already in a link
-				if (!img.closest('a')) {
-					img.classList.add('clickable-image');
-					// Set alt text if empty to avoid "Preview" showing in modal
-					if (!img.alt || img.alt === 'Preview') {
-						img.alt = '';
-					}
-				}
-			});
-		}
-	});
-</script>
+<script src="{{ '/assets/js/pages/post.js' | relative_url }}" defer></script>

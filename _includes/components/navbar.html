@@ -9,18 +9,4 @@ Displays navigation links at top of page
     <a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
   {% endfor %}
 </div>
-
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    document.addEventListener("keydown", function (event) {
-      // Tekan L untuk buka popup
-      if (!event.ctrlKey && event.key.toLowerCase() === "l") {
-        const box = document.getElementById("linktreeBox");
-        if (!box) return;
-        event.preventDefault();
-        location.hash = "linktree";
-      }
-    });
-  });
-</script>
 {% endif %}

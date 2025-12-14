@@ -2,11 +2,11 @@
 layout: page
 title: Gallery
 permalink: /gallery/
+scripts:
+  - /assets/js/pages/gallery.js
 ---
 
 <!-- Preconnect dipindah ke head untuk halaman ini -->
-
-{% include modals/image-modal.html %}
 
 <div class="gallery-container">
   <!-- Category Filter -->
@@ -53,37 +53,3 @@ permalink: /gallery/
 </div>
 
 <!-- CSS khusus dipindah ke assets/css/gallery.css -->
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const galleryItems = document.querySelectorAll('.gallery-item');
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const galleryGrid = document.getElementById('gallery-grid');
-
-  // Filter functionality
-  filterButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const category = this.getAttribute('data-category');
-
-      // Update active button
-      filterButtons.forEach(btn => btn.classList.remove('active'));
-      this.classList.add('active');
-
-      // Filter gallery items
-      galleryItems.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
-
-        if (category === 'all' || itemCategory === category) {
-          item.style.display = 'block';
-          item.style.animation = 'fadeIn 0.5s ease-in-out forwards';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-  });
-
-  // Set "All" as default active
-  filterButtons[0].classList.add('active');
-});
-</script>
