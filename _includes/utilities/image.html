@@ -8,7 +8,8 @@ Usage: {% include utilities/image.html src="url" alt="text" class="class" %}
     src="{{ include.src }}"
     alt="{{ include.alt | default: 'Image' }}"
     class="{{ include.class }}"
-    loading="{{ include.loading | default: 'lazy' }}"
+    loading="{{ include.loading | default: 'eager' }}"
+    decoding="async"
     {% if include.onerror %}
       onerror="{{ include.onerror }}"
     {% else %}

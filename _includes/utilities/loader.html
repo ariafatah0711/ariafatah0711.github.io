@@ -31,8 +31,12 @@ Shows loading animation on page transitions
 </style>
 
 <script>
+// @ts-nocheck
 (function() {
+  // Ignore JS linter errors - this file uses Jekyll Liquid templates
+  // which are processed before JS validation
 
+  const isPJAXEnabled = {{ site.app.pjax | jsonify }};
   const isAlwaysShow = {{ is_always_show | jsonify }};
   const loader = document.getElementById("page-loader");
   const container = document.getElementById("loader-words");
@@ -43,7 +47,9 @@ Shows loading animation on page transitions
     let words = ["Loading", "Please wait"];
   {% endif %}
 
-  if (!isAlwaysShow) {
+  // Kalau PJAX aktif, loader always show (gak perlu sessionStorage)
+  // Kalau PJAX tidak aktif, pakai logic sessionStorage sebelumnya
+  if (!isPJAXEnabled && !isAlwaysShow) {
     try {
       if (sessionStorage.getItem("loaderShown") === "true") {
         loader.remove();
@@ -102,7 +108,8 @@ Shows loading animation on page transitions
         // Remove overflow hidden when loader is done
         document.documentElement.classList.remove("loader-active");
         document.body.classList.remove("loader-active");
-        if (!isAlwaysShow) {
+        // Hanya set sessionStorage kalau bukan PJAX & bukan always_show
+        if (!isPJAXEnabled && !isAlwaysShow) {
           try { sessionStorage.setItem("loaderShown", "true"); } catch (e) {}
         }
       }

@@ -33,6 +33,7 @@ author:
   data_profile_github_json: https://raw.githubusercontent.com/ariafatah0711/ariafatah0711.github.io/refs/heads/data-cache/data/profile.json
 
 app:
+  pjax: true
   theme: white
   navbar:
     - name: about

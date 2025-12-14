@@ -1,19 +1,20 @@
-		<!-- ========== App Scripts ========== -->
+	<!-- ========== App Scripts ========== -->
 	<script src="assets/js/main.js" defer></script>
+	<script src="assets/js/gallery.js" defer></script>
+	<script src="assets/js/projects.js" defer></script>
+
+	<!-- ========== App Scripts PJAX ========== -->
+	<script src="assets/js/discord-lanyard-pjax.js" defer></script>
+	<script src="assets/js/github-profile-pjax.js" defer></script>
+	<script src="assets/js/song-pjax.js" defer></script>
+	<script src="assets/js/images-pjax.js" defer></script>
+	<script src="assets/js/info-page-pjax.js" defer></script>
+	<script src="https://unpkg.com/swup@2.0.19/dist/swup.min.js" defer></script>
+	<script src="assets/js/pjax.js" defer></script>
 
 	<!-- ========== Modals & Components ========== -->
 	{% include modals/image-modal.html %}
 	{% include components/confirm-modal.html %}
-
-	<!-- ========== Discord Integration ========== -->
-	{% if site.app.show_discord.active %}
-	<script src="assets/js/discord-lanyard.js" defer></script>
-	{% endif %}
-
-	<!-- ========== Song Player ========== -->
-	{% if site.app.toggle_song.active %}
-	<script src="assets/js/song.js" defer></script>
-	{% endif %}
 
 	<!-- ========== Analytics ========== -->
 	{% if site.google_analytics %}

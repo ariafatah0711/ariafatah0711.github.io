@@ -79,20 +79,37 @@ Link tree toggle button dan popup menu
       });
   }
 
-  window.addEventListener("DOMContentLoaded", () => {
+  function initLinktree() {
     handleHashChange();
     const box = document.getElementById("linktreeBox");
     const inner = document.querySelector(".linktree-inner");
-    box.addEventListener("click", (e) => {
-      if (!inner.contains(e.target)) {
-        toggleLinktree(null, false);
-      }
-    });
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && box.style.display === "flex") {
-        toggleLinktree(null, false);
-      }
-    });
-  });
+
+    if (!box || !inner) return; // Linktree not on this page
+
+    // Clear old listeners to prevent duplicates on PJAX swap
+    box.removeEventListener("click", linktreeBackdropHandler);
+    document.removeEventListener("keydown", linktreeEscapeHandler);
+
+    // Add listeners
+    box.addEventListener("click", linktreeBackdropHandler);
+    document.addEventListener("keydown", linktreeEscapeHandler);
+  }
+
+  function linktreeBackdropHandler(e) {
+    const inner = document.querySelector(".linktree-inner");
+    if (inner && !inner.contains(e.target)) {
+      toggleLinktree(null, false);
+    }
+  }
+
+  function linktreeEscapeHandler(event) {
+    const box = document.getElementById("linktreeBox");
+    if (event.key === "Escape" && box && box.style.display === "flex") {
+      toggleLinktree(null, false);
+    }
+  }
+
+  window.initLinktree = initLinktree;
+  document.addEventListener("DOMContentLoaded", initLinktree);
   window.addEventListener("hashchange", handleHashChange);
 </script>

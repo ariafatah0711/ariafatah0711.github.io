@@ -1,7 +1,7 @@
 {% include header.html %}
 {% include components/page-loader.html %}
 
-<div class="container about-layout">
+<div id="swup" class="container about-layout">
 	{% include components/about-nav-wrapper.html %}
 	{% include components/mobile-menu.html %}
 
@@ -41,17 +41,14 @@
 			const hamburger = document.getElementById('hamburgerBtn');
 			const mobileMenu = document.getElementById('mobileMenu');
 
-			if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
-				hamburger.classList.remove('active');
-				mobileMenu.classList.remove('active');
-			}
-		});
-
+		if (hamburger && mobileMenu && !hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
 		// Close menu on ESC key
 		document.addEventListener('keydown', (e) => {
 			if (e.key === 'Escape') {
-				document.getElementById('hamburgerBtn').classList.remove('active');
-				document.getElementById('mobileMenu').classList.remove('active');
+				const hamburgerBtn = document.getElementById('hamburgerBtn');
+				const mobileMenu = document.getElementById('mobileMenu');
+				if (hamburgerBtn) hamburgerBtn.classList.remove('active');
+				if (mobileMenu) mobileMenu.classList.remove('active');
 			}
 		});
 	});

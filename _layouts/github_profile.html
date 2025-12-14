@@ -2,13 +2,13 @@
 layout: about
 ---
 
-<script src="{{ '/assets/js/github-profile.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/github-profile-pjax.js' | relative_url }}"></script>
 
 <div class="github-profile-wrapper" data-github-username="{{ site.author.github }}">
   <!-- Profile Header - Clickable -->
   <a href="{{ site.baseurl }}" class="gp-card gp-header gp-header-link" rel="noopener noreferrer">
     <div class="gp-header-content">
-      <img src="{{ site.author.picture }}" alt="avatar" class="gp-avatar" />
+      <img src="{{ site.author.picture }}" alt="avatar" class="gp-avatar" loading="eager" decoding="async" />
       <div class="gp-header-info">
         <h1 class="gp-title">{{ site.author.name }}</h1>
         <p class="gp-bio">{{ site.author.bio | replace: '<br>' | replace: '<br/>' | replace: '&#60;br&#62;' }}</p>

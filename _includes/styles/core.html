@@ -3,6 +3,61 @@
 <link rel="stylesheet" href="assets/css/highlight.css">
 <link rel="stylesheet" href="assets/css/style.css" media="all">
 <link rel="stylesheet" href="assets/css/components.css" media="all">
+
+<!-- Component Stylesheets (conditional per page/layout) -->
+<!-- <link rel="stylesheet" href="assets/css/components/loader.css" media="all">
+<link rel="stylesheet" href="assets/css/components/theme-toggle.css" media="all">
+<link rel="stylesheet" href="assets/css/components/footer.css" media="all">
+<link rel="stylesheet" href="assets/css/components/social-icons.css" media="all"> -->
+
+<!-- Modals are included globally via _includes/footer.html -->
+<!-- <link rel="stylesheet" href="assets/css/components/image-modal.css" media="all">
+<link rel="stylesheet" href="assets/css/components/confirm-modal.css" media="all"> -->
+
+{% if site.app.toggle_song.active %}
+<!-- <link rel="stylesheet" href="assets/css/components/song.css" media="all"> -->
+{% endif %}
+
+{% if page.layout == 'about' or page.layout == 'github_profile' %}
+<!-- <link rel="stylesheet" href="assets/css/components/about-layout.css" media="all"> -->
+{% else %}
+<!-- <link rel="stylesheet" href="assets/css/components/profile.css" media="all"> -->
+{% if site.app.linktree.active %}
+<!-- <link rel="stylesheet" href="assets/css/components/linktree.css" media="all"> -->
+{% endif %}
+{% endif %}
+
+{% if page.layout == 'page' or page.layout == 'post' or page.layout == 'repo_post' %}
+<!-- <link rel="stylesheet" href="assets/css/components/post-styles.css" media="all"> -->
+{% endif %}
+
+{% if page.layout == 'post' or page.layout == 'repo_post' %}
+<!-- <link rel="stylesheet" href="assets/css/components/post-header.css" media="all"> -->
+<!-- <link rel="stylesheet" href="assets/css/components/post-tags.css" media="all"> -->
+<!-- <link rel="stylesheet" href="assets/css/components/post-pagination.css" media="all"> -->
+{% endif %}
+
+{% if page.layout == 'repo_post' %}
+<!-- <link rel="stylesheet" href="assets/css/components/repo-post-styles.css" media="all"> -->
+<!-- <link rel="stylesheet" href="assets/css/components/repo-buttons.css" media="all"> -->
+<!-- <link rel="stylesheet" href="assets/css/components/repo-tags.css" media="all"> -->
+{% endif %}
+
+{% if page.url == '/gallery/' %}
+<!-- <link rel="stylesheet" href="assets/css/components/gallery.css" media="all"> -->
+{% endif %}
+
+{% if page.url == '/projects/' %}
+<!-- <link rel="stylesheet" href="assets/css/components/project-gallery.css" media="all"> -->
+{% endif %}
+
+{% if page.url == '/info/' %}
+<!-- <link rel="stylesheet" href="assets/css/components/info-page.css" media="all"> -->
+{% endif %}
+
+{% if page.layout == 'github_profile' %}
+<!-- <link rel="stylesheet" href="assets/css/components/github-profile.css" media="all"> -->
+{% endif %}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
 
 <meta name="github-profile-json-url" content="{{ site.author.data_profile_github_json | escape }}">

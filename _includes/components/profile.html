@@ -3,20 +3,20 @@ Profile Component
 Displays user profile section with bio and social icons
 {% endcomment %}
 
+<script>
+	// Set Discord config untuk discord-lanyard-pjax.js
+	window.DISCORD_CONFIG = {
+		discordId: "{{ site.app.show_discord.discord_id }}",
+		cacheTime: {{ site.app.show_discord.cacheTime | default: 15000 }}
+	};
+</script>
+
 <div class="profile">
 	<div class="profile-header">
 		<a href="{{ site.url }}">
-			<img src="{{ site.author.picture }}" class="profile-image" alt="profile-image" height="128px" width="128px" loading="lazy">
+			<img src="{{ site.author.picture }}" class="profile-image" alt="profile-image" height="128px" width="128px" loading="eager" decoding="async">
 		</a>
 		{% if site.app.show_discord.active %}
-			<script>
-				document.addEventListener("DOMContentLoaded", () => {
-					let discordId = "{{ site.app.show_discord.discord_id }}"
-					let cacheTime = "{{ site.app.show_discord.cacheTime }}";
-					if (!cacheTime) cacheTime = undefined;
-					checkDiscordStatus(discordId, cacheTime);
-				});
-			</script>
 			<span id="status">Memeriksa status...</span>
 		{% endif %}
 	</div>

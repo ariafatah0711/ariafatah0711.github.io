@@ -18,15 +18,6 @@
 				var theme = getInitialTheme();
 				document.documentElement.setAttribute('data-theme', theme);
 				document.documentElement.style.colorScheme = theme;
-				// Prevent the browser from painting a white canvas before CSS loads.
-				// Keep these in sync with assets/css/style.css theme tokens.
-				if (theme === 'dark') {
-					document.documentElement.style.backgroundColor = '#0d1117';
-					document.documentElement.style.color = '#e8eef5';
-				} else {
-					document.documentElement.style.backgroundColor = '#ffffff';
-					document.documentElement.style.color = '#1a1a1a';
-				}
 				document.addEventListener('DOMContentLoaded', function () {
 					document.documentElement.classList.add('theme-ready');
 				});

@@ -11,16 +11,24 @@ Displays navigation links at top of page
 </div>
 
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    document.addEventListener("keydown", function (event) {
-      // Tekan L untuk buka popup
-      if (!event.ctrlKey && event.key.toLowerCase() === "l") {
-        const box = document.getElementById("linktreeBox");
-        if (!box) return;
-        event.preventDefault();
-        location.hash = "linktree";
-      }
-    });
-  });
+  function initNavbarKeyboard() {
+    // Clear old listener
+    document.removeEventListener("keydown", navbarLinkHandler);
+    // Add new listener
+    document.addEventListener("keydown", navbarLinkHandler);
+  }
+
+  function navbarLinkHandler(event) {
+    // Tekan L untuk buka popup
+    if (!event.ctrlKey && event.key.toLowerCase() === "l") {
+      const box = document.getElementById("linktreeBox");
+      if (!box) return;
+      event.preventDefault();
+      location.hash = "linktree";
+    }
+  }
+
+  window.initNavbarKeyboard = initNavbarKeyboard;
+  document.addEventListener("DOMContentLoaded", initNavbarKeyboard);
 </script>
 {% endif %}

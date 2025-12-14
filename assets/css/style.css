@@ -61,6 +61,17 @@
 html {
   scrollbar-gutter: stable !important;
   overflow-x: hidden !important;
+  background: var(--body-bg);
+  color: var(--primary-font-color);
+}
+
+/* PJAX (Swup) transition: keep it subtle to avoid flashes */
+#swup {
+  transition: opacity var(--ui-dur-fast) var(--ui-ease);
+}
+
+html.is-animating #swup {
+  opacity: 0;
 }
 
 html.theme-ready {
