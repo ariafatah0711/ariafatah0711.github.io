@@ -183,6 +183,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         document.body.classList.remove("modal-open");
         document.body.style.top = "";
+        // Image modal uses inline overflow lock; restore it too
+        document.body.style.overflow = "";
       }
     } catch (e) {}
 
@@ -217,6 +219,10 @@ document.addEventListener("DOMContentLoaded", function () {
     projectModal.style.display = "none";
     document.body.classList.remove("modal-open");
     document.body.style.top = "";
+    // Defensive: if another modal left overflow locked, restore scrolling
+    if (!document.body.classList.contains("linktree-lock-scroll")) {
+      document.body.style.overflow = "";
+    }
     try {
       window.scrollTo(0, scrollPosition);
     } catch (e) {}

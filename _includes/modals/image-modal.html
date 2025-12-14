@@ -67,6 +67,11 @@ Handles gallery images, repo images, and video previews
 
             // 2) Project-item image gallery (legacy / other pages)
             if (img.closest('.project-item')) {
+                // If the dedicated Project Modal exists, let projects.js handle it
+                // to avoid double-modals and stuck scroll lock.
+                if (document.getElementById('projectModal')) {
+                    return;
+                }
                 setupProjectItemMode(img);
                 return;
             }
