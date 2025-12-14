@@ -6,15 +6,14 @@ Shows comments if site.discus-identifier is configured
 {% if site.discus-identifier %}
 	<section class="comment-area w-100" style="margin-top: 20px">
 		<div class="comment-wrapper">
-			<div id="disqus_thread" class="article-comments"></div>
-			<script>
-			(function() {
-			var d = document, s = d.createElement('script');
-			s.src = '//{{ site.discus-identifier }}.disqus.com/embed.js';
-			s.setAttribute('data-timestamp', +new Date());
-			(d.head || d.body).appendChild(s);
-			})();
-			</script>
+			<div
+				id="disqus_thread"
+				class="article-comments"
+				data-disqus-shortname="{{ site.discus-identifier }}"
+				data-disqus-url="{{ page.url | absolute_url }}"
+				data-disqus-identifier="{{ page.url | absolute_url }}"
+				data-disqus-title="{% if page.title %}{{ page.title | escape }} - {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}"
+			></div>
 			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 		</div>
 	</section>

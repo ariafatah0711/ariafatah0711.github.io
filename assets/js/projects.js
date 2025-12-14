@@ -164,6 +164,23 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+  // Expose for PJAX re-init (used by assets/js/main.js)
+  try {
+    window.fetchStarCount = fetchStarCount;
+  } catch (e) {}
+
+  function initProjectStars() {
+    // isi semua stars overlay di grid
+    document.querySelectorAll(".github-stars").forEach(function (el) {
+      var repo = el.getAttribute("data-repo");
+      if (repo) fetchStarCount(repo, el);
+    });
+  }
+
+  try {
+    window.initProjectStars = initProjectStars;
+  } catch (e) {}
+
   function openProjectModal(imgArray, title, description, sourceUrl, demoUrl, repo) {
     // force-close global image modal if open
     try {
@@ -251,11 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // isi semua stars overlay di grid
-  document.querySelectorAll(".github-stars").forEach(function (el) {
-    var repo = el.getAttribute("data-repo");
-    if (repo) fetchStarCount(repo, el);
-  });
+  initProjectStars();
 
   // click handler
   document.addEventListener("click", function (e) {

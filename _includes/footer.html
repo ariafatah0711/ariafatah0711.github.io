@@ -1,6 +1,14 @@
 		<!-- ========== App Scripts ========== -->
 	<script src="assets/js/main.js" defer></script>
 
+	<script src="assets/js/projects.js" defer></script>
+	<script src="assets/js/info.js" defer></script>
+	<script src="assets/js/components/disqus.js" defer></script>
+
+	<script src="assets/js/components/about-mobile-handler.js"></script>
+	<script src="assets/js/components/confirm-modal.js"></script>
+	<script src="assets/js/components/linktree.js"></script>
+
 	<!-- ========== Modals & Components ========== -->
 	{% include modals/image-modal.html %}
 	{% include components/confirm-modal.html %}
@@ -30,5 +38,28 @@
 	{% if site.app.cursor_splash.active %}
 	<script src="/assets/js/cursor/splashCursor.js" defer></script>
 	{% endif %}
+
+	<!-- ========== Pjax Init ========== -->
+	<script>
+	(function () {
+		if (!window.Pjax) return; // library not loaded
+		// Initialize Pjax to only swap title and main content
+		var pjax = new Pjax({
+			elements: 'a[href]:not([target]):not([download]):not([data-no-pjax])',
+			selectors: ['title', '#pjax-content'],
+			switches: {
+				'#pjax-content': function (oldEl, newEl, options) {
+					oldEl.innerHTML = newEl.innerHTML;
+				}
+			}
+		});
+
+		// Re-run lightweight UI hooks after navigation
+		document.addEventListener('pjax:success', function () {
+			// Central re-init hook (theme, widgets, Disqus reset, etc)
+			try { if (typeof window.reinitAfterPjax === 'function') window.reinitAfterPjax(); } catch (e) {}
+		});
+	})();
+	</script>
 </body>
 </html>

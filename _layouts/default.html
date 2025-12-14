@@ -5,7 +5,9 @@
 	{% include components/profile.html %}
 	{% include components/navbar.html %}
 
-	{{ content }}
+	<main id="pjax-content">
+		{{ content }}
+	</main>
 	{% include components/footer.html %}
 </div>
 {% include footer.html %}

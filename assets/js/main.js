@@ -41,3 +41,101 @@ function toggleNightMode() {
 document.addEventListener("dragstart", function (event) {
   event.preventDefault();
 });
+
+// Lightweight re-init after Pjax navigations
+function reinitAfterPjax() {
+  try {
+    updateThemeIcon();
+  } catch (e) {}
+
+  // Re-run image modal delegation if component relies on fresh DOM
+  try {
+    document.dispatchEvent(new Event("imageModal:refresh"));
+  } catch (e) {}
+
+  // Rebind project gallery GitHub stars overlays
+  try {
+    if (typeof fetchStarCount === "function") {
+      document.querySelectorAll(".github-stars").forEach(function (el) {
+        var repo = el.getAttribute("data-repo");
+        if (repo) fetchStarCount(repo, el);
+      });
+    }
+  } catch (e) {}
+
+  // Refresh Discord status if widget present
+  try {
+    var statusEl = document.getElementById("status");
+    var discordIdMeta = document.querySelector('meta[name="discord-id"]');
+    var discordId = discordIdMeta ? discordIdMeta.content : null;
+    if (statusEl && typeof checkDiscordStatus === "function" && discordId) {
+      checkDiscordStatus(discordId);
+    }
+  } catch (e) {}
+
+  // Kick GitHub profile UI refresh if container exists
+  try {
+    var gpRoot = document.getElementById("github-profile-root");
+    if (gpRoot && typeof loadProfileData === "function" && typeof updateProfileUI === "function") {
+      loadProfileData()
+        .then(updateProfileUI)
+        .catch(function () {});
+    }
+  } catch (e) {}
+
+  // Inform other modules
+  try {
+    document.dispatchEvent(new Event("afterPjax"));
+  } catch (e) {}
+
+  // Bind generic info-page reset button if present
+  try {
+    var resetBtn = document.querySelector('[data-reset="info"], #info-reset-btn');
+    if (resetBtn && !resetBtn.__boundReset) {
+      resetBtn.addEventListener(
+        "click",
+        function (e) {
+          e.preventDefault();
+          try {
+            localStorage.clear();
+          } catch (err) {}
+          try {
+            sessionStorage.clear();
+          } catch (err) {}
+          // Force full reload to ensure state resets even with Pjax
+          window.location.href = window.location.pathname;
+        },
+        { passive: false }
+      );
+      resetBtn.__boundReset = true;
+    }
+  } catch (e) {}
+}
+
+// Expose and run init on first load + after PJAX
+(function () {
+  function run() {
+    try {
+      reinitAfterPjax();
+    } catch (e) {}
+  }
+
+  // make accessible to inline PJAX hook in footer
+  try {
+    window.reinitAfterPjax = reinitAfterPjax;
+  } catch (e) {}
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run, { passive: true });
+  } else {
+    run();
+  }
+
+  document.addEventListener(
+    "pjax:success",
+    function () {
+      run();
+    },
+    { passive: true }
+  );
+})();

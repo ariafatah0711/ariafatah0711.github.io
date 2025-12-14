@@ -15,11 +15,16 @@ layout: default
 </div>
 
 {% include components/post-tags.html %}
+
+<!-- Invisible anchors for Pjax prev/next hash navigation -->
+<span id="prev" style="display:none;"></span>
+<span id="next" style="display:none;"></span>
+
 {% include components/post-pagination.html %}
 {% include components/disqus.html %}
 
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
+	function enhancePostImages() {
 		// Add clickable-image class to all images in blog post content
 		const postContent = document.querySelector('.blog-post-content');
 		if (postContent) {
@@ -35,5 +40,15 @@ layout: default
 				}
 			});
 		}
+	}
+
+	document.addEventListener('DOMContentLoaded', function() {
+		enhancePostImages();
+		// Add clickable-image class to all images in blog post content
+	});
+
+	// Re-run after Pjax navigation
+	document.addEventListener('afterPjax', function() {
+		enhancePostImages();
 	});
 </script>
