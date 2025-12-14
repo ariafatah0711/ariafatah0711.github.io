@@ -2,6 +2,7 @@
 
 .about-layout {
     padding: 0;
+    /* padding-top: 70px; */
 }
 
 .about-content {
@@ -21,8 +22,16 @@
     border-bottom: 1px solid var(--border-color, #e0e0e0);
     width: 100%;
     box-sizing: border-box;
-    position: relative;
+    /* position: fixed; */
+    /* top: 0; */
+    /* left: 0; */
+    /* right: 0; */
+    /* background: var(--body-bg); */
+    z-index: 101;
     flex-wrap: wrap;
+
+    /* max-width: 800px; */
+    /* margin: 0 auto; */
 }
 
 .about-navbar {

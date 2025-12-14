@@ -4,7 +4,7 @@ Displays navigation links at top of page
 {% endcomment %}
 
 {% if page.hidden_navbar != true %}
-<div style="display: flex; margin-bottom: 20px; height: 100%;">
+<div style="display: flex; margin-bottom: 20px;">
   {% for item in site.app.navbar %}
     {% assign nav_url = item.url | to_s %}
     {% if nav_url contains '://' %}

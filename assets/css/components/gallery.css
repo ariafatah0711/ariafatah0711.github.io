@@ -1,6 +1,7 @@
 .gallery-container {
     max-width: 1200px;
     margin: 0 auto;
+    margin-bottom: 16px;
 }
 
 .gallery-header {

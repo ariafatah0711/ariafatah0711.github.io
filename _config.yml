@@ -79,9 +79,8 @@ app:
     active: True
     discord_id: 879547455941779456
     cacheTime: 15000
-  toggle_song:
-    active: False
-    song: assets/song/song.m4a
+  # meeting-js:
+    # active: True
   loader:
     active: True
     custom_teks:

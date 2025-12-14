@@ -182,6 +182,11 @@ body.modal-open {
 }
 
 /* Gallery stacked mode: match project modal layout (image + info stacked) */
+.image-fallback {
+    height: 55vh !important;
+    width: 80vw !important;
+}
+
 #imageModal.modal--stacked {
     flex-wrap: nowrap;
     flex-direction: column;
@@ -194,9 +199,9 @@ body.modal-open {
 
 #imageModal.modal--stacked .modal-content,
 #imageModal.modal--stacked .image-fallback {
-    max-width: min(1100px, 92vw);
+    max-width: min(1100px, 80vw);
     max-height: 55vh;
-    width: min(1100px, 92vw);
+    /* width: min(1100px, 80vw); */
 }
 
 #imageModal.modal--stacked .modal-info {
