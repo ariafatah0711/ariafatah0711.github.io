@@ -27,6 +27,14 @@
       applyLayoutMode();
       document.dispatchEvent(new Event("app:page-load"));
       console.info("[PJAX] app:page-load", window.location.pathname, "rid=" + window.__pjaxRuntimeId);
+
+      // Animate in content on page load
+      setTimeout(function () {
+        var swupEl = document.querySelector("#swup");
+        if (swupEl) {
+          swupEl.classList.add("pjax-loaded");
+        }
+      }, 10);
     } catch (e) {
       // IE fallback not needed; keep silent
     }
@@ -88,10 +96,26 @@
       console.info("[PJAX] Swup initialized", window.location.pathname, "rid=" + window.__pjaxRuntimeId);
     } catch (e) {}
 
-    // After content swap, run page init hooks
+    // Before content swap, prepare for animation
+    swup.on("willReplaceContent", function () {
+      var swupEl = document.querySelector("#swup");
+      if (swupEl) {
+        swupEl.classList.remove("pjax-loaded");
+      }
+    });
+
+    // After content swap, run page init hooks and animate in
     swup.on("contentReplaced", function () {
       console.info("[PJAX] contentReplaced", window.location.pathname, "rid=" + window.__pjaxRuntimeId);
       dispatchAppPageLoad();
+
+      // Trigger animation after a short delay
+      setTimeout(function () {
+        var swupEl = document.querySelector("#swup");
+        if (swupEl) {
+          swupEl.classList.add("pjax-loaded");
+        }
+      }, 10);
     });
 
     // Also trigger once on first init (useful if scripts load late)

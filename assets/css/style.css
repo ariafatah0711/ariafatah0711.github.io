@@ -359,6 +359,70 @@ img {
 /* pjax */
 #swup {
   width: 100%;
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  filter: blur(2px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform, filter;
+}
+
+#swup.pjax-loaded {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Stagger animations for content elements */
+#swup.pjax-loaded h1,
+#swup.pjax-loaded h2,
+#swup.pjax-loaded h3 {
+  animation: fadeInUp 0.4s ease-out 0.05s both;
+}
+
+#swup.pjax-loaded p,
+#swup.pjax-loaded footer,
+#swup.pjax-loaded .post-list,
+#swup.pjax-loaded .tag,
+#swup.pjax-loaded .pagination,
+#swup.pjax-loaded .footer,
+#swup.pjax-loaded .btn,
+#swup.pjax-loaded .repo-btn,
+#swup.pjax-loaded .prev,
+#swup.pjax-loaded .next,
+#swup.pjax-loaded .social-icons,
+#swup.pjax-loaded .post-share,
+#swup.pjax-loaded .tags-container,
+#swup.pjax-loaded .repo_tags {
+  animation: fadeInUp 0.4s ease-out 0.1s both;
+}
+
+#swup.pjax-loaded img,
+#swup.pjax-loaded figure {
+  animation: fadeInScale 0.5s ease-out 0.15s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /*
