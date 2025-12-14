@@ -1,31 +1,12 @@
 {% comment %}
 Page Loader Component
-Shows loader based on configuration
+
+Simplified:
+- Loader shows only on full page loads (DOMContentLoaded/load).
+- PJAX swaps won't re-trigger it.
+- No per-route path rules / always_show (keep config simple).
 {% endcomment %}
 
 {% if site.app.loader.active %}
-	{% assign show_loader = false %}
-	{% assign normalized_current = page.url | replace: "/index.html","" | replace: "index.html","" | remove_first: "/" %}
-	{% if normalized_current != "" %}
-		{% assign normalized_current = normalized_current | remove_last: "/" %}
-	{% endif %}
-	{% for loader_path in site.app.loader.path %}
-		{% if loader_path == '/*' %}
-			{% assign show_loader = true %}
-			{% break %}
-		{% endif %}
-
-		{% assign normalized_check = loader_path | replace: "/index.html","" | replace: "index.html","" | remove_first: "/" %}
-		{% if normalized_check != "" %}
-			{% assign normalized_check = normalized_check | remove_last: "/" %}
-		{% endif %}
-
-		{% if normalized_current == normalized_check %}
-			{% assign show_loader = true %}
-			{% break %}
-		{% endif %}
-	{% endfor %}
-	{% if show_loader %}
-		{% include utilities/loader.html %}
-	{% endif %}
+	{% include utilities/loader.html %}
 {% endif %}

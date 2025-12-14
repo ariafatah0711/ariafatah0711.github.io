@@ -1,21 +1,11 @@
 {% comment %}
 Page Loader Component
-Shows loading animation on page transitions
+
+Simplified behavior:
+- Shows only on full page loads.
+- No "always_show" / per-route rules.
+- No sessionStorage memory (reload = show again).
 {% endcomment %}
-
-{% assign is_always_show = false %}
-
-{% if site.app.loader.always_show %}
-  {% for always_path in site.app.loader.always_show %}
-    {% assign normalized_always = always_path | replace: "/index.html","" | replace: "index.html","" | remove_first:"/" %}
-    {% assign normalized_current = page.url | replace: "/index.html","" | replace: "index.html","" | remove_first:"/" %}
-
-    {% if normalized_current == normalized_always %}
-      {% assign is_always_show = true %}
-      {% break %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
 
 <div id="page-loader" class="page-loader">
   <div id="loader-words"></div>
@@ -32,25 +22,16 @@ Shows loading animation on page transitions
 
 <script>
 (function() {
-
-  const isAlwaysShow = {{ is_always_show | jsonify }};
   const loader = document.getElementById("page-loader");
   const container = document.getElementById("loader-words");
+
+  if (!loader || !container) return;
 
   {% if site.app.loader.custom_teks and site.app.loader.custom_teks.size > 0 %}
     let words = {{ site.app.loader.custom_teks | jsonify }};
   {% else %}
     let words = ["Loading", "Please wait"];
   {% endif %}
-
-  if (!isAlwaysShow) {
-    try {
-      if (sessionStorage.getItem("loaderShown") === "true") {
-        loader.remove();
-        return;
-      }
-    } catch (e) {}
-  }
 
   // Hide overflow while loader is active
   document.documentElement.classList.add("loader-active");
@@ -63,9 +44,22 @@ Shows loading animation on page transitions
     container.appendChild(h1);
   });
 
+  function teardownLoader() {
+    try { loader.remove(); } catch (e) {}
+    document.documentElement.classList.remove("loader-active");
+    document.body.classList.remove("loader-active");
+  }
+
   window.addEventListener("load", function() {
 
-    const tl = gsap.timeline();
+    // If GSAP didn't load (CDN blocked/offline), don't get stuck.
+    if (!window.gsap || typeof window.gsap.timeline !== "function") {
+      // Small delay to avoid a flash on very fast loads
+      window.setTimeout(teardownLoader, 200);
+      return;
+    }
+
+    const tl = window.gsap.timeline();
 
     tl.from("#page-loader", {
       opacity: 0,
@@ -98,13 +92,7 @@ Shows loading animation on page transitions
       duration: 0.8,
       ease: "cubic.inOut",
       onComplete() {
-        loader.remove();
-        // Remove overflow hidden when loader is done
-        document.documentElement.classList.remove("loader-active");
-        document.body.classList.remove("loader-active");
-        if (!isAlwaysShow) {
-          try { sessionStorage.setItem("loaderShown", "true"); } catch (e) {}
-        }
+        teardownLoader();
       }
     }, "+=0.3");
 

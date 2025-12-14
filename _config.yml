@@ -84,12 +84,6 @@ app:
     song: assets/song/song.m4a
   loader:
     active: True
-    path:
-      - /
-      - /*
-      - /about/
-    always_show:
-      - /about/
     custom_teks:
       - "IT Enthusiast"
       - "Fokus di Cyber Security & Networking"
