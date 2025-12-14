@@ -48,18 +48,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function setRepoStatsOnElement(el, stats) {
     if (!el || !stats) return;
+    function toCount(value) {
+      if (value == null) return 0;
+      if (value === "-") return 0;
+      var n = Number(value);
+      return Number.isFinite(n) && n >= 0 ? n : 0;
+    }
     var starEl = el.querySelector(".star-count");
-    if (starEl) starEl.textContent = String(stats.stars ?? "-");
+    if (starEl) starEl.textContent = String(toCount(stats.stars));
     var forkEl = el.querySelector(".fork-count");
-    if (forkEl) forkEl.textContent = String(stats.forks ?? "-");
+    if (forkEl) forkEl.textContent = String(toCount(stats.forks));
   }
 
   function clearRepoStatsOnElement(el) {
     if (!el) return;
     var starEl = el.querySelector(".star-count");
-    if (starEl) starEl.textContent = "-";
+    if (starEl) starEl.textContent = "0";
     var forkEl = el.querySelector(".fork-count");
-    if (forkEl) forkEl.textContent = "-";
+    if (forkEl) forkEl.textContent = "0";
   }
 
   function loadRepoStatsFromProfileJson() {

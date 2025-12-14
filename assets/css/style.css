@@ -28,8 +28,8 @@
   --body-bg: #ffffff;
   --primary-font-color: #1a1a1a;
   --border-color: #d0d0d0;
-  --loader-bg: #212121;
-  --loader-color: #fff;
+  --loader-bg: #f5f5f5;
+  --loader-color: #222;
 
   /* Accent tokens (shared across themes) */
   --accent-color: #0066cc;
@@ -61,6 +61,9 @@
 html {
   scrollbar-gutter: stable !important;
   overflow-x: hidden !important;
+}
+
+html.theme-ready {
   transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease);
 }
 
@@ -72,6 +75,9 @@ body {
   color: var(--primary-font-color);
   margin: 0;
   padding: 5px 12px;
+}
+
+html.theme-ready body {
   transition: background-color var(--ui-dur) var(--ui-ease), color var(--ui-dur) var(--ui-ease);
 }
 

@@ -211,21 +211,44 @@
 }
 
 .github-stars {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: gold;
     background: rgba(0, 0, 0, 0.65);
     padding: 4px 8px;
-    border-radius: 6px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+}
+
+.github-stars .github-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.github-stars .github-stat-icon {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    fill: currentColor;
+}
+
+.github-stars .github-stat-sep {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.8;
 }
 
 .github-stars .star-count {
     font-weight: 700;
-    margin-left: 4px;
 }
 
 .github-stars .fork-count {
     font-weight: 700;
-    margin-left: 4px;
 }
 
 .stars-overlay {

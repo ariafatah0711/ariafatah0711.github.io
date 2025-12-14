@@ -72,7 +72,19 @@ Displays project gallery grid from _data/projects.yml
           <!-- Stars overlay in top-right -->
           {% if project.repo != blank %}
             <div class="stars-overlay github-stars" data-repo="{{ project.repo }}" title="GitHub stars">
-              ★ <span class="star-count">-</span> · Forks <span class="fork-count">-</span>
+              <span class="github-stat" aria-label="Stars">
+                <svg class="github-stat-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                </svg>
+                <span class="star-count">0</span>
+              </span>
+              <span class="github-stat-sep" aria-hidden="true"></span>
+              <span class="github-stat" aria-label="Forks">
+                <svg class="github-stat-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M17 6a3 3 0 1 0-2.83-4H14a3 3 0 0 0 3 3zM7 22a3 3 0 1 0-2.83-4H4a3 3 0 0 0 3 3zm0-17a3 3 0 1 0-2.83-4H4a3 3 0 0 0 3 3zm10 4.17V8a1 1 0 0 0-1-1H8a3 3 0 0 1 0 2h7v.17a3 3 0 0 0 0 5.66V18h-5.17a3 3 0 0 1 0 2H16a1 1 0 0 0 1-1v-1.17a3 3 0 0 0 0-5.66z"></path>
+                </svg>
+                <span class="fork-count">0</span>
+              </span>
             </div>
           {% endif %}
         {% else %}
