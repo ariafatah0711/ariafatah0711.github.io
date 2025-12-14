@@ -90,8 +90,8 @@ app:
       - "Mahasiswa STT Nurul Fikri"
   cursor_splash:
     active: True
-
-# pwa (opsional)
+  meeting-js:
+    active: True
 # pwa:
 #   enabled: true
 #   sw_src_filepath: service-worker.js # Optional
