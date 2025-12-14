@@ -6,8 +6,25 @@
     window.__pjaxRuntimeId = Math.random().toString(16).slice(2);
   }
 
+  function applyLayoutMode() {
+    var swupEl = document.querySelector("#swup");
+    var mode = (swupEl && swupEl.getAttribute("data-layout")) || "default";
+    var isAbout = mode === "about";
+
+    if (document.body) {
+      document.body.classList.toggle("layout-about", isAbout);
+    }
+
+    var shell = document.getElementById("appShell");
+    if (shell) {
+      // Reuse existing about layout CSS by toggling the class.
+      shell.classList.toggle("about-layout", isAbout);
+    }
+  }
+
   function dispatchAppPageLoad() {
     try {
+      applyLayoutMode();
       document.dispatchEvent(new Event("app:page-load"));
       console.info("[PJAX] app:page-load", window.location.pathname, "rid=" + window.__pjaxRuntimeId);
     } catch (e) {

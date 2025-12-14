@@ -3,50 +3,10 @@ Redirect Handler Component
 Handles page redirects
 {% endcomment %}
 
-<script>
-(function () {
-    function handleRedirect() {
-        // cegah jalan kalau belum ada DOM
-        if (!document.body) return;
-
-        const hash = window.location.hash;
-        const nextPage = "{{ page.next.url | relative_url }}#next";
-        const prevPage = "{{ page.previous.url | relative_url }}#prev";
-        const redirectPage = "{{ page.url_to_redirect }}";
-
-        // debug aman
-        // console.log("Redirect handler running:", hash);
-
-        if (hash === "#no-redirect") return;
-
-        if (hash === "#next" && nextPage) {
-            window.location.assign(nextPage);
-            return;
-        }
-
-        if (hash === "#prev" && prevPage) {
-            window.location.assign(prevPage);
-            return;
-        }
-
-        if (redirectPage) {
-            window.location.assign(redirectPage);
-        }
-    }
-
-    // LOAD PERTAMA
-    document.addEventListener("DOMContentLoaded", handleRedirect);
-
-    // Unified internal event for PJAX engines
-    document.addEventListener("app:page-load", handleRedirect);
-
-    // PJAX (jquery-pjax / generic)
-    document.addEventListener("pjax:complete", handleRedirect);
-
-    // TURBO (Hotwire)
-    document.addEventListener("turbo:load", handleRedirect);
-
-    // FALLBACK: hash berubah tanpa reload
-    window.addEventListener("hashchange", handleRedirect);
-})();
-</script>
+<div
+  data-redirect-handler
+  data-redirect-url="{{ page.url_to_redirect }}"
+  data-next-url="{% if page.next %}{{ page.next.url | relative_url }}{% endif %}"
+  data-prev-url="{% if page.previous %}{{ page.previous.url | relative_url }}{% endif %}"
+  style="display:none;"
+></div>

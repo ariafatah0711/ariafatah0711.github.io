@@ -5,13 +5,13 @@ Previous/Next post navigation
 
 <div class="pagination">
 	{% if page.next %}
-		<a class="prev" href="{{ page.next | relative_url }}#next">< Previous</a>
+		<a class="prev" href="{{ page.next.url | relative_url }}#next">< Previous</a>
 	{% else %}
 		<span class="prev"></span>
 	{% endif %}
 
 	{% if page.previous %}
-		<a class="next" href="{{ page.previous | relative_url }}#prev">Next ></a>
+		<a class="next" href="{{ page.previous.url | relative_url }}#prev">Next ></a>
 	{% else %}
 		<span class="next"></span>
 	{% endif %}

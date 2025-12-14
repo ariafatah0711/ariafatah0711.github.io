@@ -360,3 +360,23 @@ img {
 #swup {
   width: 100%;
 }
+
+/*
+  Layout mode switching (default vs about) under PJAX:
+  keep both shells in DOM and only toggle visibility.
+*/
+[data-shell] {
+  width: 100%;
+}
+
+[data-shell="about"] {
+  display: none;
+}
+
+body.layout-about [data-shell="default"] {
+  display: none;
+}
+
+body.layout-about [data-shell="about"] {
+  display: block;
+}

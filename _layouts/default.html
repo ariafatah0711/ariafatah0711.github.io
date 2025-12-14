@@ -1,11 +1,17 @@
 {% include header.html %}
 {% include components/page-loader.html %}
 
-<div class="container">
-	{% include components/profile.html %}
-	{% include components/navbar.html %}
+<div class="container" id="appShell">
+	<div data-shell="default">
+		{% include components/profile.html %}
+		{% include components/navbar.html %}
+	</div>
+	<div data-shell="about">
+		{% include components/about-nav-wrapper.html %}
+		{% include components/mobile-menu.html %}
+	</div>
 
-	<div id="swup">
+	<div id="swup" data-layout="default">
 		{{ content }}
 	</div>
 	{% include components/footer.html %}

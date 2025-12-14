@@ -10,7 +10,7 @@ Displays navigation links at top of page
     {% if nav_url contains '://' %}
       <a href="{{ nav_url }}" style="margin-right: 20px;">{{ item.name }}</a>
     {% else %}
-      <a href="{{ nav_url | relative_url }}" style="margin-right: 20px;"{% if nav_url contains '/about' %} data-no-swup{% endif %}>{{ item.name }}</a>
+	  <a href="{{ nav_url | relative_url }}" style="margin-right: 20px;">{{ item.name }}</a>
     {% endif %}
   {% endfor %}
 </div>
