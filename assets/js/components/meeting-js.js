@@ -1,10 +1,9 @@
-// meeting-js.js - Auto-minimize player on inactivity
+// meeting-js.js - Hover to toggle minimize/maximize
 (function () {
   "use strict";
 
   var playerContainer = null;
   var aplayerInstance = null;
-  var inactivityTimeout = null;
   var isMinimized = false;
   var isPlayerOpen = false; // Track if player has been opened at least once
 
@@ -25,49 +24,50 @@
   function setupAutoMinimize() {
     if (!aplayerInstance) return;
 
-    // Add event listeners for activity
-    var events = ["mouseenter", "mouseleave", "click", "touchstart", "touchend"];
+    // Add event listeners for hover to toggle
+    playerContainer.addEventListener("mouseenter", maximizePlayer, false);
+    playerContainer.addEventListener("mouseleave", minimizePlayer, false);
 
-    events.forEach(function (event) {
-      playerContainer.addEventListener(event, resetInactivityTimer, false);
-    });
+    // Add manual toggle for minimize/maximize on pic click
+    var pic = aplayerInstance.querySelector(".aplayer-pic");
+    if (pic) {
+      pic.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (isMinimized) {
+          maximizePlayer();
+        } else {
+          minimizePlayer();
+        }
+      });
+    }
 
-    // Start inactivity timer when player is first opened
+    // Observer for class changes
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
-        if (mutation.type === "attributes" && mutation.attributeName === "style") {
-          var display = window.getComputedStyle(playerContainer).display;
-          if (display !== "none") {
+        if (mutation.type === "attributes" && mutation.attributeName === "class") {
+          var hasNarrow = aplayerInstance.classList.contains("aplayer-narrow");
+          var wasMinimized = isMinimized;
+          isMinimized = hasNarrow;
+          if (!hasNarrow && wasMinimized) {
+            // Just maximized
+          } else if (!hasNarrow && !isPlayerOpen) {
             isPlayerOpen = true;
-            resetInactivityTimer();
           }
         }
       });
     });
 
-    observer.observe(playerContainer, {
+    observer.observe(aplayerInstance, {
       attributes: true,
-      attributeFilter: ["style"],
+      attributeFilter: ["class"],
     });
 
     // Initial check
-    if (window.getComputedStyle(playerContainer).display !== "none") {
+    var initialHasNarrow = aplayerInstance.classList.contains("aplayer-narrow");
+    isMinimized = initialHasNarrow;
+    if (!initialHasNarrow) {
       isPlayerOpen = true;
-      resetInactivityTimer();
     }
-  }
-
-  function resetInactivityTimer() {
-    if (!isPlayerOpen) return;
-
-    clearTimeout(inactivityTimeout);
-    if (isMinimized) {
-      maximizePlayer();
-    }
-
-    inactivityTimeout = setTimeout(function () {
-      minimizePlayer();
-    }, 5000); // 5 seconds inactivity
   }
 
   function minimizePlayer() {
