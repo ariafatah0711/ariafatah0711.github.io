@@ -6,7 +6,12 @@ Displays navigation links at top of page
 {% if page.hidden_navbar != true %}
 <div style="display: flex; margin-bottom: 20px; height: 100%;">
   {% for item in site.app.navbar %}
-    <a href="{{ item.url }}" style="margin-right: 20px;">{{ item.name }}</a>
+    {% assign nav_url = item.url | to_s %}
+    {% if nav_url contains '://' %}
+      <a href="{{ nav_url }}" style="margin-right: 20px;">{{ item.name }}</a>
+    {% else %}
+      <a href="{{ nav_url | relative_url }}" style="margin-right: 20px;"{% if nav_url contains '/about' %} data-no-swup{% endif %}>{{ item.name }}</a>
+    {% endif %}
   {% endfor %}
 </div>
 {% endif %}

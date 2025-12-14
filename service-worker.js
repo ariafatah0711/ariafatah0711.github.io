@@ -2,7 +2,7 @@ importScripts("/assets/js/workbox-sw.js");
 
 workbox.core.setCacheNameDetails({
   prefix: "jekyll-pwa",
-  suffix: "v1.0",
+  suffix: "v1.1",
 });
 
 workbox.core.skipWaiting();

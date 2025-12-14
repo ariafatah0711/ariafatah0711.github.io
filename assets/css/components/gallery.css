@@ -110,6 +110,18 @@
     transform: scale(1.03);
 }
 
+/*
+    Safety net: ensure gallery thumbnails always fill the tile.
+    (Prevents global `.clickable-image` rules or lazy-load placeholder sizing from leaving empty space.)
+*/
+.gallery-item>img.clickable-image {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    flex: 1 1 auto;
+}
+
 .gallery-overlay {
     position: absolute;
     bottom: 0;

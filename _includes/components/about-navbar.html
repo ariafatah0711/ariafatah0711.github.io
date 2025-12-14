@@ -4,7 +4,7 @@ Navigation bar for about layout
 {% endcomment %}
 
 <nav class="about-navbar">
-	<a href="{{ site.baseurl }}">home</a>
+	<a href="{{ '/' | relative_url }}">home</a>
 	{% for item in site.app.navbar %}
 		<a href="{{ item.url }}">{{ item.name }}</a>
 	{% endfor %}

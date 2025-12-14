@@ -68,7 +68,10 @@ html.theme-ready {
 }
 
 body {
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
+  /* Use dynamic viewport height when supported (prevents address-bar/resize jank). */
+  min-height: 100dvh;
   font-family: 'Catamaran', sans-serif;
   font-weight: 300;
   background: var(--body-bg);
@@ -351,4 +354,9 @@ img {
 ::selection {
   background: var(--bg-hover-color);
   color: var(--primary-font-color);
+}
+
+/* pjax */
+#swup {
+  width: 100%;
 }

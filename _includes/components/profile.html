@@ -5,19 +5,11 @@ Displays user profile section with bio and social icons
 
 <div class="profile">
 	<div class="profile-header">
-		<a href="{{ site.url }}">
+		<a href="{{ '/' | relative_url }}">
 			<img src="{{ site.author.picture }}" class="profile-image" alt="profile-image" height="128px" width="128px" loading="lazy">
 		</a>
 		{% if site.app.show_discord.active %}
-			<script>
-				document.addEventListener("DOMContentLoaded", () => {
-					let discordId = "{{ site.app.show_discord.discord_id }}"
-					let cacheTime = "{{ site.app.show_discord.cacheTime }}";
-					if (!cacheTime) cacheTime = undefined;
-					checkDiscordStatus(discordId, cacheTime);
-				});
-			</script>
-			<span id="status">Memeriksa status...</span>
+			<span id="status" data-discord-id="{{ site.app.show_discord.discord_id }}" data-cache-time="{{ site.app.show_discord.cacheTime }}">Memeriksa status...</span>
 		{% endif %}
 	</div>
 	<div class="profile-about">

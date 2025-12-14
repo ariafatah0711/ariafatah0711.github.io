@@ -514,23 +514,30 @@ function renderContributionGraph(graphData) {
   debugLog("[GitHub Profile] Contribution graph rendered from JSON data");
 }
 
-// Auto-init when DOM ready
-document.addEventListener("DOMContentLoaded", async () => {
+var __gpInitInFlight = false;
+
+async function initGitHubProfile() {
   const wrapper = document.querySelector("[data-github-username]");
-  if (!wrapper) {
-    console.warn("[GitHub Profile] No data-github-username attribute found");
-    return;
+  if (!wrapper) return;
+  if (__gpInitInFlight) return;
+  __gpInitInFlight = true;
+
+  try {
+    debugLog("[GitHub Profile] Initializing profile...");
+
+    // Load data from JSON (or fallback to API)
+    const profileData = await loadProfileData();
+
+    if (profileData) {
+      await updateProfileUI(profileData);
+      await renderPinnedRepos(profileData);
+    } else {
+      console.error("[GitHub Profile] Failed to load any data");
+    }
+  } finally {
+    __gpInitInFlight = false;
   }
+}
 
-  debugLog("[GitHub Profile] Initializing profile...");
-
-  // Load data from JSON (or fallback to API)
-  const profileData = await loadProfileData();
-
-  if (profileData) {
-    await updateProfileUI(profileData);
-    await renderPinnedRepos(profileData);
-  } else {
-    console.error("[GitHub Profile] Failed to load any data");
-  }
-});
+document.addEventListener("DOMContentLoaded", initGitHubProfile);
+document.addEventListener("app:page-load", initGitHubProfile);

@@ -1,11 +1,11 @@
 {% include header.html %}
 {% include components/page-loader.html %}
 
-<div class="container about-layout">
+<div class="container about-layout" data-no-swup>
 	{% include components/about-nav-wrapper.html %}
 	{% include components/mobile-menu.html %}
 
-	<div class="about-content">
+	<div class="about-content" id="swup">
 		{{ content }}
 	</div>
 
@@ -13,8 +13,3 @@
 </div>
 
 {% include footer.html %}
-
-<script src="{{ '/assets/js/pages/about.js' | relative_url }}" defer></script>
-{% if site.app.linktree.active %}
-<script src="{{ '/assets/js/components/linktree.js' | relative_url }}" defer></script>
-{% endif %}

@@ -1,16 +1,20 @@
-const elementHtmlStatus = document.getElementById("status");
+// PJAX-safe: don't keep a stale element reference.
+function getStatusEl() {
+  return document.getElementById("status");
+}
 
 async function checkDiscordStatus(DISCORD_ID, cacheTime = 15000) {
   const CACHE_KEY = "discordStatusCache";
+  const statusEl = getStatusEl();
+  if (!statusEl) return;
 
   try {
-    console.log(`fetch ${DISCORD_ID}, ${cacheTime}`);
     const cachedData = localStorage.getItem(CACHE_KEY);
     const cachedTime = parseInt(localStorage.getItem("cacheTime"), 10) || 0;
 
     // Jika cache masih valid, gunakan cache
     if (cachedData && cachedTime && new Date().getTime() - cachedTime < cacheTime) {
-      elementHtmlStatus.innerHTML = cachedData;
+      statusEl.innerHTML = cachedData;
       return;
     }
 
@@ -20,21 +24,21 @@ async function checkDiscordStatus(DISCORD_ID, cacheTime = 15000) {
     const data = await response.json();
 
     if (data.success) {
-      const statusMessage = updateStatus(data.data);
+      const statusMessage = updateStatus(data.data, statusEl);
 
       // Simpan hasilnya di localStorage
       localStorage.setItem(CACHE_KEY, statusMessage);
       localStorage.setItem("cacheTime", new Date().getTime());
     } else {
-      elementHtmlStatus.innerText = "Gagal mendapatkan status.";
+      statusEl.innerText = "Gagal mendapatkan status.";
     }
   } catch (error) {
     console.error("Gagal mengambil data:", error);
-    elementHtmlStatus.innerText = "Error saat mengambil data.";
+    statusEl.innerText = "Error saat mengambil data.";
   }
 }
 
-function updateStatus(data) {
+function updateStatus(data, statusEl) {
   let statusMessage = "";
 
   // SVG Icons - standardized sizing
@@ -116,6 +120,26 @@ function updateStatus(data) {
   const messages = [statusMessage, spotifyMessage, activityMessage].filter(Boolean);
   const allMessages = messages.length > 0 ? messages.join("") : "Status tidak tersedia";
 
-  elementHtmlStatus.innerHTML = allMessages;
+  if (statusEl) statusEl.innerHTML = allMessages;
   return allMessages;
 }
+
+function initDiscordStatus() {
+  var statusEl = getStatusEl();
+  if (!statusEl) return;
+
+  var discordId = statusEl.getAttribute("data-discord-id");
+  if (!discordId) return;
+
+  var cacheTimeAttr = statusEl.getAttribute("data-cache-time");
+  var cacheTime = cacheTimeAttr ? Number(cacheTimeAttr) : 15000;
+  if (!Number.isFinite(cacheTime) || cacheTime <= 0) cacheTime = 15000;
+
+  checkDiscordStatus(discordId, cacheTime);
+}
+
+// Backward compat (if any old inline callers remain)
+window.checkDiscordStatus = checkDiscordStatus;
+
+document.addEventListener("DOMContentLoaded", initDiscordStatus);
+document.addEventListener("app:page-load", initDiscordStatus);
