@@ -1,8 +1,19 @@
 (function () {
   "use strict";
 
-  function qs(id) {
-    return document.getElementById(id);
+  // Cari #linktreeBox di shell yang aktif (display:block)
+  function getActiveLinktreeBox() {
+    // Cari shell aktif
+    const shells = document.querySelectorAll("[data-shell]");
+    for (const shell of shells) {
+      const style = window.getComputedStyle(shell);
+      if (style.display !== "none") {
+        const box = shell.querySelector("#linktreeBox");
+        if (box) return box;
+      }
+    }
+    // Fallback: cari langsung di root
+    return document.getElementById("linktreeBox");
   }
 
   function showAlertCompat(message) {
@@ -26,11 +37,14 @@
   }
 
   function openViaHash() {
+    // Buka overlay di shell aktif
+    const box = getActiveLinktreeBox();
+    if (box) setOpen(box, true);
     location.hash = "linktree";
   }
 
   function handleHashChange() {
-    const box = qs("linktreeBox");
+    const box = getActiveLinktreeBox();
     if (!box) return;
 
     if (window.location.hash === "#linktree") {
@@ -58,37 +72,38 @@
   }
 
   function bind() {
-    const box = qs("linktreeBox");
+    const box = getActiveLinktreeBox();
     if (!box) return;
 
     if (box.dataset.bound === "true") return;
     box.dataset.bound = "true";
 
     const inner = box.querySelector(".linktree-inner");
-    const openBtn = document.querySelector('[data-action="open-linktree"]');
-    const closeBtn = box.querySelector('[data-action="close-linktree"]');
-    const cvBtn = document.querySelector('[data-action="download-cv"]');
 
-    if (openBtn) {
-      openBtn.addEventListener("click", (e) => {
+    // Patch: bind to ALL matching buttons, not just the first
+    const openBtns = document.querySelectorAll('[data-action="open-linktree"]');
+    openBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
         e.preventDefault();
         openViaHash();
       });
-    }
+    });
 
-    if (closeBtn) {
-      closeBtn.addEventListener("click", (e) => {
+    const closeBtns = box.querySelectorAll('[data-action="close-linktree"]');
+    closeBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
         e.preventDefault();
         setOpen(box, false);
       });
-    }
+    });
 
-    if (cvBtn) {
-      cvBtn.addEventListener("click", (e) => {
+    const cvBtns = document.querySelectorAll('[data-action="download-cv"]');
+    cvBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
         e.preventDefault();
         downloadCV();
       });
-    }
+    });
 
     box.addEventListener("click", (e) => {
       if (inner && !inner.contains(e.target)) {
@@ -103,7 +118,7 @@
 
       // Shortcut: press L to open linktree if it exists
       if (!event.ctrlKey && String(event.key || "").toLowerCase() === "l") {
-        if (!qs("linktreeBox")) return;
+        if (!getActiveLinktreeBox()) return;
         event.preventDefault();
         openViaHash();
       }
