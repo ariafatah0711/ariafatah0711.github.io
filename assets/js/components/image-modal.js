@@ -139,7 +139,7 @@
     if (!state.modalEl) return;
 
     state.scrollPosition = window.scrollY || 0;
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("modal-open");
 
     state.currentIndex = index;
     state.modalEl.style.display = "flex";
@@ -154,7 +154,7 @@
     if (!state.modalEl) return;
 
     state.modalEl.style.display = "none";
-    document.body.style.overflow = "auto";
+    document.body.classList.remove("modal-open");
 
     try {
       window.scrollTo(0, state.scrollPosition);
@@ -474,4 +474,11 @@
       init();
     });
   }
+
+  // Also listen to app:page-load to ensure modal is closed on page changes
+  document.addEventListener("app:page-load", function () {
+    if (state.modalEl && state.modalEl.style.display === "flex") {
+      closeModal();
+    }
+  });
 })();

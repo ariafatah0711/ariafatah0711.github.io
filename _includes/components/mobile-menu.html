@@ -4,7 +4,7 @@ Mobile navigation menu
 {% endcomment %}
 
 <div class="mobile-menu" id="mobileMenu">
-	<a href="{{ site.baseurl }}">home</a>
+	<a href="{{ '/' | relative_url }}">home</a>
 	{% for item in site.app.navbar %}
 		<a href="{{ item.url }}">{{ item.name }}</a>
 	{% endfor %}

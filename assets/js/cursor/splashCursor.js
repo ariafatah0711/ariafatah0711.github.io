@@ -1,9 +1,8 @@
 // Splash Cursor effect - vanilla JS port
 
 (function () {
-  // Prevent duplicate initialization
-  if (window.__splashCursorInitialized) return;
-  window.__splashCursorInitialized = true;
+  // Allow re-initialization for PJAX
+  // Removed global check to allow re-init on page load
 
   const SIM_RESOLUTION = 128;
   const DYE_RESOLUTION = 1440;
@@ -40,7 +39,10 @@
     listeners.clear();
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  function initCursor() {
+    // Prevent duplicate canvas
+    if (document.getElementById("fluid")) return;
+
     const canvas = document.createElement("canvas");
     canvas.id = "fluid";
     canvas.style.position = "fixed";
@@ -1196,5 +1198,8 @@
 
     // Auto splash during page loader (if present)
     startAutoLoaderSplash();
-  });
+  }
+
+  document.addEventListener("DOMContentLoaded", initCursor);
+  document.addEventListener("app:page-load", initCursor);
 })();
