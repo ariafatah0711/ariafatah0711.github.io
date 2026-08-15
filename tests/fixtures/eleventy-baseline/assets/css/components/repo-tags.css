@@ -1,0 +1,30 @@
+/* Repository Tags Styles */
+
+.repo_tags {
+    text-align: left;
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-top: 24px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.repo_tags .repo_tag {
+    background: var(--bg-hover-color);
+    color: var(--primary-font-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-block;
+    border: 1px solid var(--border-color);
+}
+
+.repo_tags .repo_tag::before {
+    content: "#";
+    margin-right: 4px;
+    font-weight: 700;
+    opacity: 0.7;
+}

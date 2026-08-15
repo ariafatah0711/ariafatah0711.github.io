@@ -5,20 +5,21 @@ import pixelmatch from "pixelmatch";
 import { PNG } from "pngjs";
 import { startStaticServer } from "../scripts/serve-static.mjs";
 
-const legacyOrigin = "http://127.0.0.1:8081";
-const migratedOrigin = "http://127.0.0.1:8080";
+const baselineOrigin = "http://127.0.0.1:8081";
+const currentOrigin = "http://127.0.0.1:8080";
 const artifactDirectory = path.resolve(".artifacts/visual");
+const baselineDirectory = path.resolve("tests/fixtures/eleventy-baseline");
 const profileFixture = JSON.parse(await readFile("src/content/drafts/profile.json", "utf8"));
-let legacyServer;
-let migratedServer;
+let baselineServer;
+let currentServer;
 
 test.beforeAll(async () => {
-  migratedServer = await startStaticServer("dist", 8080);
-  legacyServer = await startStaticServer("_site", 8081);
+  currentServer = await startStaticServer("dist", 8080);
+  baselineServer = await startStaticServer(baselineDirectory, 8081, ["dist"]);
 });
 
 test.afterAll(async () => {
-  for (const server of [migratedServer, legacyServer]) {
+  for (const server of [currentServer, baselineServer]) {
     server?.closeAllConnections?.();
     await new Promise((resolve) => server?.close(resolve));
   }
@@ -83,6 +84,7 @@ for (const scenario of [
   { name: "gallery", route: "/gallery/" },
   { name: "projects", route: "/projects/" },
   { name: "tags", route: "/tags/" },
+  { name: "404", route: "/404.html" },
   { name: "raw-html-post", route: "/blog/itclub" },
   { name: "post", route: "/blog/praktikum_uiux" }
 ]) {
@@ -94,28 +96,28 @@ for (const scenario of [
   ]) {
     test(`@visual ${scenario.name} ${mode.name}`, async ({ browser }) => {
       await mkdir(artifactDirectory, { recursive: true });
-      const legacy = await capture(browser, legacyOrigin, scenario.route, mode.viewport, mode.theme);
-      const migrated = await capture(browser, migratedOrigin, scenario.route, mode.viewport, mode.theme);
-      const legacyPng = PNG.sync.read(legacy);
-      const migratedPng = PNG.sync.read(migrated);
-      expect(migratedPng.width).toBe(legacyPng.width);
-      expect(migratedPng.height).toBe(legacyPng.height);
+      const baseline = await capture(browser, baselineOrigin, scenario.route, mode.viewport, mode.theme);
+      const current = await capture(browser, currentOrigin, scenario.route, mode.viewport, mode.theme);
+      const baselinePng = PNG.sync.read(baseline);
+      const currentPng = PNG.sync.read(current);
+      expect(currentPng.width).toBe(baselinePng.width);
+      expect(currentPng.height).toBe(baselinePng.height);
 
-      const diff = new PNG({ width: legacyPng.width, height: legacyPng.height });
+      const diff = new PNG({ width: baselinePng.width, height: baselinePng.height });
       const mismatched = pixelmatch(
-        legacyPng.data,
-        migratedPng.data,
+        baselinePng.data,
+        currentPng.data,
         diff.data,
-        legacyPng.width,
-        legacyPng.height,
+        baselinePng.width,
+        baselinePng.height,
         { threshold: 0.1 }
       );
       const basename = `${scenario.name}-${mode.name}`;
-      await writeFile(path.join(artifactDirectory, `${basename}-jekyll.png`), legacy);
-      await writeFile(path.join(artifactDirectory, `${basename}-eleventy.png`), migrated);
+      await writeFile(path.join(artifactDirectory, `${basename}-baseline.png`), baseline);
+      await writeFile(path.join(artifactDirectory, `${basename}-current.png`), current);
       if (mismatched) await writeFile(path.join(artifactDirectory, `${basename}-diff.png`), PNG.sync.write(diff));
 
-      const ratio = mismatched / (legacyPng.width * legacyPng.height);
+      const ratio = mismatched / (baselinePng.width * baselinePng.height);
       expect(ratio, `${basename} pixel difference`).toBeLessThanOrEqual(0.005);
     });
   }
@@ -131,7 +133,7 @@ test("@behavior theme, PJAX, integrations, modals, and reset bindings", async ({
     if (url.hostname === "api.lanyard.rest") lanyardRequests.push(url.pathname);
   });
 
-  await settlePage(page, `${migratedOrigin}/`);
+  await settlePage(page, `${currentOrigin}/`);
   await expect(page.locator("#swup")).toHaveCount(1);
   await expect.poll(() => page.evaluate(() => Boolean(window.__swup))).toBe(true);
   await expect(page.locator("#status").first()).toHaveAttribute("data-discord-id", "879547455941779456");
@@ -143,40 +145,70 @@ test("@behavior theme, PJAX, integrations, modals, and reset bindings", async ({
   await expect(localPostLink).toHaveCount(1);
   await expect(page.locator('a.post-title[href="https://docs.ariaf.my.id"]')).toHaveCount(1);
   await localPostLink.click();
-  await expect(page).toHaveURL(`${migratedOrigin}/blog/praktikum_uiux`);
+  await expect(page).toHaveURL(`${currentOrigin}/blog/praktikum_uiux`);
   await page.goBack();
-  await expect(page).toHaveURL(`${migratedOrigin}/`);
+  await expect(page).toHaveURL(`${currentOrigin}/`);
 
   const themeToggle = page.locator('.theme-toggle:visible').first();
   await themeToggle.click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
   await page.locator('a[href="/about"]:visible').first().click();
-  await expect(page).toHaveURL(`${migratedOrigin}/about`);
+  await expect(page).toHaveURL(`${currentOrigin}/about`);
   await expect(page.locator('[data-gp-stat="followers"]')).toHaveText("108");
   await page.goBack();
-  await expect(page).toHaveURL(`${migratedOrigin}/`);
+  await expect(page).toHaveURL(`${currentOrigin}/`);
 
-  await settlePage(page, `${migratedOrigin}/gallery/`);
+  await settlePage(page, `${currentOrigin}/gallery/`);
   const category = page.locator('.filter-btn[data-category="certificate"]');
   await category.click();
   await expect(category).toHaveClass(/active/);
   await page.locator(".gallery-item .clickable-image").first().dispatchEvent("click");
   await expect(page.locator("#imageModal")).toHaveCSS("display", "flex");
 
-  await settlePage(page, `${migratedOrigin}/projects/`);
+  await settlePage(page, `${currentOrigin}/projects/`);
   await page.locator(".project-thumb-img").first().dispatchEvent("click");
   await expect(page.locator("#projectModal")).toHaveCSS("display", "flex");
 
-  await settlePage(page, `${migratedOrigin}/blog/praktikum_uiux`);
+  await settlePage(page, `${currentOrigin}/blog/praktikum_uiux`);
   await expect(page.locator("#disqus_thread")).toHaveAttribute("data-disqus-shortname", "ariafatah0711");
 
-  await settlePage(page, `${migratedOrigin}/info/`);
+  await settlePage(page, `${currentOrigin}/info/`);
   await expect(page.locator('[data-action="reset-local-data"]')).toHaveAttribute("data-bound", "true");
   await expect(page.locator('[data-action="reset-cache"]')).toHaveAttribute("data-bound", "true");
 
-  await settlePage(page, `${migratedOrigin}/blog/cisco_aria`);
-  await expect(page).toHaveURL(`${migratedOrigin}/blog/cisco_aria`);
+  await settlePage(page, `${currentOrigin}/blog/cisco_aria`);
+  await expect(page).toHaveURL(`${currentOrigin}/blog/cisco_aria`);
   await expect(page.locator("[data-redirect-handler]")).toHaveAttribute("data-redirect-url", "./cisco_aria");
+  await context.close();
+});
+
+test("@behavior linked local stylesheets return HTTP 200", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  await installStableEnvironment(context, "light");
+  const page = await context.newPage();
+  const checked = new Set();
+  const failures = [];
+
+  page.on("response", (response) => {
+    const request = response.request();
+    const url = new URL(response.url());
+    if (request.resourceType() !== "stylesheet" || url.origin !== currentOrigin) return;
+    checked.add(url.pathname);
+    if (response.status() !== 200) failures.push(`${url.pathname}: ${response.status()}`);
+  });
+  page.on("requestfailed", (request) => {
+    const url = new URL(request.url());
+    if (request.resourceType() === "stylesheet" && url.origin === currentOrigin) {
+      failures.push(`${url.pathname}: ${request.failure()?.errorText || "request failed"}`);
+    }
+  });
+
+  for (const route of ["/", "/projects/", "/blog/praktikum_uiux", "/tags/", "/404.html", "/gallery/"]) {
+    await settlePage(page, `${currentOrigin}${route}`);
+  }
+
+  expect(failures).toEqual([]);
+  expect(checked.size).toBeGreaterThan(0);
   await context.close();
 });

@@ -1,12 +1,19 @@
 # Eleventy Parity Notes
 
-## Baseline
+## Historical Migration Baseline
 
 - Jekyll checkpoint: `jekyll-final-2026-08-15` at `549f91f`.
 - Route contract: `docs/migration/jekyll-routes.json`.
 - Asset hashes: `docs/migration/jekyll-assets.sha256`.
 - Legacy root sources and the Ruby/Jekyll runtime were removed only after all parity gates passed; the tag retains them for rollback.
-- The ignored `_site/` snapshot is used only for local DOM, metadata, and visual comparison. Its development host is normalized during metadata comparison.
+- The ignored `_site/` snapshot and `compare:*` scripts are retained only as historical migration evidence. They are not active test dependencies.
+
+## Active Eleventy Baseline
+
+- Eleventy commit `93763de` is the visual baseline stored in `tests/fixtures/eleventy-baseline`.
+- Playwright renders the committed baseline and current `dist/` in the same browser, so the 0.5% regression threshold is independent of OS font rasterization.
+- `docs/migration/eleventy-assets.sha256` protects non-CSS public assets. CSS is checked for non-empty output, valid local imports, and resolvable linked stylesheet URLs.
+- Eleventy is the only implementation under active test; Ruby and Jekyll are not required.
 
 ## Compatibility Decisions
 
@@ -19,10 +26,10 @@
 
 - Node.js 24.19.0: clean Eleventy build and all route/link/asset/endpoint checks passed.
 - 43 explicit routes plus `/assets/**` passed.
-- 70 public files match the baseline and `dist/` output.
+- 46 non-CSS public files match the Eleventy integrity manifest and `dist/` output.
 - 43 legacy and migrated routes have matching parsed DOM contracts and stylesheet/script order.
 - Comparable title, description, Open Graph metadata, and URL paths match.
-- 28 Playwright comparisons passed at 1440x900 and 390x844, light and dark, with zero generated diff images.
+- The original 28 Jekyll/Eleventy comparisons passed at 1440x900 and 390x844, light and dark, with zero generated diff images. Active comparisons now use the committed Eleventy baseline and also cover `/404.html`.
 - Behavioral smoke tests passed for theme state, Swup/PJAX and back navigation, GitHub profile, Discord Lanyard, music markup, gallery/project modals, Disqus, cache-reset bindings, and link-post redirect data.
 
 ## Intentionally Deferred

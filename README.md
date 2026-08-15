@@ -28,13 +28,14 @@ Useful validation commands:
 
 ```bash
 npm run check
-npm run compare:builds
-npm run compare:metadata
 npm run check:visual
 npm run check:behavior
 ```
 
-The comparison and visual commands require the ignored Jekyll `_site/` baseline. Visual tests use Microsoft Edge on Windows or a Playwright Chromium installation on other platforms.
+Visual tests compare the current build with the committed Eleventy fixture in
+`tests/fixtures/eleventy-baseline`. Both sites are rendered in the same browser to avoid
+cross-platform font-rasterization noise. The historical `compare:*` scripts remain available
+only for migration archaeology and are not active validation gates.
 
 ## Deployment
 
@@ -47,8 +48,8 @@ Before the first production run, set the repository's Pages source to **GitHub A
 ```text
 src/       Eleventy data, Liquid templates, content, pages, and feeds
 public/    Byte-preserved static assets and root public files
-scripts/   Build, route, link, asset, metadata, and parity checks
-tests/     Playwright visual and behavioral parity checks
+scripts/   Build, route, link, asset, metadata, and integrity checks
+tests/     Playwright Eleventy visual-baseline and behavioral checks
 dist/      Generated production site (ignored by Git)
 ```
 

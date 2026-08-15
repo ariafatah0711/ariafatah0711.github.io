@@ -41,10 +41,14 @@ async function resolveRequest(directory, url) {
   }
 }
 
-export async function startStaticServer(rootDirectory, port) {
-  const directory = path.resolve(rootDirectory);
+export async function startStaticServer(rootDirectory, port, fallbackDirectories = []) {
+  const directories = [rootDirectory, ...fallbackDirectories].map((directory) => path.resolve(directory));
   const server = createServer(async (request, response) => {
-    const file = await resolveRequest(directory, request.url || "/");
+    let file;
+    for (const directory of directories) {
+      file = await resolveRequest(directory, request.url || "/");
+      if (file) break;
+    }
     if (!file) {
       response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
       response.end("Not found");

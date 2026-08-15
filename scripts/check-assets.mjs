@@ -4,34 +4,26 @@ import path from "node:path";
 import process from "node:process";
 
 const root = path.resolve(import.meta.dirname, "..");
-const manifest = await readFile(path.join(root, "docs/migration/jekyll-assets.sha256"), "utf8");
-const overrides = JSON.parse(
-  await readFile(path.join(root, "docs/migration/asset-overrides.json"), "utf8")
-);
+const manifest = await readFile(path.join(root, "docs/migration/eleventy-assets.sha256"), "utf8");
 
 function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
 }
 
-function matchesExpected(value, expected) {
-  if (sha256(value) === expected) return true;
+function normalizedHash(value) {
   if (value.includes(0)) return false;
+  return sha256(Buffer.from(value.toString("utf8").replace(/\r\n?|\n/g, "\n"), "utf8"));
+}
 
-  const normalized = Buffer.from(
-    value.toString("utf8").replace(/\r\n|\r|\n/g, "\n").replaceAll("\n", "\r\n"),
-    "utf8"
-  );
-  return sha256(normalized) === expected;
+function matchesExpected(value, expected) {
+  return sha256(value) === expected || normalizedHash(value) === expected;
 }
 
 const failures = [];
-const manifestPaths = new Set();
 let checked = 0;
 for (const line of manifest.split(/\r?\n/)) {
   if (!line.trim()) continue;
-  const [baselineExpected, sourcePath] = line.split(/  /, 2);
-  const expected = overrides[sourcePath]?.sha256 || baselineExpected;
-  manifestPaths.add(sourcePath);
+  const [expected, sourcePath] = line.split(/  /, 2);
   const publicPath = sourcePath.startsWith("assets/")
     ? path.join("public", sourcePath)
     : path.join("public", sourcePath);
@@ -49,15 +41,9 @@ for (const line of manifest.split(/\r?\n/)) {
   checked += 1;
 }
 
-for (const [sourcePath, override] of Object.entries(overrides)) {
-  if (!manifestPaths.has(sourcePath)) failures.push(`${sourcePath}: override is not in the baseline manifest`);
-  if (!/^[a-f0-9]{64}$/.test(override.sha256 || "")) failures.push(`${sourcePath}: invalid override hash`);
-}
-
 if (failures.length) {
-  console.error(`Asset parity failed:\n${failures.join("\n")}`);
+  console.error(`Eleventy asset integrity failed:\n${failures.join("\n")}`);
   process.exitCode = 1;
 } else {
-  const overrideCount = Object.keys(overrides).length;
-  console.log(`Verified ${checked} baseline/current, public, and dist asset hashes (${overrideCount} intentional override).`);
+  console.log(`Verified ${checked} non-CSS Eleventy asset hashes in public and dist.`);
 }

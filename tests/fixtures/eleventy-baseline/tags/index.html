@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+	<head>
+		<script>
+			(function () {
+				function getInitialTheme() {
+					try {
+						var stored = localStorage.getItem('theme');
+						if (stored === 'dark') return 'dark';
+						if (stored === 'light' || stored === '') return 'light';
+					} catch (e) {}
+					return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+						? 'dark'
+						: 'light';
+				}
+
+				var theme = getInitialTheme();
+				document.documentElement.setAttribute('data-theme', theme);
+				document.documentElement.style.colorScheme = theme;
+				// Prevent the browser from painting a white canvas before CSS loads.
+				// Keep these in sync with assets/css/style.css theme tokens.
+				if (theme === 'dark') {
+					document.documentElement.style.backgroundColor = '#0d1117';
+					document.documentElement.style.color = '#e8eef5';
+				} else {
+					document.documentElement.style.backgroundColor = '#ffffff';
+					document.documentElement.style.color = '#1a1a1a';
+				}
+				document.addEventListener('DOMContentLoaded', function () {
+					document.documentElement.classList.add('theme-ready');
+				});
+			})();
+		</script>
+
+		<!-- ========== Basic Meta Tags ========== -->
+		<!-- Basic Meta Tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<base href="/" />
+
+
+		<!-- ========== SEO & Social Meta Tags ========== -->
+		<!-- SEO & Social Meta Tags -->
+<title>Tags - ariaf.my.id</title>
+<meta name="description" content="Portfolio and blog showcasing projects and academic achievements.">
+<meta name="keywords" content="ariaf blog">
+
+<!-- Article Meta Tags -->
+
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:site_name" content="ariaf.my.id">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ariaf.my.id/tags/"/>
+<meta property="og:title" content="Tags - ariaf.my.id" />
+<meta property="og:description" content="Portfolio and blog showcasing projects and academic achievements." />
+<meta property="og:image" content="https://ariaf.my.id/assets/images/favicon.png"/>
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary"/>
+<meta property="twitter:title" content="Tags - ariaf.my.id" />
+<meta property="twitter:description" content="Portfolio and blog showcasing projects and academic achievements." />
+<meta property="twitter:image" content="https://ariaf.my.id/assets/images/favicon.png" />
+
+<!-- Verification & Manifest -->
+
+<link rel="manifest" href="/manifest.json">
+
+
+		<!-- ========== Core Stylesheets ========== -->
+		<!-- Core Stylesheets -->
+<link rel="preload" href="assets/css/style.css" as="style">
+<link rel="stylesheet" href="assets/css/highlight.css">
+<link rel="stylesheet" href="assets/css/style.css" media="all">
+<link rel="stylesheet" href="assets/css/components.css" media="all">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
+
+<meta name="github-profile-json-url" content="https://raw.githubusercontent.com/ariafatah0711/ariafatah0711.github.io/refs/heads/data-cache/data/profile.json">
+
+
+		<!-- ========== Gallery Stylesheets ========== -->
+		<!-- Gallery Stylesheets (conditional) -->
+
+
+
+		<!-- ========== Favicon & Feed Links ========== -->
+		<!-- Favicon & Feed Links -->
+<link rel="shortcut icon" href="assets/images/favicon.png" />
+<link rel="alternate" type="application/atom+xml" title="ariaf.my.id" href="https://ariaf.my.id/atom.xml">
+<link rel="alternate" type="application/json" title="ariaf.my.id" href="https://ariaf.my.id/feed.json" />
+<link rel="sitemap" type="application/xml" title="sitemap" href="https://ariaf.my.id/sitemap.xml" />
+
+
+		<!-- ========== Preload Resources ========== -->
+		<!-- Preload Resources -->
+<link rel="preload" href="assets/images/profile2-128.avif" as="image">
+<link rel="preload" href="assets/fonts/Catamaran-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Catamaran-Bold.woff2" as="font" type="font/woff2" crossorigin>
+
+
+		<!-- ========== Service Worker Disabled ========== -->
+		<script>
+		// Unregister all service workers if any are registered
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.getRegistrations().then(function(registrations) {
+				for(let registration of registrations) {
+					registration.unregister();
+				}
+			});
+		}
+		</script>
+	</head>
+<body>
+
+
+
+
+	
+
+<div id="page-loader" class="page-loader">
+  <div id="loader-words"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+  body.loader-active,
+  html.loader-active {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+(function() {
+  const loader = document.getElementById("page-loader");
+  const container = document.getElementById("loader-words");
+
+  if (!loader || !container) return;
+
+  
+    let words = ["IT Enthusiast","Fokus di Cyber Security & Networking","Belajar Web Dev & DevOps","Mahasiswa STT Nurul Fikri"];
+  
+
+  // Hide overflow while loader is active
+  document.documentElement.classList.add("loader-active");
+  document.body.classList.add("loader-active");
+
+  words.forEach(t => {
+    const h1 = document.createElement("h1");
+    h1.className = "header-text";
+    h1.textContent = t;
+    container.appendChild(h1);
+  });
+
+  function teardownLoader() {
+    try { loader.remove(); } catch (e) {}
+    document.documentElement.classList.remove("loader-active");
+    document.body.classList.remove("loader-active");
+  }
+
+  window.addEventListener("load", function() {
+
+    // If GSAP didn't load (CDN blocked/offline), don't get stuck.
+    if (!window.gsap || typeof window.gsap.timeline !== "function") {
+      // Small delay to avoid a flash on very fast loads
+      window.setTimeout(teardownLoader, 200);
+      return;
+    }
+
+    const tl = window.gsap.timeline();
+
+    tl.from("#page-loader", {
+      opacity: 0,
+      scale: 0.95,
+      duration: 0.8,
+      ease: "cubic.inOut"
+    });
+
+    tl.to({}, {duration: 0.2});
+
+    tl.to(".header-text", {
+      y: "-100%",
+      opacity: 1,
+      duration: 0.85,
+      ease: "cubic.out",
+      stagger: {
+        each: 0.8,
+        onComplete() {
+          gsap.to(this.targets()[0], {
+            opacity: 0,
+            duration: 0.3,
+            ease: "cubic.inOut"
+          });
+        }
+      }
+    });
+
+    tl.to("#page-loader", {
+      opacity: 0,
+      duration: 0.8,
+      ease: "cubic.inOut",
+      onComplete() {
+        teardownLoader();
+      }
+    }, "+=0.3");
+
+  });
+
+})();
+</script>
+
+
+
+
+<div class="container" id="appShell">
+	<div data-shell="default">
+		
+
+<div class="profile">
+	<div class="profile-header">
+		<a href="/">
+			<img src="assets/images/profile2-128.avif" class="profile-image" alt="profile-image" height="128px" width="128px" loading="lazy">
+		</a>
+		
+			<span id="status" data-discord-id="879547455941779456" data-cache-time="15000">Memeriksa status...</span>
+		
+	</div>
+	<div class="profile-about">
+		<h2 style="margin: 0; font-weight: 700;">aria fatah</h2>
+		
+
+<div class="social-icons-container">
+	
+	
+	
+		<a href="https://instagram.com/ariaf.my.id" target="_blank"><img src="assets/images/icon/instagram.svg" height="24px" width="27px" class="social-icon" alt="instagram" loading="lazy"></a>
+	
+	
+	
+		<a href="https://github.com/ariafatah0711" target="_blank"><img src="assets/images/icon/github.svg" height="24px" width="27px" class="social-icon" alt="github" loading="lazy"></a>
+	
+	
+		<a href="https://linkedin.com/in/ariafatah" target="_blank"><img src="assets/images/icon/linkedin.svg" height="24px" width="27px" class="social-icon" alt="linkedin" loading="lazy"></a>
+	
+	
+		<a href="https://s.id/dev-universe" target="_blank"><img src="assets/images/icon/discord.svg" height="24px" width="27px" class="social-icon" alt="discord" loading="lazy"></a>
+	
+</div>
+
+		<div class="profile-bio">
+			IT Enthusiast <br> Fokus di Cyber Security & Networking <br> Belajar Web Dev & DevOps <br> Mahasiswa STT Nurul Fikri
+		</div>
+		<div class="profile-action-row">
+			
+				
+
+<!-- Tombol Linktree & CV -->
+<button class="linktree-toggle" type="button" data-action="open-linktree" title="Linktree" aria-controls="linktreeBox">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</button>
+
+<button class="cv-toggle" type="button" data-action="download-cv" title="Download CV" data-cv-url="/assets/data/cv.pdf">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+    <line x1="12" y1="19" x2="12" y2="11"></line>
+    <polyline points="9 14 12 11 15 14"></polyline>
+  </svg>
+</button>
+
+<!-- Popup Linktree -->
+<div id="linktreeBox" class="linktree-box" style="display: none;">
+  <div class="linktree-inner">
+    <span class="close-btn" role="button" tabindex="0" data-action="close-linktree">&times;</span>
+    
+      <div class="linktree-group">
+        
+          <h3>Linktree</h3>
+        
+        
+          <a href="https://wa.me/+6289509221496" target="_blank" rel="noopener">WhatsApp</a>
+        
+      </div>
+      
+        <div class="linktree-divider"></div>
+      
+    
+      <div class="linktree-group">
+        
+          <h3>My Web</h3>
+        
+        
+          <a href="https://ariaf.my.id/notes" target="_blank" rel="noopener">notes</a>
+        
+          <a href="https://ariaf.my.id/files" target="_blank" rel="noopener">files</a>
+        
+          <a href="https://ctf.ariaf.my.id" target="_blank" rel="noopener">ctf</a>
+        
+      </div>
+      
+    
+  </div>
+</div>
+
+			
+			
+
+<button class="theme-toggle" type="button" title="Toggle theme" data-action="toggle-theme">
+  <svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+		</div>
+	</div>
+</div>
+
+		
+
+
+<div style="display: flex; margin-bottom: 20px;">
+  
+    
+    
+	  <a href="/about" style="margin-right: 20px;">about</a>
+    
+  
+    
+    
+	  <a href="/gallery" style="margin-right: 20px;">gallery</a>
+    
+  
+    
+    
+	  <a href="/projects" style="margin-right: 20px;">projects</a>
+    
+  
+    
+    
+	  <a href="/info" style="margin-right: 20px;">info</a>
+    
+  
+</div>
+
+
+	</div>
+	<div data-shell="about">
+		
+
+<div class="about-navbar-wrapper">
+	
+
+<nav class="about-navbar">
+	<a href="/">home</a>
+	
+		
+		
+			<a href="/about">about</a>
+		
+	
+		
+		
+			<a href="/gallery">gallery</a>
+		
+	
+		
+		
+			<a href="/projects">projects</a>
+		
+	
+		
+		
+			<a href="/info">info</a>
+		
+	
+</nav>
+
+	
+
+<button class="hamburger-menu" id="hamburgerBtn" type="button" title="Menu" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+	<span></span>
+	<span></span>
+	<span></span>
+</button>
+
+
+	<div class="about-navbar-toggles">
+		
+			
+
+<!-- Tombol Linktree & CV -->
+<button class="linktree-toggle" type="button" data-action="open-linktree" title="Linktree" aria-controls="linktreeBox">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</button>
+
+<button class="cv-toggle" type="button" data-action="download-cv" title="Download CV" data-cv-url="/assets/data/cv.pdf">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+    <line x1="12" y1="19" x2="12" y2="11"></line>
+    <polyline points="9 14 12 11 15 14"></polyline>
+  </svg>
+</button>
+
+<!-- Popup Linktree -->
+<div id="linktreeBox" class="linktree-box" style="display: none;">
+  <div class="linktree-inner">
+    <span class="close-btn" role="button" tabindex="0" data-action="close-linktree">&times;</span>
+    
+      <div class="linktree-group">
+        
+          <h3>Linktree</h3>
+        
+        
+          <a href="https://wa.me/+6289509221496" target="_blank" rel="noopener">WhatsApp</a>
+        
+      </div>
+      
+        <div class="linktree-divider"></div>
+      
+    
+      <div class="linktree-group">
+        
+          <h3>My Web</h3>
+        
+        
+          <a href="https://ariaf.my.id/notes" target="_blank" rel="noopener">notes</a>
+        
+          <a href="https://ariaf.my.id/files" target="_blank" rel="noopener">files</a>
+        
+          <a href="https://ctf.ariaf.my.id" target="_blank" rel="noopener">ctf</a>
+        
+      </div>
+      
+    
+  </div>
+</div>
+
+		
+		
+
+<button class="theme-toggle" type="button" title="Toggle theme" data-action="toggle-theme">
+  <svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+	</div>
+</div>
+
+		
+
+<div class="mobile-menu" id="mobileMenu">
+	<a href="/">home</a>
+	
+		<a href="/about">about</a>
+	
+		<a href="/gallery">gallery</a>
+	
+		<a href="/projects">projects</a>
+	
+		<a href="/info">info</a>
+	
+</div>
+
+	</div>
+
+	<div id="swup" data-layout="default">
+		
+
+
+<div class="post-container">
+	<div class="post-list">
+		<span class="post-title">Tags</span>
+	</div>
+</div>
+
+<div class="blog-post-content">
+	<h1>Tags</h1>
+	<div class="w-100">
+	<h1>Tags in Blog</h1>
+	<div class="tags">
+		
+		
+			<a href="/tags/#blog" class="tag">blog <span>(1)</span></a>
+		
+		
+			<a href="/tags/#ctf" class="tag">ctf <span>(1)</span></a>
+		
+		
+			<a href="/tags/#dicoding" class="tag">dicoding <span>(5)</span></a>
+		
+		
+			<a href="/tags/#event" class="tag">event <span>(1)</span></a>
+		
+		
+			<a href="/tags/#link" class="tag">link <span>(6)</span></a>
+		
+		
+			<a href="/tags/#praktikum" class="tag">praktikum <span>(1)</span></a>
+		
+		
+			<a href="/tags/#repo" class="tag">repo <span>(17)</span></a>
+		
+		
+			<a href="/tags/#security" class="tag">security <span>(1)</span></a>
+		
+		
+			<a href="/tags/#supabase" class="tag">supabase <span>(1)</span></a>
+		
+		
+			<a href="/tags/#uiux" class="tag">uiux <span>(1)</span></a>
+		
+		
+			<a href="/tags/#web" class="tag">web <span>(13)</span></a>
+		
+	</div>
+</div>
+<div class="post-container">
+	
+	
+	<h2 id="blog">blog</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="https://docs.ariaf.my.id/blog/ukk_p5">usk_1_bonet</a>
+			
+            <time datetime="2025-02-17T07:00:00+07:00" class="post-date">17.02.2025</time>
+		</div>
+	
+	
+	
+	<h2 id="ctf">ctf</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/ctfs">ctfs</a>
+			
+            <time datetime="2025-09-25T07:00:00+07:00" class="post-date">25.09.2025</time>
+		</div>
+	
+	
+	
+	<h2 id="dicoding">dicoding</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/pic_story">pic story</a>
+			
+            <time datetime="2024-06-09T07:00:00+07:00" class="post-date">09.06.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/gurih_nusantara">gurih nusantara</a>
+			
+            <time datetime="2024-04-18T07:00:00+07:00" class="post-date">18.04.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/anime_lab">anime lab</a>
+			
+            <time datetime="2023-12-31T07:00:00+07:00" class="post-date">31.12.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/todo_list">todo_list</a>
+			
+            <time datetime="2023-10-17T07:00:00+07:00" class="post-date">17.10.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/web_academy">web academy</a>
+			
+            <time datetime="2023-10-03T07:00:00+07:00" class="post-date">03.10.2023</time>
+		</div>
+	
+	
+	
+	<h2 id="event">event</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/itclub">it club</a>
+			
+            <time datetime="2025-01-11T07:00:00+07:00" class="post-date">11.01.2025</time>
+		</div>
+	
+	
+	
+	<h2 id="link">link</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="https://docs.ariaf.my.id/blog/ukk_p5">usk_1_bonet</a>
+			
+            <time datetime="2025-02-17T07:00:00+07:00" class="post-date">17.02.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="https://docs.ariaf.my.id">docs_aria</a>
+			
+            <time datetime="2025-02-02T07:00:00+07:00" class="post-date">02.02.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="./container_aria">container_aria</a>
+			
+            <time datetime="2024-06-15T07:00:00+07:00" class="post-date">15.06.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="./ctf_aria">ctf_aria</a>
+			
+            <time datetime="2024-06-15T07:00:00+07:00" class="post-date">15.06.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="./linux_aria">linux_aria</a>
+			
+            <time datetime="2024-01-14T07:00:00+07:00" class="post-date">14.01.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="./cisco_aria">cisco_aria</a>
+			
+            <time datetime="2023-08-01T07:00:00+07:00" class="post-date">01.08.2023</time>
+		</div>
+	
+	
+	
+	<h2 id="praktikum">praktikum</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/praktikum_uiux">praktikum_uiux</a>
+			
+            <time datetime="2025-10-08T07:00:00+07:00" class="post-date">08.10.2025</time>
+		</div>
+	
+	
+	
+	<h2 id="repo">repo</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/praktikum_uiux">praktikum_uiux</a>
+			
+            <time datetime="2025-10-08T07:00:00+07:00" class="post-date">08.10.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/ctfs">ctfs</a>
+			
+            <time datetime="2025-09-25T07:00:00+07:00" class="post-date">25.09.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/hpone">hpone</a>
+			
+            <time datetime="2025-09-01T07:00:00+07:00" class="post-date">01.09.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/files">files github</a>
+			
+            <time datetime="2025-03-30T07:00:00+07:00" class="post-date">30.03.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/notes">notes gists</a>
+			
+            <time datetime="2025-03-24T07:00:00+07:00" class="post-date">24.03.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/cv_jekyll">cv jekyll</a>
+			
+            <time datetime="2025-03-22T07:00:00+07:00" class="post-date">22.03.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/mikropush">MikroPush</a>
+			
+            <time datetime="2024-10-14T07:00:00+07:00" class="post-date">14.10.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/pfwsl">PFwsl (Port Forwarding WSL)</a>
+			
+            <time datetime="2024-10-01T07:00:00+07:00" class="post-date">01.10.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/pic_story">pic story</a>
+			
+            <time datetime="2024-06-09T07:00:00+07:00" class="post-date">09.06.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/gurih_nusantara">gurih nusantara</a>
+			
+            <time datetime="2024-04-18T07:00:00+07:00" class="post-date">18.04.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/anime_lab">anime lab</a>
+			
+            <time datetime="2023-12-31T07:00:00+07:00" class="post-date">31.12.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/portofolio_v2">portofolio v2</a>
+			
+            <time datetime="2023-12-26T07:00:00+07:00" class="post-date">26.12.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/portofolio_v1">portofolio v1</a>
+			
+            <time datetime="2023-10-20T07:00:00+07:00" class="post-date">20.10.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/todo_list">todo_list</a>
+			
+            <time datetime="2023-10-17T07:00:00+07:00" class="post-date">17.10.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/web_academy">web academy</a>
+			
+            <time datetime="2023-10-03T07:00:00+07:00" class="post-date">03.10.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/html_aria">html_aria</a>
+			
+            <time datetime="2023-09-26T07:00:00+07:00" class="post-date">26.09.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/linktree">linktree</a>
+			
+            <time datetime="2023-03-21T07:00:00+07:00" class="post-date">21.03.2023</time>
+		</div>
+	
+	
+	
+	<h2 id="security">security</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/hpone">hpone</a>
+			
+            <time datetime="2025-09-01T07:00:00+07:00" class="post-date">01.09.2025</time>
+		</div>
+	
+	
+	
+	<h2 id="supabase">supabase</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/ctfs">ctfs</a>
+			
+            <time datetime="2025-09-25T07:00:00+07:00" class="post-date">25.09.2025</time>
+		</div>
+	
+	
+	
+	<h2 id="uiux">uiux</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/praktikum_uiux">praktikum_uiux</a>
+			
+            <time datetime="2025-10-08T07:00:00+07:00" class="post-date">08.10.2025</time>
+		</div>
+	
+	
+	
+	<h2 id="web">web</h2>
+
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/praktikum_uiux">praktikum_uiux</a>
+			
+            <time datetime="2025-10-08T07:00:00+07:00" class="post-date">08.10.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/ctfs">ctfs</a>
+			
+            <time datetime="2025-09-25T07:00:00+07:00" class="post-date">25.09.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/files">files github</a>
+			
+            <time datetime="2025-03-30T07:00:00+07:00" class="post-date">30.03.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/notes">notes gists</a>
+			
+            <time datetime="2025-03-24T07:00:00+07:00" class="post-date">24.03.2025</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/pic_story">pic story</a>
+			
+            <time datetime="2024-06-09T07:00:00+07:00" class="post-date">09.06.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/gurih_nusantara">gurih nusantara</a>
+			
+            <time datetime="2024-04-18T07:00:00+07:00" class="post-date">18.04.2024</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/anime_lab">anime lab</a>
+			
+            <time datetime="2023-12-31T07:00:00+07:00" class="post-date">31.12.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/portofolio_v2">portofolio v2</a>
+			
+            <time datetime="2023-12-26T07:00:00+07:00" class="post-date">26.12.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/portofolio_v1">portofolio v1</a>
+			
+            <time datetime="2023-10-20T07:00:00+07:00" class="post-date">20.10.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/todo_list">todo_list</a>
+			
+            <time datetime="2023-10-17T07:00:00+07:00" class="post-date">17.10.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/web_academy">web academy</a>
+			
+            <time datetime="2023-10-03T07:00:00+07:00" class="post-date">03.10.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/html_aria">html_aria</a>
+			
+            <time datetime="2023-09-26T07:00:00+07:00" class="post-date">26.09.2023</time>
+		</div>
+	
+	    <div class="post-list">
+			
+				<a class="post-title" href="/blog/linktree">linktree</a>
+			
+            <time datetime="2023-03-21T07:00:00+07:00" class="post-date">21.03.2023</time>
+		</div>
+	
+	
+</div>
+
+</div>
+
+		
+
+<div class="footer">
+	<span>Made with <font color="red">♥</font> on Earth, a minimalist Jekyll Theme by <a href="/info"><b>ariaf</b></a></span>
+</div>
+
+	</div>
+</div>
+
+	<!-- ========== App Scripts ========== -->
+	<script src="assets/js/main.js" defer></script>
+	<script src="assets/js/components/image-modal.js" defer></script>
+	<script src="assets/js/components/meeting-js.js" defer></script>
+	<script src="assets/js/vendor/swup.umd.js" defer></script>
+
+	<script src="assets/js/pjax.js" defer></script>
+	<script src="assets/js/pages/about.js" defer></script>
+	<script src="assets/js/pages/gallery.js" defer></script>
+	<script src="assets/js/pages/info.js" defer></script>
+	<script src="assets/js/pages/post.js" defer></script>
+	<script src="assets/js/projects.js" defer></script>
+	<script src="assets/js/github-profile.js" defer></script>
+	<script src="assets/js/components/disqus.js" defer></script>
+	<script src="assets/js/components/redirect-handler.js" defer></script>
+
+	
+	<script src="assets/js/components/linktree.js" defer></script>
+	
+
+	<!-- ========== Page-specific Scripts (opt-in) ========== -->
+	
+
+	<!-- ========== Modals & Components ========== -->
+	
+
+<div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <div class="modal-nav prev" id="prevBtn">&#10094;</div>
+    <div class="modal-nav next" id="nextBtn">&#10095;</div>
+    <img class="modal-content" id="modalImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
+    <div class="image-fallback" style="display:none;"></div>
+    <!-- video element for project/video previews -->
+    <video class="modal-content" id="modalVideo" controls style="display:none; background: black;"></video>
+    <div class="modal-info" id="modalInfo">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-description" id="modalDescription"></div>
+        <div class="modal-counter" id="modalCounter"></div>
+    </div>
+</div>
+
+	
+
+<div id="projectModal" class="modal">
+  <span class="close" id="projectClose">&times;</span>
+  <div class="modal-nav prev" id="projectPrev">&#10094;</div>
+  <div class="modal-nav next" id="projectNext">&#10095;</div>
+  <img class="modal-content" id="projectModalImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
+  <div class="image-fallback" style="display:none;"></div>
+  <div class="modal-info" id="projectModalInfo">
+    <div class="modal-title" id="projectModalTitle"></div>
+    <div class="modal-description" id="projectModalDescription"></div>
+    <div style="margin-top:8px; display:flex; gap:8px; justify-content:center; align-items:center;">
+      <a id="projectModalSource" class="btn small" href="#" target="_blank" rel="noopener" style="display:none;">Source</a>
+      <a id="projectModalDemo" class="btn small" href="#" target="_blank" rel="noopener" style="display:none;">Demo</a>
+      <span class="github-stars" id="projectModalStars" data-repo="" title="GitHub stars">
+        <span class="github-stat" aria-label="Stars">
+          <svg class="github-stat-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+          </svg>
+          <span class="star-count">0</span>
+        </span>
+        <span class="github-stat-sep" aria-hidden="true"></span>
+        <span class="github-stat" aria-label="Forks">
+          <svg class="github-stat-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M17 6a3 3 0 1 0-2.83-4H14a3 3 0 0 0 3 3zM7 22a3 3 0 1 0-2.83-4H4a3 3 0 0 0 3 3zm0-17a3 3 0 1 0-2.83-4H4a3 3 0 0 0 3 3zm10 4.17V8a1 1 0 0 0-1-1H8a3 3 0 0 1 0 2h7v.17a3 3 0 0 0 0 5.66V18h-5.17a3 3 0 0 1 0 2H16a1 1 0 0 0 1-1v-1.17a3 3 0 0 0 0-5.66z"></path>
+          </svg>
+          <span class="fork-count">0</span>
+        </span>
+      </span>
+    </div>
+    <div class="modal-counter" id="projectModalCounter"></div>
+  </div>
+</div>
+
+	
+
+<!-- Global Confirmation / Alert Modal -->
+<div id="confirmModal" class="confirm-modal" style="display: none;" aria-hidden="true">
+  <div class="confirm-content" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+    <h3 id="confirmTitle">Konfirmasi</h3>
+    <p id="confirmMessage"></p>
+    <div class="confirm-buttons">
+      <button id="confirmYes" class="confirm-btn confirm-yes" type="button">Ya</button>
+      <button id="confirmNo" class="confirm-btn confirm-no" type="button">Tidak</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.showConfirm && window.showAlert) return;
+
+  var modal = null;
+  var titleEl = null;
+  var messageEl = null;
+  var yesBtn = null;
+  var noBtn = null;
+  var buttonsEl = null;
+
+  var confirmCallback = null;
+  var activeMode = "confirm"; // 'confirm' | 'alert'
+  var lastFocusedEl = null;
+
+  function qs(id) {
+    return document.getElementById(id);
+  }
+
+  function ensureElements() {
+    if (modal) return true;
+    modal = qs("confirmModal");
+    titleEl = qs("confirmTitle");
+    messageEl = qs("confirmMessage");
+    yesBtn = qs("confirmYes");
+    noBtn = qs("confirmNo");
+    buttonsEl = modal ? modal.querySelector(".confirm-buttons") : null;
+    return !!(modal && titleEl && messageEl && yesBtn && noBtn && buttonsEl);
+  }
+
+  function setVisible(show) {
+    if (!ensureElements()) return;
+    modal.style.display = show ? "flex" : "none";
+    modal.setAttribute("aria-hidden", show ? "false" : "true");
+
+    if (show) {
+      lastFocusedEl = document.activeElement;
+      // focus primary button
+      try {
+        (activeMode === "alert" ? noBtn : yesBtn).focus();
+      } catch (e) {}
+    } else {
+      if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
+        try {
+          lastFocusedEl.focus();
+        } catch (e) {}
+      }
+      lastFocusedEl = null;
+    }
+  }
+
+  function cleanupHandlers() {
+    if (!ensureElements()) return;
+
+    yesBtn.onclick = null;
+    noBtn.onclick = null;
+    document.removeEventListener("keydown", handleKeydown);
+    modal.removeEventListener("click", handleBackdropClick);
+  }
+
+  function finish(result) {
+    setVisible(false);
+    var cb = confirmCallback;
+    confirmCallback = null;
+    cleanupHandlers();
+    if (typeof cb === "function") cb(result);
+  }
+
+  function handleKeydown(e) {
+    if (!modal || modal.style.display !== "flex") return;
+
+    if (e.key === "Escape") {
+      e.preventDefault();
+      finish(false);
+      return;
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeMode === "alert") {
+        finish(true);
+      } else {
+        finish(true);
+      }
+    }
+  }
+
+  function handleBackdropClick(e) {
+    if (!modal) return;
+    // click outside content => cancel/close
+    var content = modal.querySelector(".confirm-content");
+    if (content && !content.contains(e.target)) {
+      finish(false);
+    }
+  }
+
+  function setButtonsForConfirm() {
+    if (!ensureElements()) return;
+    yesBtn.style.display = "inline-flex";
+    yesBtn.textContent = "Ya";
+    noBtn.style.display = "inline-flex";
+    noBtn.textContent = "Tidak";
+  }
+
+  function setButtonsForAlert() {
+    if (!ensureElements()) return;
+    yesBtn.style.display = "none";
+    noBtn.style.display = "inline-flex";
+    noBtn.textContent = "OK";
+  }
+
+  window.showConfirm = function (title, message, callback) {
+    if (!ensureElements()) return;
+
+    activeMode = "confirm";
+    confirmCallback = function (confirmed) {
+      if (typeof callback === "function") callback(!!confirmed);
+    };
+
+    titleEl.textContent = title || "Konfirmasi";
+    messageEl.textContent = message || "";
+
+    setButtonsForConfirm();
+
+    cleanupHandlers();
+    yesBtn.onclick = function () {
+      finish(true);
+    };
+    noBtn.onclick = function () {
+      finish(false);
+    };
+
+    modal.addEventListener("click", handleBackdropClick);
+    document.addEventListener("keydown", handleKeydown);
+
+    setVisible(true);
+  };
+
+  window.showAlert = function (message, callback) {
+    if (!ensureElements()) return;
+
+    activeMode = "alert";
+    confirmCallback = function () {
+      if (typeof callback === "function") callback();
+    };
+
+    titleEl.textContent = "";
+    messageEl.textContent = message || "";
+
+    setButtonsForAlert();
+
+    cleanupHandlers();
+    noBtn.onclick = function () {
+      finish(true);
+    };
+
+    modal.addEventListener("click", handleBackdropClick);
+    document.addEventListener("keydown", handleKeydown);
+
+    setVisible(true);
+  };
+})();
+</script>
+
+
+	<!-- ========== Meeting JS ========== -->
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+		<!-- Meeting JS Player -->
+<div id="meeting-js-player" class="meeting-js-fixed">
+  <meting-js
+    server="netease"
+    type="playlist"
+    id="2265921590"
+    fixed="true"
+    autoplay="false"
+    theme="var(--color-link)"
+    loop="all"
+    order="list"
+    preload="auto"
+    volume="0.7"
+    mutex="true"
+  ></meting-js>
+</div>
+
+	
+
+	<!-- ========== Discord Integration ========== -->
+	
+	<script src="assets/js/discord-lanyard.js" defer></script>
+	
+
+	<!-- ========== Analytics ========== -->
+	
+
+	<!-- ========== Cursor Effects ========== -->
+	
+	<script src="/assets/js/cursor/splashCursor.js" defer></script>
+	
+</body>
+</html>
+
