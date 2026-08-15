@@ -77,7 +77,7 @@ app:
             url: https://ctf.ariaf.my.id
   show_discord:
     active: True
-    discord_id: 879547455941779456
+    discord_id: "879547455941779456"
     cacheTime: 15000
   # meeting-js:
     # active: True

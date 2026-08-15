@@ -9,7 +9,7 @@ permalink: /blogs/
         {% if post.tags %}
             {% unless post.tags contains "link" %}
                 <div class="post-list">
-                    <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+                    <a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
                     <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
                 </div>
             {% endunless %}

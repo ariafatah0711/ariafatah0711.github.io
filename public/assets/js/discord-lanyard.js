@@ -4,31 +4,46 @@ function getStatusEl() {
 }
 
 async function checkDiscordStatus(DISCORD_ID, cacheTime = 15000) {
-  const CACHE_KEY = "discordStatusCache";
   const statusEl = getStatusEl();
   if (!statusEl) return;
 
-  try {
-    const cachedData = localStorage.getItem(CACHE_KEY);
-    const cachedTime = parseInt(localStorage.getItem("cacheTime"), 10) || 0;
+  const discordId = String(DISCORD_ID).trim();
+  if (!/^\d{17,20}$/.test(discordId)) {
+    console.error("ID Discord tidak valid:", discordId);
+    statusEl.innerText = "ID Discord tidak valid.";
+    return;
+  }
 
-    // Jika cache masih valid, gunakan cache
-    if (cachedData && cachedTime && new Date().getTime() - cachedTime < cacheTime) {
+  const cacheKey = `discordStatusCache:${discordId}`;
+  const cacheTimeKey = `discordStatusCacheTime:${discordId}`;
+
+  // Storage can be unavailable in strict privacy modes; fetching should still work.
+  try {
+    const cachedData = localStorage.getItem(cacheKey);
+    const cachedTime = parseInt(localStorage.getItem(cacheTimeKey), 10) || 0;
+    if (cachedData && cachedTime && Date.now() - cachedTime < cacheTime) {
       statusEl.innerHTML = cachedData;
       return;
     }
+  } catch (error) {
+    console.warn("Cache status Discord tidak tersedia:", error);
+  }
 
-    const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
+  try {
+    const response = await fetch(`https://api.lanyard.rest/v1/users/${discordId}`);
     if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
     const data = await response.json();
 
-    if (data.success) {
+    if (data.success && data.data) {
       const statusMessage = updateStatus(data.data, statusEl);
 
-      // Simpan hasilnya di localStorage
-      localStorage.setItem(CACHE_KEY, statusMessage);
-      localStorage.setItem("cacheTime", new Date().getTime());
+      try {
+        localStorage.setItem(cacheKey, statusMessage);
+        localStorage.setItem(cacheTimeKey, String(Date.now()));
+      } catch (error) {
+        console.warn("Status Discord tidak dapat disimpan ke cache:", error);
+      }
     } else {
       statusEl.innerText = "Gagal mendapatkan status.";
     }
@@ -76,7 +91,8 @@ function updateStatus(data, statusEl) {
   }
 
   let activityMessage = "";
-  const otherActivities = data.activities.filter((a) => a.name !== "Spotify" && a.details);
+  const activities = Array.isArray(data.activities) ? data.activities : [];
+  const otherActivities = activities.filter((a) => a.name !== "Spotify" && a.details);
   console.log("Other activities:", otherActivities);
 
   if (otherActivities.length > 0) {
@@ -127,6 +143,7 @@ function updateStatus(data, statusEl) {
 function initDiscordStatus() {
   var statusEl = getStatusEl();
   if (!statusEl) return;
+  if (statusEl.dataset.discordLoading === "true") return;
 
   var discordId = statusEl.getAttribute("data-discord-id");
   if (!discordId) return;
@@ -135,7 +152,10 @@ function initDiscordStatus() {
   var cacheTime = cacheTimeAttr ? Number(cacheTimeAttr) : 15000;
   if (!Number.isFinite(cacheTime) || cacheTime <= 0) cacheTime = 15000;
 
-  checkDiscordStatus(discordId, cacheTime);
+  statusEl.dataset.discordLoading = "true";
+  checkDiscordStatus(discordId, cacheTime).finally(function () {
+    if (statusEl.isConnected) delete statusEl.dataset.discordLoading;
+  });
 }
 
 // Backward compat (if any old inline callers remain)

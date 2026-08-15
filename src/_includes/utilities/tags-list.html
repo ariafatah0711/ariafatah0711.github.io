@@ -9,7 +9,7 @@ Displays all tags with post counts
 	{% for tag in tags %}
 	<ul>
 		<li>
-			<a class="posts" href="{{ site.url }}/tag/{{ tag | first | slugify }}/">{{ tag[0] | replace:'-', ' ' }} ({{ tag | last | size }}){% unless forloop.last %}, {% endunless %}</a>
+			<a class="posts" href="/tags/#{{ tag | first | cgi_escape }}">{{ tag[0] | replace:'-', ' ' }} ({{ tag | last | size }}){% unless forloop.last %}, {% endunless %}</a>
 		</li>
 	</ul>
 	{% endfor %}

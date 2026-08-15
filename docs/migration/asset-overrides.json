@@ -1,0 +1,6 @@
+{
+  "assets/js/discord-lanyard.js": {
+    "sha256": "6a7b48820dbcf45ccc89f7ce2f019b1a8bd9294468f81ee10b94b508b0383c14",
+    "reason": "Preserve the Discord snowflake as a string and make Lanyard loading cache-safe after the parity migration."
+  }
+}

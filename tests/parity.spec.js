@@ -125,12 +125,27 @@ test("@behavior theme, PJAX, integrations, modals, and reset bindings", async ({
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   await installStableEnvironment(context, "light");
   const page = await context.newPage();
+  const lanyardRequests = [];
+  page.on("request", (request) => {
+    const url = new URL(request.url());
+    if (url.hostname === "api.lanyard.rest") lanyardRequests.push(url.pathname);
+  });
 
   await settlePage(page, `${migratedOrigin}/`);
   await expect(page.locator("#swup")).toHaveCount(1);
   await expect.poll(() => page.evaluate(() => Boolean(window.__swup))).toBe(true);
+  await expect(page.locator("#status").first()).toHaveAttribute("data-discord-id", "879547455941779456");
   await expect(page.locator("#status").first()).toContainText("Online");
+  await expect.poll(() => lanyardRequests).toEqual(["/v1/users/879547455941779456"]);
   await expect(page.locator("#meeting-js-player")).toHaveCount(1);
+
+  const localPostLink = page.locator('a.post-title[href="/blog/praktikum_uiux"]');
+  await expect(localPostLink).toHaveCount(1);
+  await expect(page.locator('a.post-title[href="https://docs.ariaf.my.id"]')).toHaveCount(1);
+  await localPostLink.click();
+  await expect(page).toHaveURL(`${migratedOrigin}/blog/praktikum_uiux`);
+  await page.goBack();
+  await expect(page).toHaveURL(`${migratedOrigin}/`);
 
   const themeToggle = page.locator('.theme-toggle:visible').first();
   await themeToggle.click();

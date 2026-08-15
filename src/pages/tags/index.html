@@ -8,7 +8,7 @@ permalink: /tags/
 	<div class="tags">
 		{% for tag_pair in collections.tagPairs %}
 		{% assign this_word = tag_pair[0] %}
-			<a href="tags/#{{ this_word | cgi_escape }}" class="tag">{{ this_word }} <span>({{ tag_pair[1].size }})</span></a>
+			<a href="/tags/#{{ this_word | cgi_escape }}" class="tag">{{ this_word }} <span>({{ tag_pair[1].size }})</span></a>
 		{% endfor %}
 	</div>
 </div>
@@ -22,9 +22,8 @@ permalink: /tags/
 			{% if post.tags and post.tags contains "link" %}
 				<a class="post-title" href="{{ post.url_to_redirect }}">{{ post.title }}</a>
 			{% else %}
-				<a class="post-title" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
+				<a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
 			{% endif %}
-            <!-- <a class="post-title" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a> -->
             <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
 		</div>
 	{% endif %}{% endfor %}
