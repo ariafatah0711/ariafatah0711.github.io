@@ -5,7 +5,3 @@ playwright-report
 test-results
 .artifacts
 *_bak
-.jekyll-cache_old*
-.jekyll-cache
-.bundle
-.jekyll-metadata
