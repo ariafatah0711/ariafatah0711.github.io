@@ -1,0 +1,180 @@
+{% comment %}
+Global Confirm/Alert Modal
+Reusable modal API: window.showConfirm(title, message, callback) and window.showAlert(message, callback)
+{% endcomment %}
+
+<!-- Global Confirmation / Alert Modal -->
+<div id="confirmModal" class="confirm-modal" style="display: none;" aria-hidden="true">
+  <div class="confirm-content" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+    <h3 id="confirmTitle">Konfirmasi</h3>
+    <p id="confirmMessage"></p>
+    <div class="confirm-buttons">
+      <button id="confirmYes" class="confirm-btn confirm-yes" type="button">Ya</button>
+      <button id="confirmNo" class="confirm-btn confirm-no" type="button">Tidak</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.showConfirm && window.showAlert) return;
+
+  var modal = null;
+  var titleEl = null;
+  var messageEl = null;
+  var yesBtn = null;
+  var noBtn = null;
+  var buttonsEl = null;
+
+  var confirmCallback = null;
+  var activeMode = "confirm"; // 'confirm' | 'alert'
+  var lastFocusedEl = null;
+
+  function qs(id) {
+    return document.getElementById(id);
+  }
+
+  function ensureElements() {
+    if (modal) return true;
+    modal = qs("confirmModal");
+    titleEl = qs("confirmTitle");
+    messageEl = qs("confirmMessage");
+    yesBtn = qs("confirmYes");
+    noBtn = qs("confirmNo");
+    buttonsEl = modal ? modal.querySelector(".confirm-buttons") : null;
+    return !!(modal && titleEl && messageEl && yesBtn && noBtn && buttonsEl);
+  }
+
+  function setVisible(show) {
+    if (!ensureElements()) return;
+    modal.style.display = show ? "flex" : "none";
+    modal.setAttribute("aria-hidden", show ? "false" : "true");
+
+    if (show) {
+      lastFocusedEl = document.activeElement;
+      // focus primary button
+      try {
+        (activeMode === "alert" ? noBtn : yesBtn).focus();
+      } catch (e) {}
+    } else {
+      if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
+        try {
+          lastFocusedEl.focus();
+        } catch (e) {}
+      }
+      lastFocusedEl = null;
+    }
+  }
+
+  function cleanupHandlers() {
+    if (!ensureElements()) return;
+
+    yesBtn.onclick = null;
+    noBtn.onclick = null;
+    document.removeEventListener("keydown", handleKeydown);
+    modal.removeEventListener("click", handleBackdropClick);
+  }
+
+  function finish(result) {
+    setVisible(false);
+    var cb = confirmCallback;
+    confirmCallback = null;
+    cleanupHandlers();
+    if (typeof cb === "function") cb(result);
+  }
+
+  function handleKeydown(e) {
+    if (!modal || modal.style.display !== "flex") return;
+
+    if (e.key === "Escape") {
+      e.preventDefault();
+      finish(false);
+      return;
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeMode === "alert") {
+        finish(true);
+      } else {
+        finish(true);
+      }
+    }
+  }
+
+  function handleBackdropClick(e) {
+    if (!modal) return;
+    // click outside content => cancel/close
+    var content = modal.querySelector(".confirm-content");
+    if (content && !content.contains(e.target)) {
+      finish(false);
+    }
+  }
+
+  function setButtonsForConfirm() {
+    if (!ensureElements()) return;
+    yesBtn.style.display = "inline-flex";
+    yesBtn.textContent = "Ya";
+    noBtn.style.display = "inline-flex";
+    noBtn.textContent = "Tidak";
+  }
+
+  function setButtonsForAlert() {
+    if (!ensureElements()) return;
+    yesBtn.style.display = "none";
+    noBtn.style.display = "inline-flex";
+    noBtn.textContent = "OK";
+  }
+
+  window.showConfirm = function (title, message, callback) {
+    if (!ensureElements()) return;
+
+    activeMode = "confirm";
+    confirmCallback = function (confirmed) {
+      if (typeof callback === "function") callback(!!confirmed);
+    };
+
+    titleEl.textContent = title || "Konfirmasi";
+    messageEl.textContent = message || "";
+
+    setButtonsForConfirm();
+
+    cleanupHandlers();
+    yesBtn.onclick = function () {
+      finish(true);
+    };
+    noBtn.onclick = function () {
+      finish(false);
+    };
+
+    modal.addEventListener("click", handleBackdropClick);
+    document.addEventListener("keydown", handleKeydown);
+
+    setVisible(true);
+  };
+
+  window.showAlert = function (message, callback) {
+    if (!ensureElements()) return;
+
+    activeMode = "alert";
+    confirmCallback = function () {
+      if (typeof callback === "function") callback();
+    };
+
+    titleEl.textContent = "";
+    messageEl.textContent = message || "";
+
+    setButtonsForAlert();
+
+    cleanupHandlers();
+    noBtn.onclick = function () {
+      finish(true);
+    };
+
+    modal.addEventListener("click", handleBackdropClick);
+    document.addEventListener("keydown", handleKeydown);
+
+    setVisible(true);
+  };
+})();
+</script>

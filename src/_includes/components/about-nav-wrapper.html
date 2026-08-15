@@ -1,0 +1,16 @@
+{% comment %}
+About Navigation Wrapper Component
+Contains navbar, hamburger button, and toggles for about layout
+{% endcomment %}
+
+<div class="about-navbar-wrapper">
+	{% include components/about-navbar.html %}
+	{% include components/hamburger-button.html %}
+
+	<div class="about-navbar-toggles">
+		{% if site.app.linktree.active %}
+			{% include components/linktree.html %}
+		{% endif %}
+		{% include components/theme-toggle.html %}
+	</div>
+</div>

@@ -1,0 +1,19 @@
+{% comment %}
+Post Pagination Component
+Previous/Next post navigation
+{% endcomment %}
+{% assign current_post = collections.posts | post_for_url: page.url %}
+
+<div class="pagination">
+	{% if current_post.next %}
+		<a class="prev" href="{{ current_post.next.url | relative_url }}#next">< Previous</a>
+	{% else %}
+		<span class="prev"></span>
+	{% endif %}
+
+	{% if current_post.previous %}
+		<a class="next" href="{{ current_post.previous.url | relative_url }}#prev">Next ></a>
+	{% else %}
+		<span class="next"></span>
+	{% endif %}
+</div>

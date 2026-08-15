@@ -1,0 +1,16 @@
+{% comment %}
+Repository Buttons Component
+Source, Demo, and Jekyll Theme buttons
+{% endcomment %}
+
+<div class="repo-buttons-container">
+	{% if repo.source %}
+		<a href="{{ repo.source }}" class="btn repo-btn secondary" target="_blank" rel="noopener">Source</a>
+	{% endif %}
+	{% if repo.demo %}
+		<a href="{{ repo.demo }}" class="btn repo-btn primary" target="_blank" rel="noopener">Demo</a>
+	{% endif %}
+	{% if repo.jt %}
+		<a href="{{ repo.jt }}" class="btn repo-btn tertiary" target="_blank" rel="noopener">Jekyll Theme</a>
+	{% endif %}
+</div>

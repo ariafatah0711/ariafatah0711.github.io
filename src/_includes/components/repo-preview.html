@@ -1,0 +1,28 @@
+{% comment %}
+Repository Preview Component
+Handles image, video, and YouTube preview display
+{% endcomment %}
+
+{% if repo.preview_type == "image" or repo.preview contains ".png" or repo.preview contains ".jpg" or repo.preview contains ".jpeg" %}
+
+<p align="center">
+	<img src="{{ repo.preview }}" alt="Preview" class="clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
+	<div class="image-fallback" style="display:none;"></div>
+</p>
+
+{% elsif repo.preview_type == "video" or repo.preview contains ".mp4" or repo.preview contains ".webm" or repo.preview contains ".mov" or repo.preview contains "user-attachments/assets" %}
+<p align="center">
+	<video controls class="video-player" style="max-width:100%; border-radius: 12px;">
+		<source src="{{ repo.preview }}">
+		Browser kamu tidak mendukung video tag.
+	</video>
+</p>
+
+{% elsif repo.preview_type == "youtube" or repo.preview contains "youtube.com/embed" %}
+<div class="video-container">
+	<iframe src="{{ repo.preview }}" title="YouTube video player" frameborder="0"
+		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+		referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+	</iframe>
+</div>
+{% endif %}

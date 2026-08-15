@@ -1,0 +1,41 @@
+{% comment %}
+Linktree Component
+Link tree toggle button dan popup menu
+{% endcomment %}
+
+<!-- Tombol Linktree & CV -->
+<button class="linktree-toggle" type="button" data-action="open-linktree" title="Linktree" aria-controls="linktreeBox">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</button>
+
+<button class="cv-toggle" type="button" data-action="download-cv" title="Download CV" data-cv-url="{{ site.baseurl }}/{{ site.author.cv }}">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+    <line x1="12" y1="19" x2="12" y2="11"></line>
+    <polyline points="9 14 12 11 15 14"></polyline>
+  </svg>
+</button>
+
+<!-- Popup Linktree -->
+<div id="linktreeBox" class="linktree-box" style="display: none;">
+  <div class="linktree-inner">
+    <span class="close-btn" role="button" tabindex="0" data-action="close-linktree">&times;</span>
+    {% for group in site.app.linktree.groups %}
+      <div class="linktree-group">
+        {% if group.title %}
+          <h3>{{ group.title }}</h3>
+        {% endif %}
+        {% for link in group.links %}
+          <a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.name }}</a>
+        {% endfor %}
+      </div>
+      {% if forloop.last == false %}
+        <div class="linktree-divider"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

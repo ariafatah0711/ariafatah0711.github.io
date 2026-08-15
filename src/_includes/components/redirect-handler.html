@@ -1,0 +1,13 @@
+{% comment %}
+Redirect Handler Component
+Handles page redirects
+{% endcomment %}
+{% assign current_post = collections.posts | post_for_url: page.url %}
+
+<div
+  data-redirect-handler
+  data-redirect-url="{{ url_to_redirect }}"
+  data-next-url="{% if current_post.next %}{{ current_post.next.url | relative_url }}{% endif %}"
+  data-prev-url="{% if current_post.previous %}{{ current_post.previous.url | relative_url }}{% endif %}"
+  style="display:none;"
+></div>

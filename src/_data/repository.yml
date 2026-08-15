@@ -1,0 +1,13 @@
+- name: ariafatah0711
+  github: ariafatah0711
+  repos:
+    - linux_aria
+    - cisco_aria
+    - container_aria
+    - ctf_aria
+    - PFwsl
+
+- mame: MuzakyGood
+  github: MuzakyGood
+  repos:
+    - SkyboxLib
