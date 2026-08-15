@@ -3,19 +3,19 @@ Image Component - Reusable with fallback
 Usage: {% include utilities/image.html src="url" alt="text" class="class" %}
 {% endcomment %}
 
-{% if include.src %}
+{% if src %}
   <img
-    src="{{ include.src }}"
-    alt="{{ include.alt | default: 'Image' }}"
-    class="{{ include.class }}"
-    loading="{{ include.loading | default: 'lazy' }}"
-    {% if include.onerror %}
-      onerror="{{ include.onerror }}"
+    src="{{ src }}"
+    alt="{{ alt | default: 'Image' }}"
+    class="{{ class }}"
+    loading="{{ loading | default: 'lazy' }}"
+    {% if onerror %}
+      onerror="{{ onerror }}"
     {% else %}
       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
     {% endif %}
   >
-  {% unless include.no_fallback %}
+  {% unless no_fallback %}
     <div class="image-fallback" style="display:none;"></div>
   {% endunless %}
 {% endif %}

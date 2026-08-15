@@ -39,6 +39,16 @@ function collectAttributes(node, result = []) {
   return result;
 }
 
+function findBaseHref(node) {
+  if (node.nodeName === "base") {
+    return node.attrs?.find((attribute) => attribute.name === "href")?.value;
+  }
+  for (const child of node.childNodes || []) {
+    const value = findBaseHref(child);
+    if (value) return value;
+  }
+}
+
 function routeForFile(file) {
   const relative = path.relative(output, file).replaceAll(path.sep, "/");
   if (relative === "index.html") return "/";
@@ -69,12 +79,13 @@ const htmlFiles = (await walk(output)).filter((file) => file.endsWith(".html"));
 for (const file of htmlFiles) {
   const document = parse(await readFile(file, "utf8"));
   const sourceRoute = routeForFile(file);
+  const documentBase = new URL(findBaseHref(document) || sourceRoute, origin);
   for (const value of collectAttributes(document)) {
     if (!value || /^(#|mailto:|tel:|javascript:|data:)/i.test(value)) continue;
 
     let target;
     try {
-      target = new URL(value, new URL(sourceRoute, origin));
+      target = new URL(value, documentBase);
     } catch {
       failures.push(`${sourceRoute}: invalid URL ${value}`);
       continue;

@@ -45,14 +45,15 @@ Displays project gallery grid from _data/projects.yml
   <div class="project-item" data-repo="{{ project.repo | default: '' }}" data-source="{{ source_url }}" data-demo="{{ demo_url }}" data-images='{{ img_list_json }}' {% if project.videos or project.video %}data-video="{{ project.videos | default: project.video }}"{% endif %}>
       <div class="project-thumb">
         {% if project.image or project.images %}
-          {% assign img = project.image | default: (project.images | first) %}
+          {% assign first_project_image = project.images | first %}
+          {% assign img = project.image | default: first_project_image %}
           {% if img contains 'http' %}
-            {% include utilities/image.html src=img alt=project.title class="clickable-image" %}
+            {% include utilities/image.html, src: img, alt: project.title, class: "clickable-image" %}
           {% elsif img contains '.' %}
-            {% include utilities/image.html src=img alt=project.title class="clickable-image" %}
+            {% include utilities/image.html, src: img, alt: project.title, class: "clickable-image" %}
           {% else %}
             {% comment %} fallback to default image {% endcomment %}
-            {% include utilities/image.html src="/assets/images/profile2-128.avif" alt=project.title class="clickable-image" %}
+            {% include utilities/image.html, src: "/assets/images/profile2-128.avif", alt: project.title, class: "clickable-image" %}
           {% endif %}
           {% if project.videos or project.video %}
             <div class="play-overlay">▶</div>

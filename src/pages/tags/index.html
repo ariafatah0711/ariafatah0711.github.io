@@ -1,0 +1,32 @@
+---
+layout: page
+title: Tags
+permalink: /tags/
+---
+<div class="w-100">
+	<h1>Tags in Blog</h1>
+	<div class="tags">
+		{% for tag_pair in collections.tagPairs %}
+		{% assign this_word = tag_pair[0] %}
+			<a href="tags/#{{ this_word | cgi_escape }}" class="tag">{{ this_word }} <span>({{ tag_pair[1].size }})</span></a>
+		{% endfor %}
+	</div>
+</div>
+<div class="post-container">
+	{% for tag_pair in collections.tagPairs %}
+	{% assign this_word = tag_pair[0] %}
+	<h2 id="{{ this_word | cgi_escape }}">{{ this_word }}</h2>
+
+	{% for post in tag_pair[1] %}{% if post.title != null %}
+	    <div class="post-list">
+			{% if post.tags and post.tags contains "link" %}
+				<a class="post-title" href="{{ post.url_to_redirect }}">{{ post.title }}</a>
+			{% else %}
+				<a class="post-title" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
+			{% endif %}
+            <!-- <a class="post-title" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a> -->
+            <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
+		</div>
+	{% endif %}{% endfor %}
+	{% endfor %}
+</div>

@@ -1,0 +1,21 @@
+---
+layout: default
+pagination:
+  data: collections.posts
+  size: 10
+  alias: paginator_posts
+permalink: "{% if pagination.pageNumber == 0 %}/{% else %}/page/{{ pagination.pageNumber | plus: 1 }}/{% endif %}"
+---
+<div class="post-container">
+	{% for post in paginator_posts %}
+        <div class="post-list">
+            {% if post.tags contains "link" %}
+                <a class="post-title" href="{{ post.url_to_redirect }}">{{ post.title }}</a>
+            {% else %}
+                <a class="post-title" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
+            {% endif %}
+            <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
+        </div>
+    {% endfor %}
+</div>
+{% include components/pagination.html %}

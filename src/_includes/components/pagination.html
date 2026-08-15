@@ -4,15 +4,17 @@ Previous/Next page navigation
 {% endcomment %}
 
 <div class="pagination">
-	{% if paginator.previous_page %}
-		{% if paginator.previous_page == 1 %}
+	{% assign current_page = pagination.pageNumber | plus: 1 %}
+	{% if pagination.href.previous %}
+		{% if current_page == 2 %}
 			<a class="prev" href="/">< Previous</a>
 		{% else %}
-			<a class="prev" href="/page/{{ paginator.previous_page }}/">< Previous</a>
+			<a class="prev" href="/page/{{ pagination.pageNumber }}/">< Previous</a>
 		{% endif %}
 	{% endif %}
-	<span class="page-number">Page {{paginator.page}} of {{paginator.total_pages}}</span>
-	{% if paginator.next_page %}
-		<a class="next" href="/page/{{ paginator.next_page }}/">Next ></a>
+	<span class="page-number">Page {{current_page}} of {{pagination.pages.size}}</span>
+	{% if pagination.href.next %}
+		{% assign next_page = current_page | plus: 1 %}
+		<a class="next" href="/page/{{ next_page }}/">Next ></a>
 	{% endif %}
 </div>

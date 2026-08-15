@@ -18,6 +18,24 @@ function textContent(node) {
   return (node.childNodes || []).map(textContent).join("");
 }
 
+function normalizePost(item) {
+  const sourceSlug = item.inputPath.split(/[\\/]/).at(-1)
+    .replace(/\.md$/, "")
+    .replace(/^\d{4}-\d{2}-\d{2}-/, "");
+  const post = {
+    ...item.data,
+    date: item.date,
+    id: `/blog/${sourceSlug}`,
+    inputPath: item.inputPath,
+    outputPath: item.outputPath,
+    url: item.url
+  };
+  Object.defineProperty(post, "content", {
+    get: () => item.templateContent
+  });
+  return post;
+}
+
 export default function (eleventyConfig) {
   eleventyConfig.addDataExtension("yml", (contents) => YAML.parse(contents));
 
@@ -30,6 +48,11 @@ export default function (eleventyConfig) {
   eleventyConfig.setLiquidOptions({
     dynamicPartials: false,
     strictFilters: false
+  });
+
+  eleventyConfig.addUrlTransform(({ url, urlStem }) => {
+    if (url.endsWith(".html") && url !== "/404.html") return urlStem;
+    return url;
   });
 
   for (const name of ["about", "default", "github_profile", "link", "page", "post", "repo_post", "tag"]) {
@@ -92,25 +115,12 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("posts", (collectionApi) => {
     const items = collectionApi.getFilteredByGlob("src/content/posts/*.md")
       .sort((left, right) => right.date - left.date);
-    const posts = items.map((item) => {
-      const sourceSlug = item.inputPath.split(/[\\/]/).at(-1)
-        .replace(/\.md$/, "")
-        .replace(/^\d{4}-\d{2}-\d{2}-/, "");
-      return {
-        ...item.data,
-        content: item.content,
-        date: item.date,
-        id: `/blog/${sourceSlug}`,
-        inputPath: item.inputPath,
-        outputPath: item.outputPath,
-        url: item.url
-      };
+    const posts = items.map(normalizePost);
+    posts.forEach((post, index) => {
+      post.next = posts[index - 1];
+      post.previous = posts[index + 1];
     });
-    return posts.map((post, index) => ({
-      ...post,
-      next: posts[index - 1],
-      previous: posts[index + 1]
-    }));
+    return posts;
   });
 
   eleventyConfig.addCollection("tagList", (collectionApi) => {
@@ -126,9 +136,10 @@ export default function (eleventyConfig) {
     for (const item of collectionApi.getFilteredByGlob("src/content/posts/*.md")) {
       for (const tag of item.data.tags || []) {
         if (!pairs.has(tag)) pairs.set(tag, []);
-        pairs.get(tag).push(item);
+        pairs.get(tag).push(normalizePost(item));
       }
     }
+    for (const posts of pairs.values()) posts.sort((left, right) => right.date - left.date);
     return [...pairs.entries()].sort(([left], [right]) => left.localeCompare(right));
   });
 
