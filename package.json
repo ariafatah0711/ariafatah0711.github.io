@@ -10,9 +10,11 @@
     "clean": "node scripts/clean.mjs",
     "dev": "eleventy --serve",
     "build": "npm run clean && eleventy",
-    "check": "npm run build && npm run check:routes && npm run check:links",
+    "check": "npm run build && npm run check:routes && npm run check:links && npm run check:assets && npm run check:endpoints",
     "check:routes": "node scripts/audit-routes.mjs",
     "check:links": "node scripts/check-links.mjs",
+    "check:assets": "node scripts/check-assets.mjs",
+    "check:endpoints": "node scripts/check-endpoints.mjs",
     "compare:builds": "node scripts/compare-builds.mjs",
     "compare:metadata": "node scripts/compare-metadata.mjs"
   },

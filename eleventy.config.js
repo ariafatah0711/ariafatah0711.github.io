@@ -75,7 +75,7 @@ export default function (eleventyConfig) {
     };
     return date.setLocale("en").toFormat(formats[format] || format);
   });
-  eleventyConfig.addFilter("jsonify", (value) => JSON.stringify(value));
+  eleventyConfig.addFilter("jsonify", (value) => JSON.stringify(value) ?? "null");
   eleventyConfig.addFilter("sha1", (value) => createHash("sha1").update(String(value)).digest("hex"));
   eleventyConfig.addFilter("strip_html", (value = "") => textContent(parseFragment(String(value))));
   eleventyConfig.addFilter("strip_newlines", (value = "") => String(value).replace(/[\r\n]+/g, ""));

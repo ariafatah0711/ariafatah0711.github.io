@@ -1,0 +1,25 @@
+---
+layout: null
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% assign ordered_posts = collections.posts | reverse %}
+{% for post in ordered_posts %}
+<url>
+<loc>{{ site.url }}{{ post.url }}</loc>
+<lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
+</url>
+{% endfor %}
+{% assign sitemap_pages = "/about/,/blogs/,/gallery/,/info/,/projects/,/repos/,/tags/,/urls/,/,/page/2/,/page/3/" | split: "," %}
+{% for route in sitemap_pages %}
+<url>
+<loc>{{ site.url }}{{ route }}</loc>
+</url>
+{% endfor %}
+<url>
+<loc>{{ site.url }}/assets/data/cv.pdf</loc>
+<lastmod>2025-11-25T20:47:40+07:00</lastmod>
+</url>
+</urlset>

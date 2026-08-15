@@ -10,7 +10,17 @@ const delegatedRoutes = new Set([
   "/cisco_aria",
   "/linux_aria",
   "/container_aria",
-  "/ctf_aria"
+  "/ctf_aria",
+  "/notes",
+  "/notes/",
+  "/files",
+  "/files/",
+  "/cv/",
+  "/html_aria/",
+  "/dicoding_1/",
+  "/dicoding_2/",
+  "/dicoding_3/dist/",
+  "/praktikum_uiux/"
 ]);
 
 async function walk(directory) {
@@ -91,7 +101,11 @@ for (const file of htmlFiles) {
       continue;
     }
 
-    if (target.origin !== origin || delegatedRoutes.has(target.pathname)) continue;
+    if (
+      target.origin !== origin
+      || delegatedRoutes.has(target.pathname)
+      || target.pathname.startsWith("/itclub/")
+    ) continue;
     if (!await resolvesLocally(target.pathname)) {
       failures.push(`${sourceRoute}: ${value} -> ${target.pathname}`);
     }

@@ -10,6 +10,7 @@ const manifest = JSON.parse(
 
 function routeToCandidates(route) {
   if (route === "/") return [path.join(output, "index.html")];
+  if (route === "/CNAME") return [path.join(output, "CNAME")];
 
   const relative = route.slice(1);
   if (route.endsWith("/")) {
