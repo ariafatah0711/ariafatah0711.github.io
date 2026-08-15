@@ -1,0 +1,27 @@
+{
+  "name": "ariafatah0711-github-io",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "dev": "eleventy --serve",
+    "build": "npm run clean && eleventy",
+    "check": "npm run build && npm run check:routes && npm run check:links",
+    "check:routes": "node scripts/audit-routes.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "compare:builds": "node scripts/compare-builds.mjs",
+    "compare:metadata": "node scripts/compare-metadata.mjs"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.6",
+    "fast-xml-parser": "5.10.1",
+    "luxon": "3.7.2",
+    "markdown-it": "15.0.0",
+    "parse5": "8.0.1",
+    "yaml": "2.9.0"
+  }
+}

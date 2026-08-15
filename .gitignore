@@ -1,4 +1,9 @@
 _site
+dist
+node_modules
+playwright-report
+test-results
+.artifacts
 *_bak
 .jekyll-cache_old*
 .jekyll-cache
