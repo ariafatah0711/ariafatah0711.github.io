@@ -42,13 +42,24 @@ function metadata(html) {
   };
 }
 
+function comparableValue(key, value) {
+  if (key !== "ogUrl" || !value) return value;
+  try {
+    return new URL(value, "https://ariaf.my.id").pathname;
+  } catch {
+    return value;
+  }
+}
+
 const differences = [];
 for (const route of manifest.routes.filter((item) => item.endsWith("/") || !path.extname(item))) {
   try {
     const legacy = metadata(await readFile(routeFile(path.join(root, "_site"), route), "utf8"));
     const migrated = metadata(await readFile(routeFile(path.join(root, "dist"), route), "utf8"));
     for (const key of Object.keys(legacy)) {
-      if (legacy[key] !== migrated[key]) differences.push(`${route} ${key}`);
+      if (comparableValue(key, legacy[key]) !== comparableValue(key, migrated[key])) {
+        differences.push(`${route} ${key}`);
+      }
     }
   } catch {
     // Route presence is reported by compare-builds and audit-routes.

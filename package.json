@@ -15,15 +15,21 @@
     "check:links": "node scripts/check-links.mjs",
     "check:assets": "node scripts/check-assets.mjs",
     "check:endpoints": "node scripts/check-endpoints.mjs",
+    "check:visual": "playwright test --grep @visual",
+    "check:behavior": "playwright test --grep @behavior",
     "compare:builds": "node scripts/compare-builds.mjs",
     "compare:metadata": "node scripts/compare-metadata.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "3.1.6",
+    "@playwright/test": "1.62.1",
     "fast-xml-parser": "5.10.1",
     "luxon": "3.7.2",
     "markdown-it": "15.0.0",
+    "markdown-it-anchor": "9.2.1",
     "parse5": "8.0.1",
+    "pixelmatch": "7.2.0",
+    "pngjs": "7.0.0",
     "yaml": "2.9.0"
   }
 }

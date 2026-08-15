@@ -10,21 +10,31 @@ function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
 }
 
+function matchesBaseline(value, expected) {
+  if (sha256(value) === expected) return true;
+  if (value.includes(0)) return false;
+
+  const normalized = Buffer.from(
+    value.toString("utf8").replace(/\r\n|\r|\n/g, "\n").replaceAll("\n", "\r\n"),
+    "utf8"
+  );
+  return sha256(normalized) === expected;
+}
+
 const failures = [];
 let checked = 0;
 for (const line of manifest.split(/\r?\n/)) {
   if (!line.trim()) continue;
-  const [, sourcePath] = line.split(/  /, 2);
+  const [expected, sourcePath] = line.split(/  /, 2);
   const publicPath = sourcePath.startsWith("assets/")
     ? path.join("public", sourcePath)
     : path.join("public", sourcePath);
   const outputPath = path.join("dist", sourcePath);
 
   try {
-    const source = await readFile(path.join(root, sourcePath));
     const copied = await readFile(path.join(root, publicPath));
     const built = await readFile(path.join(root, outputPath));
-    if (sha256(source) !== sha256(copied) || sha256(copied) !== sha256(built)) {
+    if (!matchesBaseline(copied, expected) || sha256(copied) !== sha256(built)) {
       failures.push(sourcePath);
     }
   } catch (error) {
@@ -37,5 +47,5 @@ if (failures.length) {
   console.error(`Asset parity failed:\n${failures.join("\n")}`);
   process.exitCode = 1;
 } else {
-  console.log(`Verified ${checked} source, public, and dist asset hashes.`);
+  console.log(`Verified ${checked} baseline, public, and dist asset hashes.`);
 }

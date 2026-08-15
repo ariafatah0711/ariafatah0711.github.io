@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import markdownIt from "markdown-it";
+import markdownItAnchor from "markdown-it-anchor";
 import { DateTime } from "luxon";
 import { parseFragment } from "parse5";
 import YAML from "yaml";
@@ -36,14 +37,33 @@ function normalizePost(item) {
   return post;
 }
 
+function kramdownHeadingId(value) {
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9_\s-]/g, "")
+    .replace(/\s/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 export default function (eleventyConfig) {
   eleventyConfig.addDataExtension("yml", (contents) => YAML.parse(contents));
 
-  eleventyConfig.setLibrary("md", markdownIt({
+  const markdownLibrary = markdownIt({
     html: true,
     linkify: false,
     typographer: false
-  }));
+  }).use(markdownItAnchor, { slugify: kramdownHeadingId });
+  markdownLibrary.renderer.rules.html_block = (tokens, index) => {
+    const html = tokens[index].content;
+    if (/^<a\b[\s\S]*<\/a>\s*$/i.test(html.trim())) {
+      return `<p>${html.trim()}</p>\n`;
+    }
+    return html;
+  };
+  eleventyConfig.setLibrary("md", markdownLibrary);
 
   eleventyConfig.setLiquidOptions({
     dynamicPartials: false,
