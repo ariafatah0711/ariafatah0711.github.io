@@ -98,7 +98,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("jsonify", (value) => JSON.stringify(value) ?? "null");
   eleventyConfig.addFilter("sha1", (value) => createHash("sha1").update(String(value)).digest("hex"));
   eleventyConfig.addFilter("strip_html", (value = "") => textContent(parseFragment(String(value))));
-  eleventyConfig.addFilter("strip_newlines", (value = "") => String(value).replace(/[\r\n]+/g, ""));
+  eleventyConfig.addFilter("strip_newlines", (value = "") => String(value).replace(/\s*[\r\n]+\s*/g, " "));
   eleventyConfig.addFilter("xml_escape", (value = "") => String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")

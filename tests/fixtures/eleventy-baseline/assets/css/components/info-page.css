@@ -1,7 +1,117 @@
 /* Info Page Styles */
 
+.info-page {
+    width: 100%;
+}
+
+.info-intro {
+    padding: 4px 0 28px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-kicker {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    opacity: 0.7;
+}
+
+.info-lead {
+    max-width: 680px;
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.65;
+}
+
+.info-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.info-actions .info-link {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    padding: 9px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--primary-font-color);
+    font-weight: 700;
+}
+
+.info-actions .info-link-primary {
+    border-color: var(--primary-font-color);
+    background: var(--primary-font-color);
+    color: var(--body-bg);
+}
+
+.info-link:hover,
+.info-link-primary:hover {
+    border-color: var(--primary-font-color);
+    background: var(--bg-hover-color);
+    color: var(--primary-font-color);
+    opacity: 1;
+}
+
+.info-link:focus-visible,
+.reset-btn:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+.info-section {
+    padding: 26px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-section h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    letter-spacing: 0;
+}
+
+.info-section p {
+    margin: 0 0 12px;
+    line-height: 1.65;
+}
+
+.info-section p:last-child {
+    margin-bottom: 0;
+}
+
+.info-section a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.info-facts {
+    margin: 8px 0 0;
+}
+
+.info-facts div {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    gap: 16px;
+    padding: 11px 0;
+    border-top: 1px dashed var(--border-color);
+}
+
+.info-facts dt {
+    font-weight: 700;
+}
+
+.info-facts dd {
+    margin: 0;
+}
+
 .info-footer {
     display: flex;
+    flex-wrap: wrap;
+    margin-top: 24px;
     margin-bottom: 25px;
     gap: 10px;
 }
@@ -22,6 +132,7 @@
 
 .reset-btn:hover {
     background-color: var(--bg-hover-color);
+    color: var(--primary-font-color);
     transform: translateY(-2px);
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
 }
@@ -46,7 +157,7 @@
 
 .confirm-content {
     background: var(--bg-color);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 30px;
     max-width: 400px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -110,4 +221,24 @@
 .confirm-no:hover {
     background: var(--primary-font-color);
     color: var(--bg-color);
+}
+
+@media (max-width: 480px) {
+    .info-lead {
+        font-size: 16px;
+    }
+
+    .info-actions,
+    .info-link {
+        width: 100%;
+    }
+
+    .info-link {
+        justify-content: center;
+    }
+
+    .info-facts div {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
 }

@@ -31,7 +31,7 @@
     margin-top: 22px;
 }
 
-.info-link {
+.info-actions .info-link {
     display: inline-flex;
     min-height: 42px;
     align-items: center;
@@ -42,7 +42,7 @@
     font-weight: 700;
 }
 
-.info-link-primary {
+.info-actions .info-link-primary {
     border-color: var(--primary-font-color);
     background: var(--primary-font-color);
     color: var(--body-bg);

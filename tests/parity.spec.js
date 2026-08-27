@@ -80,6 +80,7 @@ async function capture(browser, origin, route, viewport, theme) {
 
 for (const scenario of [
   { name: "home", route: "/" },
+  { name: "info", route: "/info/" },
   { name: "about", route: "/about/" },
   { name: "gallery", route: "/gallery/" },
   { name: "projects", route: "/projects/" },
@@ -141,6 +142,12 @@ test("@behavior theme, PJAX, integrations, modals, and reset bindings", async ({
   await expect.poll(() => lanyardRequests).toEqual(["/v1/users/879547455941779456"]);
   await expect(page.locator("#meeting-js-player")).toHaveCount(0);
   await expect(page.locator('a[href="/music"]')).toHaveCount(0);
+  await expect(page.locator('a.post-title[href="https://wu.ariaf.my.id/"]')).toHaveText(
+    "Writeups CTF Aria Fatah"
+  );
+  await expect(page.locator('a.post-title[href="/blog/nxctf"]')).toHaveText(
+    "NXCTF: Dari Platform Menjadi Ekosistem CTF"
+  );
 
   const localPostLink = page.locator('a.post-title[href="/blog/praktikum_uiux"]');
   await expect(localPostLink).toHaveCount(1);
@@ -159,6 +166,16 @@ test("@behavior theme, PJAX, integrations, modals, and reset bindings", async ({
   await expect(page.locator('[data-gp-stat="followers"]')).toHaveText("108");
   await page.goBack();
   await expect(page).toHaveURL(`${currentOrigin}/`);
+
+  await settlePage(page, `${currentOrigin}/blog/nxctf`);
+  await expect(page.getByRole("heading", {
+    level: 1,
+    name: "NXCTF: Dari Platform Menjadi Ekosistem CTF"
+  })).toBeVisible();
+  await expect(page.getByRole("link", { name: "organisasi NXCTF di GitHub" })).toHaveAttribute(
+    "href",
+    "https://github.com/nxctf"
+  );
 
   await settlePage(page, `${currentOrigin}/gallery/`);
   const category = page.locator('.filter-btn[data-category="certificate"]');
