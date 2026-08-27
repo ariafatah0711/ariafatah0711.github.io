@@ -139,7 +139,8 @@ test("@behavior theme, PJAX, integrations, modals, and reset bindings", async ({
   await expect(page.locator("#status").first()).toHaveAttribute("data-discord-id", "879547455941779456");
   await expect(page.locator("#status").first()).toContainText("Online");
   await expect.poll(() => lanyardRequests).toEqual(["/v1/users/879547455941779456"]);
-  await expect(page.locator("#meeting-js-player")).toHaveCount(1);
+  await expect(page.locator("#meeting-js-player")).toHaveCount(0);
+  await expect(page.locator('a[href="/music"]')).toHaveCount(0);
 
   const localPostLink = page.locator('a.post-title[href="/blog/praktikum_uiux"]');
   await expect(localPostLink).toHaveCount(1);
@@ -174,6 +175,15 @@ test("@behavior theme, PJAX, integrations, modals, and reset bindings", async ({
   await expect(page.locator("#disqus_thread")).toHaveAttribute("data-disqus-shortname", "ariafatah0711");
 
   await settlePage(page, `${currentOrigin}/info/`);
+  await expect(page.getByRole("heading", { level: 1, name: "Tentang Website Ini" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Source code on GitHub" })).toHaveAttribute(
+    "href",
+    "https://github.com/ariafatah0711/ariafatah0711.github.io"
+  );
+  await expect(page.getByRole("link", { name: "GitHub profile" })).toHaveAttribute(
+    "href",
+    "https://github.com/ariafatah0711"
+  );
   await expect(page.locator('[data-action="reset-local-data"]')).toHaveAttribute("data-bound", "true");
   await expect(page.locator('[data-action="reset-cache"]')).toHaveAttribute("data-bound", "true");
 
@@ -204,7 +214,7 @@ test("@behavior linked local stylesheets return HTTP 200", async ({ browser }) =
     }
   });
 
-  for (const route of ["/", "/projects/", "/blog/praktikum_uiux", "/tags/", "/404.html", "/gallery/"]) {
+  for (const route of ["/", "/projects/", "/info/", "/blog/praktikum_uiux", "/tags/", "/404.html", "/gallery/"]) {
     await settlePage(page, `${currentOrigin}${route}`);
   }
 

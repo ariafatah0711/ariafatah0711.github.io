@@ -1,0 +1,104 @@
+---
+layout: default
+title: Listening Room
+description: Spotify playlists for late-night builds and quiet sessions.
+permalink: false
+eleventyExcludeFromCollections: true
+---
+
+<main class="music-page tw:pb-8" data-music-page data-motion="playing">
+  <section class="music-hero tw:relative tw:overflow-hidden" aria-labelledby="music-title">
+    <div
+      class="music-scene"
+      role="img"
+      aria-label="Anime-inspired listening room overlooking a rainy city at night"
+    ></div>
+    <div class="music-hero-shade" aria-hidden="true"></div>
+
+    <div class="music-copy">
+      <p class="music-kicker">ARIAF / MUSIC</p>
+      <h1 id="music-title">Listening Room</h1>
+      <p class="music-intro">Soundtracks for late-night builds and quiet sessions.</p>
+    </div>
+
+    <div class="music-vinyl" aria-hidden="true">
+      <span>AF</span>
+    </div>
+
+    <button
+      class="music-motion-toggle"
+      type="button"
+      data-music-motion
+      aria-pressed="false"
+      aria-label="Pause ambient animation"
+      title="Pause ambient animation"
+    >
+      <span class="music-motion-icon" aria-hidden="true"></span>
+    </button>
+  </section>
+
+  <section class="music-library" aria-labelledby="music-library-title">
+    <div class="music-library-heading tw:flex tw:flex-wrap tw:items-end tw:justify-between tw:gap-4">
+      <div>
+        <p class="music-section-label">PLAYLISTS</p>
+        <h2 id="music-library-title">Current rotation</h2>
+      </div>
+      <p class="music-count">{{ music.playlists.size }} on the shelf</p>
+    </div>
+
+    <div class="music-tabs tw:flex tw:gap-2" role="tablist" aria-label="Choose a Spotify playlist">
+      {% for playlist in music.playlists %}
+      <button
+        class="music-tab{% if forloop.first %} is-active{% endif %}"
+        type="button"
+        role="tab"
+        id="music-tab-{{ playlist.key }}"
+        aria-controls="music-panel-{{ playlist.key }}"
+        aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+        tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+        data-music-tab="{{ playlist.key }}"
+      >
+        {{ playlist.title }}
+      </button>
+      {% endfor %}
+    </div>
+
+    {% for playlist in music.playlists %}
+    <section
+      class="music-playlist-panel"
+      id="music-panel-{{ playlist.key }}"
+      role="tabpanel"
+      aria-labelledby="music-tab-{{ playlist.key }}"
+      data-music-panel="{{ playlist.key }}"
+      {% unless forloop.first %}hidden{% endunless %}
+    >
+      <div class="music-embed-shell">
+        <p class="music-embed-status" data-music-status aria-live="polite">
+          Loading {{ playlist.title }} from Spotify...
+        </p>
+        <iframe
+          class="music-embed"
+          title="Spotify playlist: {{ playlist.title }}"
+          src="{% if forloop.first %}{{ playlist.embedUrl }}{% else %}about:blank{% endif %}"
+          data-src="{{ playlist.embedUrl }}"
+          width="100%"
+          height="352"
+          loading="lazy"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <div class="music-panel-actions tw:flex tw:flex-wrap tw:items-center tw:justify-between tw:gap-3">
+        <span>{{ playlist.title }}</span>
+        <a
+          class="music-spotify-link"
+          href="{{ playlist.url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Open in Spotify</a>
+      </div>
+    </section>
+    {% endfor %}
+  </section>
+</main>

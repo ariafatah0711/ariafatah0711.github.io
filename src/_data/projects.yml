@@ -1,14 +1,22 @@
 # List of projects shown in the projects gallery
-- title: "CTFS (Capture The Flag Simple)"
-  description: "Free & Simple CTF Platform — Deploy seamlessly with Vercel + Supabase. Perfect for individuals or teams who want a free and lightweight CTF platform."
+- title: "NXCTF - Modern Capture The Flag Platform"
+  description: "NXCTF is a next-generation open-source platform and orchestration ecosystem for Capture The Flag competitions and cybersecurity training."
   images:
-  - https://raw.githubusercontent.com/ariafatah0711/ctfs/main/images/README/image-4.png
-  - https://raw.githubusercontent.com/ariafatah0711/ctfs/main/images/README/image-7.png
-  - https://raw.githubusercontent.com/ariafatah0711/ctfs/main/images/README/image-6.png
-  - https://raw.githubusercontent.com/ariafatah0711/ctfs/main/images/README/image-8.png
-  source_url: "https://github.com/ariafatah0711/ctfs"
-  demo_url: "https://ctf.ariaf.my.id"
-  repo: "ariafatah0711/ctfs"
+  - https://raw.githubusercontent.com/nxctf/assets/refs/heads/main/preview_2/ctf-landing-page.png
+  - https://raw.githubusercontent.com/nxctf/assets/refs/heads/main/preview_2/ctf-challenges.png
+  - https://raw.githubusercontent.com/nxctf/assets/refs/heads/main/preview_2/ctf-admin.png
+  - https://raw.githubusercontent.com/nxctf/assets/refs/heads/main/preview_2/landing-page.png
+  source_url: "https://github.com/nxctf/nxctf"
+  demo_url: "https://nxctf.my.id"
+  repo: "nxctf/nxctf"
+
+- title: "NXCTL - CTF Challenge Orchestrator"
+  description: "NXCTL is an open-source command-line orchestrator for running containerized Capture The Flag (CTF) challenges. As part of the NXCTF ecosystem, it streamlines challenge lifecycle management with automated tunnels, TTL controls, dynamic port allocation, and infrastructure automation."
+  images:
+  - https://raw.githubusercontent.com/nxctf/assets/refs/heads/main/preview_2/nxctl-1.jpg
+  source_url: "https://github.com/nxctf/nxctl"
+  demo_url: "https://nxctf.my.id"
+  repo: "nxctf/nxctl"
 
 - title: "HPone - Docker Honeypot Manager"
   description: "HPone is a comprehensive Docker-based honeypot management platform that simplifies the deployment, monitoring, and maintenance of security honeypots. With intelligent auto-import features and streamlined command interfaces, HPone makes honeypot management accessible for both production and development environments."

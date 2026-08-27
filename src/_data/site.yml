@@ -91,7 +91,7 @@ app:
   cursor_splash:
     active: True
   meeting-js:
-    active: True
+    active: False
 # pwa:
 #   enabled: true
 #   sw_src_filepath: service-worker.js # Optional

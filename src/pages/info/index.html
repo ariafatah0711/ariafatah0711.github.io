@@ -1,19 +1,80 @@
 ---
 layout: page
-title: Information Tentang Website ini
+title: Tentang Website Ini
 permalink: /info/
 ---
 
-<div class="w-100">
-    <p>
-        Website ini dibangun menggunakan <strong>Jekyll</strong>, sebuah static site generator yang memungkinkan pembuatan website dengan mudah dan cepat. Tema yang digunakan adalah <strong>Ephesus Jekyll Theme</strong>, yang memiliki desain sederhana dan minimalis, cocok untuk blog atau portofolio pribadi. Tema ini dikembangkan oleh <strong>Hakan Torun</strong>.
-    </p>
-    <p>
-        Untuk melihat demo dari template awal, kamu bisa mengunjungi <a href="https://pardin.us/ephesus/" target="_blank" class="link_color">demo template Ephesus</a>.
-    </p>
-    <p>
-        Template awal dapat ditemukan di <a href="https://github.com/onepase/Ephesus" target="_blank" class="link_color">GitHub template Ephesus</a>. Sementara itu, untuk versi custom yang saya buat, kamu bisa menemukannya di <a href="https://github.com/ariafatah0711/ariafatah0711.github.io" target="_blank" class="link_color">GitHub saya</a>.
-    </p>
+<div class="info-page w-100">
+    <header class="info-intro">
+        <p class="info-kicker">ARIAF.MY.ID / OPEN SOURCE</p>
+        <p class="info-lead">
+            Portfolio dan blog ini sekarang berjalan sepenuhnya dengan <strong>Eleventy dan Node.js</strong>.
+            Source code, riwayat refactor, serta pengembangan aktifnya tersedia terbuka di GitHub.
+        </p>
+        <div class="info-actions">
+            <a
+                class="info-link info-link-primary"
+                href="https://github.com/ariafatah0711/ariafatah0711.github.io"
+                target="_blank"
+                rel="noopener noreferrer"
+            >Source code on GitHub</a>
+            <a
+                class="info-link"
+                href="https://github.com/ariafatah0711"
+                target="_blank"
+                rel="noopener noreferrer"
+            >GitHub profile</a>
+        </div>
+    </header>
+
+    <section class="info-section" aria-labelledby="info-refactor-title">
+        <h2 id="info-refactor-title">Dari Jekyll ke Eleventy</h2>
+        <p>
+            Website ini bermula dari <a href="https://github.com/onepase/Ephesus" target="_blank" rel="noopener noreferrer">Ephesus Jekyll Theme</a>
+            buatan <a href="https://hakan.io" target="_blank" rel="noopener noreferrer">Hakan Torun</a>,
+            kemudian dikustomisasi dan dikembangkan untuk kebutuhan portfolio pribadi.
+        </p>
+        <p>
+            Runtime dan build pipeline-nya kini telah direfaktor penuh oleh ariafatah0711 dari
+            Jekyll/Ruby ke Eleventy/Node.js. URL, konten, feed, integrasi browser, dan identitas visual
+            dipertahankan, tetapi Jekyll, Ruby, serta Bundler tidak lagi dipakai pada implementasi aktif.
+        </p>
+    </section>
+
+    <section class="info-section" aria-labelledby="info-stack-title">
+        <h2 id="info-stack-title">Implementasi Sekarang</h2>
+        <dl class="info-facts">
+            <div>
+                <dt>Runtime</dt>
+                <dd>Node.js 24 dan Eleventy 3</dd>
+            </div>
+            <div>
+                <dt>Templates</dt>
+                <dd>Liquid, HTML, Markdown, dan data YAML</dd>
+            </div>
+            <div>
+                <dt>Styling</dt>
+                <dd>Component CSS dengan fondasi Tailwind CSS v4 tanpa Preflight</dd>
+            </div>
+            <div>
+                <dt>Testing</dt>
+                <dd>Integrity checks dan Playwright visual regression</dd>
+            </div>
+            <div>
+                <dt>Deployment</dt>
+                <dd>GitHub Actions dan GitHub Pages</dd>
+            </div>
+        </dl>
+    </section>
+
+    <section class="info-section" aria-labelledby="info-credit-title">
+        <h2 id="info-credit-title">Kredit dan Riwayat</h2>
+        <p>
+            Ephesus tetap dikreditkan sebagai fondasi visual awal. Implementasi Eleventy, migrasi
+            konten, compatibility layer, pengujian parity, dan pengembangan berikutnya dikerjakan
+            serta dipelihara di repository GitHub ariafatah0711.
+        </p>
+    </section>
 </div>
 
 <div class="text-center info-footer">
