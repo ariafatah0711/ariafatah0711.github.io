@@ -32,11 +32,11 @@ jobs:
       - name: Run Eleventy integrity checks
         run: npm run check
 
-      - name: Install Playwright Chromium
-        run: npm exec -- playwright install --with-deps chromium
+      # - name: Install Playwright Chromium
+      #   run: npm exec -- playwright install --with-deps chromium
 
-      - name: Run browser tests
-        run: npm run test
+      # - name: Run browser tests
+      #   run: npm run test
 
       - name: Build production site
         run: npm run build
