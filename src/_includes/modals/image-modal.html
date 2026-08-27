@@ -1,19 +1,25 @@
 {% comment %}
 Image Modal Component
-Handles gallery images, repo images, and video previews
+Handles gallery images, repo images, and video previews with spacious left/right click zones
 {% endcomment %}
 
-<div id="imageModal" class="modal">
-    <span class="close">&times;</span>
-    <div class="modal-nav prev" id="prevBtn">&#10094;</div>
-    <div class="modal-nav next" id="nextBtn">&#10095;</div>
-    <img class="modal-content" id="modalImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
-    <div class="image-fallback" style="display:none;"></div>
-    <!-- video element for project/video previews -->
-    <video class="modal-content" id="modalVideo" controls style="display:none; background: black;"></video>
-    <div class="modal-info" id="modalInfo">
-        <div class="modal-title" id="modalTitle"></div>
-        <div class="modal-description" id="modalDescription"></div>
-        <div class="modal-counter" id="modalCounter"></div>
+<div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-label="Image preview">
+    <button class="close" title="Close (Esc)" aria-label="Close modal">&times;</button>
+    <div class="modal-nav prev" id="prevBtn" role="button" aria-label="Previous image">
+        <span class="nav-icon" aria-hidden="true">&#10094;</span>
+    </div>
+    <div class="modal-nav next" id="nextBtn" role="button" aria-label="Next image">
+        <span class="nav-icon" aria-hidden="true">&#10095;</span>
+    </div>
+    <div class="modal-body">
+        <img class="modal-content" id="modalImg" alt="Modal image preview" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
+        <div class="image-fallback" style="display:none;"></div>
+        <!-- video element for project/video previews -->
+        <video class="modal-content" id="modalVideo" controls style="display:none; background: black;"></video>
+        <div class="modal-info" id="modalInfo">
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-description" id="modalDescription"></div>
+            <div class="modal-counter" id="modalCounter"></div>
+        </div>
     </div>
 </div>

@@ -16,16 +16,10 @@ discus-identifier:  ariafatah0711
 # Author settings
 author:
   name: aria fatah
-  # bio: Hoby Belajar IT web development ppppppppppppppppppppp ddddddddddddddddddddd  12312 4234 342423 42422 dancokkkk kk kk kk
-  # bio: Hoby Belajar IT <br> web development <br> Networking & IT security <br> DevOps & automation
   bio: "IT Enthusiast <br> Fokus di Cyber Security & Networking <br> Belajar Web Dev & DevOps <br> Mahasiswa STT Nurul Fikri"
-  # picture: assets/images/profile-128.avif
   picture: assets/images/profile2-128.avif
   github: ariafatah0711 # github username
-  # twitter:  # twitter username
-  # facebook:  # facebook username
   instagram: ariaf.my.id # instagram username
-  # youtube: https://www.youtube.com/channel/# youtube username
   linkedin: ariafatah
   email: calhounsgt07@gmail.com
   discord: https://s.id/dev-universe
@@ -36,28 +30,13 @@ app:
   theme: white
   navbar:
     - name: about
-      # url: https://me.ariaf.my.id
       url: /about
-    # - name: cv
-      # url: /cv
     - name: gallery
       url: /gallery
+    - name: achievements
+      url: /achievements
     - name: projects
       url: /projects
-    # - name: notes
-    #   url: /notes
-    # - name: blogs
-    #   url: /blogs
-    # - name: urls
-    #   url: /urls
-    # - name: tags
-      # url: /tags
-    # - name: repos
-      # url: repos
-    - name: info
-      url: /info
-    # - name: /external
-    #   url: https://docs.ariaf.my.id
   linktree:
     active: true
     groups:
@@ -65,10 +44,10 @@ app:
         links:
           - name: WhatsApp
             url: https://wa.me/+6289509221496
-          # - name: GitHub
-          #   url: https://github.com/ariafatah0711
       - title: My Web
         links:
+          - name: achievements
+            url: /achievements
           - name: notes
             url: https://ariaf.my.id/notes
           - name: files
@@ -79,8 +58,6 @@ app:
     active: True
     discord_id: "879547455941779456"
     cacheTime: 15000
-  # meeting-js:
-    # active: True
   loader:
     active: True
     custom_teks:
@@ -92,23 +69,9 @@ app:
     active: True
   meeting-js:
     active: False
-# pwa:
-#   enabled: true
-#   sw_src_filepath: service-worker.js # Optional
-#   sw_dest_filename: service-worker.js # Optional
-#   dest_js_directory: assets/js # Required
-#   precache_recent_posts_num: 5 # Optional
-#   precache_glob_directory: / # Optional
-#   precache_glob_patterns:
-#     - "{js,css,fonts,img}/**/*.{js,css,eot,svg,ttf,woff,png,avif,jpg,jpeg,gif,webp}"
-#     - index.html
-#   precache_glob_ignores: # Optional
-#     - sw-register.js
-#     - "fonts/**/*"
 
 # URL settings
 url: "https://ariaf.my.id"
-# url: "http://127.0.0.1:4000" # Domain Name of host. [username].github.io for github pages
 permalink: pretty
 
 markdown: kramdown
@@ -129,7 +92,6 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-relative-links
-  # - jekyll-pwa-plugin
 
 paginate: 10
 paginate_path: "/page/:num"

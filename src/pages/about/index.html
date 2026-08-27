@@ -4,10 +4,26 @@ title: "About Me"
 permalink: /about/
 ---
 
-🚀 <strong>Halo, saya Aria Fatah Anom</strong>, seorang mahasiswa STT Terpadu Nurul Fikri berusia 18 tahun dengan fokus utama di bidang <strong>Cyber Security</strong> dan <strong>Networking</strong>. Perjalanan saya di dunia IT dimulai sejak 2023 melalui <strong>Front-End Development</strong>, sebelum akhirnya saya lebih mendalami dunia keamanan jaringan dan sistem.
+<strong>Halo, saya Aria Fatah Anom</strong>, mahasiswa Teknik Informatika di STT Terpadu Nurul Fikri dengan fokus utama di bidang <strong>Cybersecurity</strong>, <strong>Networking</strong>, dan infrastructure engineering. Perjalanan saya di dunia IT dimulai dari front-end development pada 2023, kemudian berkembang ke keamanan jaringan, sistem, dan open-source tooling.
 
-Bagi saya, teknologi bukan hanya sekadar kode atau perangkat keras, melainkan sebuah <strong>ekosistem yang terus berkembang</strong>. Dari situlah saya percaya bahwa <strong>keamanan</strong> dan <strong>keandalan</strong> adalah fondasi penting bagi masa depan digital.
+Saat ini saya membangun <strong>NXCTF</strong> sebagai founder dan lead developer. Di luar pengembangan project, saya aktif mengikuti kompetisi CTF dan networking dari tingkat kota hingga internasional.
 
-Dengan semangat <strong>belajar tanpa henti</strong> dan eksplorasi, saya berkomitmen untuk mengasah keterampilan teknis, memahami tantangan nyata, serta berkontribusi dalam menciptakan <strong>solusi digital yang bermanfaat dan aman</strong>.
+Bagi saya, teknologi bukan hanya kode atau perangkat keras, tetapi ekosistem yang harus aman, andal, dan bermanfaat. Saya terus belajar melalui kompetisi, komunitas, dan project yang menyelesaikan masalah nyata.
 
-Mari terhubung dan berbagi pengetahuan untuk berkembang bersama!
+<section class="about-achievements-preview" aria-labelledby="about-achievements-title">
+  <div class="about-achievements-header">
+    <h2 id="about-achievements-title">Competition Highlights</h2>
+    <a class="about-achievements-link" href="{{ '/achievements/' | relative_url }}">See all {{ achievements.items.size }} achievements</a>
+  </div>
+  <ol class="about-achievements-list">
+    {% for achievement in achievements.items %}
+      {% if achievement.featured %}
+        <li class="about-achievement-item">
+          <time datetime="{{ achievement.datetime }}">{{ achievement.period }}</time>
+          <strong>{{ achievement.title }}</strong>
+          <span class="about-achievement-result">{{ achievement.result }}</span>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+</section>

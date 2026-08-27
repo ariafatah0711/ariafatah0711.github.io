@@ -202,7 +202,7 @@
     var allGalleryImages = Array.prototype.slice.call(document.querySelectorAll(".gallery-item .clickable-image"));
 
     state.imageData = allGalleryImages.map(function (el) {
-      return el.currentSrc || el.src;
+      return el.getAttribute("data-full-src") || el.currentSrc || el.src;
     });
 
     state.metaData = allGalleryImages.map(function (el) {
@@ -261,6 +261,38 @@
     openModal(0, false);
   }
 
+  function setupAchievementMode(img) {
+    state.isGalleryMode = true;
+    applyModalMode();
+
+    var achievementItem = img.closest(".achievement-item");
+    var achievementTitle = achievementItem ? (achievementItem.querySelector("h3") ? achievementItem.querySelector("h3").textContent : "") : "";
+    var images = achievementItem
+      ? Array.prototype.slice.call(achievementItem.querySelectorAll(".clickable-image"))
+      : [img];
+
+    state.imageData = images.map(function (el) {
+      return el.getAttribute("data-full-src") || el.currentSrc || el.src;
+    });
+
+    state.metaData = images.map(function (el) {
+      var wrapper = el.closest(".achievement-proof-wrapper");
+      var captionEl = wrapper ? wrapper.querySelector(".achievement-photo-caption") : null;
+      return {
+        title: achievementTitle,
+        description: (captionEl ? captionEl.textContent : "") || el.getAttribute("alt") || "",
+      };
+    });
+
+    var clickedIndex = images.indexOf(img);
+    state.currentIndex = clickedIndex >= 0 ? clickedIndex : 0;
+
+    if (state.imageData.length > 0) {
+      openModal(state.currentIndex, state.imageData.length > 1);
+      preloadAdjacent(state.currentIndex);
+    }
+  }
+
   function onDocumentClick(event) {
     if (!event || !event.target) return;
 
@@ -283,10 +315,14 @@
         return;
       }
 
-      // 2) Project-item image gallery (legacy / other pages)
+      // 2) Achievement items (photos / certificates)
+      if (img.closest && img.closest(".achievement-item")) {
+        setupAchievementMode(img);
+        return;
+      }
+
+      // 3) Project-item image gallery (legacy / other pages)
       if (img.closest && img.closest(".project-item")) {
-        // If the dedicated Project Modal exists, let projects.js handle it
-        // to avoid double-modals and stuck scroll lock.
         if (getEl("projectModal")) {
           return;
         }
@@ -295,7 +331,7 @@
         return;
       }
 
-      // 3) Single image inside blog post content
+      // 4) Single image inside blog post content
       if (img.closest && img.closest(".blog-post-content")) {
         setupRepoMode(img);
         return;

@@ -4,8 +4,6 @@ title: Gallery
 permalink: /gallery/
 ---
 
-<!-- Preconnect dipindah ke head untuk halaman ini -->
-
 <div class="gallery-container">
   <!-- Category Filter -->
   <div class="gallery-filters">
@@ -20,7 +18,7 @@ permalink: /gallery/
           {% endif %}
         {% endfor %}
       {% endif %}
-      <button class="filter-btn" data-category="{{ category.slug }}">
+      <button class="filter-btn{% if forloop.first %} active{% endif %}" data-category="{{ category.slug }}">
         {{ category.name }} ({{ count }})
       </button>
     {% endfor %}
@@ -52,6 +50,7 @@ permalink: /gallery/
           src="https://wsrv.nl/?url={{ photo.path | uri_escape }}&w=800&output=webp"
           srcset="https://wsrv.nl/?url={{ photo.path | uri_escape }}&w=480&output=webp 480w, https://wsrv.nl/?url={{ photo.path | uri_escape }}&w=800&output=webp 800w, https://wsrv.nl/?url={{ photo.path | uri_escape }}&w=1200&output=webp 1200w"
           sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
+          data-full-src="{{ photo.path }}"
           alt="{{ photo.title }}"
           loading="lazy"
           decoding="async"
@@ -68,5 +67,3 @@ permalink: /gallery/
     {% endfor %}
   </div>
 </div>
-
-<!-- CSS khusus dipindah ke assets/css/gallery.css -->

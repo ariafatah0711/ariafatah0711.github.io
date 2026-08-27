@@ -1,0 +1,91 @@
+---
+layout: page
+title: Awards & Achievements
+permalink: /achievements/
+description: Competition results and academic recognitions earned by Aria Fatah.
+---
+
+<div class="achievements-page">
+  <dl class="achievements-stats" aria-label="Achievement summary">
+    {% for stat in achievements.stats %}
+      <div>
+        <dt>{{ stat.value }}</dt>
+        <dd>{{ stat.label }}</dd>
+      </div>
+    {% endfor %}
+  </dl>
+
+  <div class="achievements-timeline">
+    {% for year in achievements.years %}
+      <section class="achievement-year" aria-labelledby="achievement-year-{{ year }}">
+        <h2 id="achievement-year-{{ year }}">{{ year }}</h2>
+        <div class="achievement-list">
+          {% for achievement in achievements.items %}
+            {% if achievement.year == year %}
+              <article class="achievement-item" id="{{ achievement.id }}">
+                <div class="achievement-card-header">
+                  <div class="achievement-meta-left">
+                    <span class="achievement-marker" data-result="{{ achievement.result_key }}" aria-hidden="true"></span>
+                    <time class="achievement-date" datetime="{{ achievement.datetime }}">{{ achievement.period }}</time>
+                    <span class="dot-sep" aria-hidden="true">•</span>
+                    <span class="achievement-stage-tag">{{ achievement.education_stage }}</span>
+                  </div>
+                  <span class="achievement-result" data-result="{{ achievement.result_key }}">{{ achievement.result }}</span>
+                </div>
+
+                <div class="achievement-copy">
+                  <h3>{{ achievement.title }}</h3>
+                  <p class="achievement-details">
+                    <span>{{ achievement.field }}</span>
+                    <span class="dot-sep" aria-hidden="true">•</span>
+                    <span>{{ achievement.scope }}</span>
+                  </p>
+                </div>
+
+                {% if achievement.photos %}
+                  <div class="achievement-gallery-strip" aria-label="Documentation photos for {{ achievement.title }}">
+                    {% for photo in achievement.photos %}
+                      <div class="achievement-proof-wrapper">
+                        <img
+                          class="clickable-image achievement-photo"
+                          src="https://wsrv.nl/?url={{ photo.url | uri_escape }}&w=600&output=webp"
+                          data-full-src="{{ photo.url }}"
+                          alt="{{ photo.caption | default: achievement.title }}"
+                          loading="lazy"
+                          decoding="async"
+                        >
+                        <span class="achievement-photo-caption">{{ photo.caption }}</span>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% elsif achievement.proof_url %}
+                  <div class="achievement-gallery-strip">
+                    <div class="achievement-proof-wrapper">
+                      <img
+                        class="clickable-image achievement-photo"
+                        src="https://wsrv.nl/?url={{ achievement.proof_url | uri_escape }}&w=600&output=webp"
+                        data-full-src="{{ achievement.proof_url }}"
+                        alt="Certificate for {{ achievement.title }}"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if achievement.proof_url %}
+                  <a
+                    class="achievement-proof"
+                    href="{{ achievement.proof_url }}"
+                    style="display: none;"
+                    aria-hidden="true"
+                  >Proof</a>
+                {% endif %}
+              </article>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  </div>
+</div>

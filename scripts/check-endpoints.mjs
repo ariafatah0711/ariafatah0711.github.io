@@ -12,6 +12,10 @@ const expectedPostUrls = [
   `${origin}/blog/nxctf`,
   `${origin}/blog/ctf-writeups`
 ];
+const expectedSitemapUrls = [
+  ...expectedPostUrls,
+  `${origin}/achievements/`
+];
 
 const feed = JSON.parse(await readFile(path.join(output, "feed.json"), "utf8"));
 if (feed.items?.length !== 26) failures.push(`JSON Feed items: ${feed.items?.length}`);
@@ -30,9 +34,9 @@ for (const url of expectedPostUrls) {
 
 const sitemap = parser.parse(await readFile(path.join(output, "sitemap.xml"), "utf8"));
 const sitemapUrls = (sitemap.urlset?.url || []).map((item) => item.loc);
-if (sitemapUrls.length !== 38) failures.push(`Sitemap URLs: ${sitemapUrls.length}`);
+if (sitemapUrls.length !== 39) failures.push(`Sitemap URLs: ${sitemapUrls.length}`);
 if (!sitemapUrls.includes(`${origin}/assets/data/cv.pdf`)) failures.push("Sitemap CV PDF");
-for (const url of expectedPostUrls) {
+for (const url of expectedSitemapUrls) {
   if (!sitemapUrls.includes(url)) failures.push(`Sitemap missing: ${url}`);
 }
 if (sitemapUrls.some((url) => url.endsWith(".html") && !url.endsWith("404.html"))) {

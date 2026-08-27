@@ -12,7 +12,7 @@ eleventyExcludeFromCollections: true
 <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
 </url>
 {% endfor %}
-{% assign sitemap_pages = "/about/,/blogs/,/gallery/,/info/,/projects/,/repos/,/tags/,/urls/,/,/page/2/,/page/3/" | split: "," %}
+{% assign sitemap_pages = "/about/,/achievements/,/blogs/,/gallery/,/info/,/projects/,/repos/,/tags/,/urls/,/,/page/2/,/page/3/" | split: "," %}
 {% for route in sitemap_pages %}
 <url>
 <loc>{{ site.url }}{{ route }}</loc>

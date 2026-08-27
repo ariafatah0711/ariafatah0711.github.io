@@ -82,6 +82,7 @@ for (const scenario of [
   { name: "home", route: "/" },
   { name: "info", route: "/info/" },
   { name: "about", route: "/about/" },
+  { name: "achievements", route: "/achievements/" },
   { name: "gallery", route: "/gallery/" },
   { name: "projects", route: "/projects/" },
   { name: "tags", route: "/tags/" },
@@ -164,8 +165,26 @@ test("@behavior theme, PJAX, integrations, modals, and reset bindings", async ({
   await page.locator('a[href="/about"]:visible').first().click();
   await expect(page).toHaveURL(`${currentOrigin}/about`);
   await expect(page.locator('[data-gp-stat="followers"]')).toHaveText("108");
+  await expect(page.locator(".about-achievement-item")).toHaveCount(3);
+  await expect(page.getByRole("link", { name: "See all 9 achievements" })).toHaveAttribute(
+    "href",
+    "/achievements/"
+  );
   await page.goBack();
   await expect(page).toHaveURL(`${currentOrigin}/`);
+
+  await settlePage(page, `${currentOrigin}/achievements/`);
+  await expect(page.getByRole("heading", { level: 1, name: "Awards & Achievements" })).toBeVisible();
+  await expect(page.locator(".achievement-item")).toHaveCount(9);
+  await expect(page.locator(".achievements-stats")).toBeVisible();
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.waitForTimeout(50);
+  const achievementPageWidth = await page.evaluate(() => ({
+    document: document.documentElement.scrollWidth,
+    viewport: window.innerWidth
+  }));
+  expect(achievementPageWidth.document).toBeLessThanOrEqual(achievementPageWidth.viewport);
+  await page.setViewportSize({ width: 1440, height: 900 });
 
   await settlePage(page, `${currentOrigin}/blog/nxctf`);
   await expect(page.getByRole("heading", {
@@ -231,7 +250,7 @@ test("@behavior linked local stylesheets return HTTP 200", async ({ browser }) =
     }
   });
 
-  for (const route of ["/", "/projects/", "/info/", "/blog/praktikum_uiux", "/tags/", "/404.html", "/gallery/"]) {
+  for (const route of ["/", "/projects/", "/info/", "/achievements/", "/blog/praktikum_uiux", "/tags/", "/404.html", "/gallery/"]) {
     await settlePage(page, `${currentOrigin}${route}`);
   }
 

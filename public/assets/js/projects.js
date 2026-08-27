@@ -304,22 +304,24 @@
       currentIndex = 0;
       modalTitle.textContent = title || "";
       modalDescription.textContent = description || "";
-      sourceBtn.style.display = sourceUrl ? "inline-block" : "none";
+      sourceBtn.style.display = sourceUrl ? "inline-flex" : "none";
       if (sourceUrl) sourceBtn.href = sourceUrl;
-      demoBtn.style.display = demoUrl ? "inline-block" : "none";
+      demoBtn.style.display = demoUrl ? "inline-flex" : "none";
       if (demoUrl) demoBtn.href = demoUrl;
 
       if (repo) {
+        starsEl.style.display = "inline-flex";
         starsEl.setAttribute("data-repo", repo);
         fetchStarCount(repo, starsEl);
       } else {
+        starsEl.style.display = "none";
         clearRepoStatsOnElement(starsEl);
       }
 
       updateProjectModalImage();
 
-      prevBtn.style.display = images.length > 1 ? "block" : "none";
-      nextBtn.style.display = images.length > 1 ? "block" : "none";
+      prevBtn.style.display = images.length > 1 ? "flex" : "none";
+      nextBtn.style.display = images.length > 1 ? "flex" : "none";
 
       scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
       document.body.classList.add("modal-open");
