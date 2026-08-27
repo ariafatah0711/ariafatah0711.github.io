@@ -30,7 +30,7 @@ jobs:
           GITHUB_USERNAME: ariafatah0711
         run: |
           mkdir -p data
-          node .github/scripts/fetch-graphql.js
+          node .github/scripts/fetch-graphql.cjs
 
           mkdir -p /tmp/data
           cp -r data /tmp/data/data
