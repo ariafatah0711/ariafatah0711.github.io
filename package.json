@@ -8,8 +8,11 @@
   },
   "scripts": {
     "clean": "node scripts/clean.mjs",
-    "dev": "eleventy --serve",
-    "build": "npm run clean && eleventy",
+    "dev": "npm run build:css && eleventy --serve",
+    "dev:css": "tailwindcss -i ./src/assets/css/site.css -o ./dist/assets/css/site.css --watch",
+    "build": "npm run clean && npm run build:site && npm run build:css",
+    "build:site": "eleventy",
+    "build:css": "tailwindcss -i ./src/assets/css/site.css -o ./dist/assets/css/site.css --minify",
     "check": "npm run build && npm run check:routes && npm run check:links && npm run check:assets && npm run check:css && npm run check:endpoints",
     "check:routes": "node scripts/audit-routes.mjs",
     "check:links": "node scripts/check-links.mjs",
@@ -18,12 +21,14 @@
     "check:endpoints": "node scripts/check-endpoints.mjs",
     "check:visual": "playwright test --grep @visual",
     "check:behavior": "playwright test --grep @behavior",
+    "test": "playwright test",
     "compare:builds": "node scripts/compare-builds.mjs",
     "compare:metadata": "node scripts/compare-metadata.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "3.1.6",
     "@playwright/test": "1.62.1",
+    "@tailwindcss/cli": "^4.3.3",
     "fast-xml-parser": "5.10.1",
     "luxon": "3.7.2",
     "markdown-it": "15.0.0",
@@ -31,6 +36,7 @@
     "parse5": "8.0.1",
     "pixelmatch": "7.2.0",
     "pngjs": "7.0.0",
+    "tailwindcss": "^4.3.3",
     "yaml": "2.9.0"
   }
 }

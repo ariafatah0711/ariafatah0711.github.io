@@ -7,6 +7,7 @@ const output = path.join(root, "dist");
 const failures = [];
 const stylesheets = new Set();
 const checkedImports = new Set();
+const tailwindInput = path.join(root, "src/assets/css/site.css");
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -84,6 +85,20 @@ for (const htmlPath of (await walk(output)).filter((file) => file.endsWith(".htm
 }
 
 for (const stylesheet of stylesheets) await verifyCss(stylesheet);
+
+try {
+  const input = await readFile(tailwindInput, "utf8");
+  if (/^\s*@import\s+["']tailwindcss["']/m.test(input) || input.includes("preflight.css")) {
+    failures.push("src/assets/css/site.css: Tailwind Preflight import is not allowed");
+  }
+
+  const generated = await readFile(path.join(output, "assets/css/site.css"), "utf8");
+  if (/box-sizing:border-box;border:0 solid/.test(generated)) {
+    failures.push("assets/css/site.css: generated CSS contains the Tailwind Preflight reset");
+  }
+} catch (error) {
+  failures.push(`Tailwind foundation: ${error.code || error.message}`);
+}
 
 if (failures.length) {
   console.error(`CSS integrity failed:\n${failures.join("\n")}`);

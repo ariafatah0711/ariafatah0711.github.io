@@ -16,13 +16,25 @@ npm ci
 npm run dev
 ```
 
-The development server is provided by Eleventy. Production output is never read from the repository root; it is generated in `dist/`.
+The development server is provided by Eleventy. In a second terminal, run the Tailwind watcher when
+adding or changing prefixed utilities:
+
+```bash
+npm run dev:css
+```
+
+`npm run dev` creates the initial CSS output before starting Eleventy. Production output is never
+read from the repository root; it is generated in `dist/`.
 
 ## Production Build
 
 ```bash
 npm run build
 ```
+
+The production build cleans `dist/`, builds Eleventy, then compiles
+`src/assets/css/site.css` to `dist/assets/css/site.css`. Tailwind uses the `tw:` prefix and does not
+load Preflight; legacy styles remain authoritative during the incremental migration.
 
 Useful validation commands:
 
@@ -46,7 +58,7 @@ Before the first production run, set the repository's Pages source to **GitHub A
 ## Structure
 
 ```text
-src/       Eleventy data, Liquid templates, content, pages, and feeds
+src/       Eleventy data, templates, content, pages, feeds, and Tailwind CSS input
 public/    Byte-preserved static assets and root public files
 scripts/   Build, route, link, asset, metadata, and integrity checks
 tests/     Playwright Eleventy visual-baseline and behavioral checks

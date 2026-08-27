@@ -44,6 +44,13 @@
 
 These items must be handled in separate changes after migration parity is approved.
 
+## Tailwind Foundation
+
+- Tailwind CSS v4 is compiled locally from `src/assets/css/site.css` after Eleventy writes `dist/`.
+- Only `theme.css` and `utilities.css` are imported; Preflight is intentionally disabled.
+- Tailwind classes use the `tw:` prefix, and explicit source detection excludes drafts, generated output, dependencies, and vendor scripts.
+- The legacy CSS remains loaded before the generated foundation stylesheet. No markup or component styles were migrated in this phase.
+
 ## Owner Cutover
 
 1. Review the local commits on `migration/eleventy` and open a pull request without squashing the Jekyll checkpoint history if rollback granularity is desired.
