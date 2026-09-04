@@ -1,11 +1,16 @@
-// projects.js - project modal handling (PJAX-safe)
+// projects.js - project stats and PhotoSwipe previews (PJAX-safe)
 (function () {
   "use strict";
 
-  // Prefer pre-generated JSON (data-cache) to avoid GitHub API calls.
-  // Falls back to GitHub API only if JSON can't be loaded or repo is missing.
   var DEFAULT_PROFILE_DATA_URL =
     "https://raw.githubusercontent.com/ariafatah0711/ariafatah0711.github.io/refs/heads/data-cache/data/profile.json";
+  var PHOTOSWIPE_URL = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js";
+
+  var repoStatsCache = Object.create(null);
+  var repoStatsLoadPromise = null;
+  var photoswipeModulePromise = null;
+  var controller = null;
+  var fallbackListeners = [];
 
   function getProfileDataUrl() {
     try {
@@ -15,13 +20,6 @@
     } catch (e) {}
     return DEFAULT_PROFILE_DATA_URL;
   }
-
-  var PROFILE_DATA_FALLBACK_URL = getProfileDataUrl();
-  var repoStatsCache = Object.create(null); // { "owner/name": { stars, forks } }
-  var repoStatsLoadPromise = null;
-
-  var controller = null;
-  var fallbackListeners = [];
 
   function addListener(target, type, handler, options) {
     if (!target) return;
@@ -69,32 +67,29 @@
     return m ? normalizeRepoKey(m[1]) : null;
   }
 
+  function toCount(value) {
+    if (value == null || value === "-") return 0;
+    var n = Number(value);
+    return Number.isFinite(n) && n >= 0 ? n : 0;
+  }
+
+  function formatStats(stats) {
+    if (!stats) return "";
+    return toCount(stats.stars) + " stars / " + toCount(stats.forks) + " forks";
+  }
+
   function setRepoStatsOnElement(el, stats) {
     if (!el || !stats) return;
-    function toCount(value) {
-      if (value == null) return 0;
-      if (value === "-") return 0;
-      var n = Number(value);
-      return Number.isFinite(n) && n >= 0 ? n : 0;
-    }
     var starEl = el.querySelector(".star-count");
     if (starEl) starEl.textContent = String(toCount(stats.stars));
     var forkEl = el.querySelector(".fork-count");
     if (forkEl) forkEl.textContent = String(toCount(stats.forks));
   }
 
-  function clearRepoStatsOnElement(el) {
-    if (!el) return;
-    var starEl = el.querySelector(".star-count");
-    if (starEl) starEl.textContent = "0";
-    var forkEl = el.querySelector(".fork-count");
-    if (forkEl) forkEl.textContent = "0";
-  }
-
   function loadRepoStatsFromProfileJson() {
     if (repoStatsLoadPromise) return repoStatsLoadPromise;
 
-    repoStatsLoadPromise = fetch(PROFILE_DATA_FALLBACK_URL)
+    repoStatsLoadPromise = fetch(getProfileDataUrl())
       .then(function (res) {
         if (!res.ok) throw new Error("Profile JSON not available");
         return res.json();
@@ -109,28 +104,21 @@
 
         nodes.forEach(function (repo) {
           if (!repo) return;
-          var url = repo.url || repo.html_url;
-          var key = repo.nameWithOwner || repoKeyFromUrl(url);
-          key = normalizeRepoKey(key);
-
-          // fallback: if we only have name and not owner, can't safely map
+          var key = normalizeRepoKey(repo.nameWithOwner || repoKeyFromUrl(repo.url || repo.html_url));
           if (!key || key.indexOf("/") === -1) return;
 
           var stars =
             repo.stargazerCount != null ? repo.stargazerCount : repo.stargazers_count != null ? repo.stargazers_count : null;
           var forks = repo.forkCount != null ? repo.forkCount : repo.forks_count != null ? repo.forks_count : null;
-
           if (stars == null && forks == null) return;
 
           repoStatsCache[key] = {
-            stars: stars != null ? stars : "-",
-            forks: forks != null ? forks : "-",
+            stars: stars != null ? stars : 0,
+            forks: forks != null ? forks : 0,
           };
         });
       })
-      .catch(function () {
-        // ignore; API fallback will handle
-      });
+      .catch(function () {});
 
     return repoStatsLoadPromise;
   }
@@ -138,10 +126,10 @@
   function fetchRepoStatsFromApi(repo) {
     repo = normalizeRepoKey(repo);
     if (!repo) return Promise.resolve(null);
-    var api = "https://api.github.com/repos/" + repo;
-    return fetch(api)
+
+    return fetch("https://api.github.com/repos/" + repo)
       .then(function (res) {
-        if (!res.ok) throw new Error("no");
+        if (!res.ok) throw new Error("Repo not available");
         return res.json();
       })
       .then(function (data) {
@@ -155,283 +143,206 @@
       });
   }
 
-  function fetchStarCount(repo, el) {
-    if (!repo || !el) return;
+  function getRepoStats(repo) {
+    var key = normalizeRepoKey(repo);
+    if (!key) return Promise.resolve(null);
+    if (repoStatsCache[key]) return Promise.resolve(repoStatsCache[key]);
 
-    var repoKey = normalizeRepoKey(repo);
-    if (!repoKey) return;
-
-    // kick off JSON load early (no await needed here)
     loadRepoStatsFromProfileJson();
 
-    // if already cached from JSON/API, use immediately
-    if (repoStatsCache[repoKey]) {
-      setRepoStatsOnElement(el, repoStatsCache[repoKey]);
-      return;
-    }
-
-    // otherwise wait for JSON (best case), then fall back to API
-    Promise.resolve(repoStatsLoadPromise)
+    return Promise.resolve(repoStatsLoadPromise)
       .then(function () {
-        if (repoStatsCache[repoKey]) {
-          setRepoStatsOnElement(el, repoStatsCache[repoKey]);
-          return null;
-        }
-        return fetchRepoStatsFromApi(repoKey);
+        if (repoStatsCache[key]) return repoStatsCache[key];
+        return fetchRepoStatsFromApi(key);
       })
       .then(function (stats) {
-        if (!stats) return;
-        repoStatsCache[repoKey] = stats;
-        setRepoStatsOnElement(el, stats);
+        if (stats) repoStatsCache[key] = stats;
+        return stats;
       });
   }
 
-  function initProjectsModal() {
-    cleanupListeners();
-    controller = typeof AbortController !== "undefined" ? new AbortController() : null;
-
-    var projectModal = document.getElementById("projectModal");
-    if (!projectModal) return;
-
-    var modalImg = document.getElementById("projectModalImg");
-    var modalTitle = document.getElementById("projectModalTitle");
-    var modalDescription = document.getElementById("projectModalDescription");
-    var modalCounter = document.getElementById("projectModalCounter");
-    var prevBtn = document.getElementById("projectPrev");
-    var nextBtn = document.getElementById("projectNext");
-    var closeBtn = document.getElementById("projectClose");
-    var sourceBtn = document.getElementById("projectModalSource");
-    var demoBtn = document.getElementById("projectModalDemo");
-    var starsEl = document.getElementById("projectModalStars");
-
-    if (
-      !modalImg ||
-      !modalTitle ||
-      !modalDescription ||
-      !modalCounter ||
-      !prevBtn ||
-      !nextBtn ||
-      !closeBtn ||
-      !sourceBtn ||
-      !demoBtn ||
-      !starsEl
-    ) {
-      return;
-    }
-
-    var currentIndex = 0;
-    var images = [];
-    var scrollPosition = 0;
-
-    function normalizeImages(arr) {
-      return arr
-        .map(function (i) {
-          if (!i) return "";
-          i = i.trim();
-          if (i.indexOf("http") === 0) return i;
-          if (i.indexOf("/") === 0) return i;
-          if (i.indexOf(".") !== -1) return "/" + i;
-          return "";
-        })
-        .filter(Boolean);
-    }
-
-    function updateProjectModalImage() {
-      if (!images || images.length === 0) {
-        modalImg.src = "";
-        modalCounter.textContent = "";
-        return;
-      }
-      var fallback = modalImg.nextElementSibling;
-      if (fallback) {
-        fallback.style.display = "none";
-      }
-      modalImg.style.display = "block";
-      modalImg.src = images[currentIndex];
-      modalCounter.textContent = currentIndex + 1 + " / " + images.length;
-    }
-
-    function closeProjectModal() {
-      projectModal.style.display = "none";
-      document.body.classList.remove("modal-open");
-      document.body.style.top = "";
-      if (!document.body.classList.contains("linktree-lock-scroll")) {
-        document.body.style.overflow = "";
-      }
-      try {
-        window.scrollTo(0, scrollPosition);
-      } catch (e) {}
-    }
-
-    function showPrev() {
-      if (images.length > 1) {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateProjectModalImage();
-      }
-    }
-    function showNext() {
-      if (images.length > 1) {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateProjectModalImage();
-      }
-    }
-
-    function openProjectModal(imgArray, title, description, sourceUrl, demoUrl, repo) {
-      // force-close global image modal if open
-      try {
-        var globalImageModal = document.getElementById("imageModal");
-        if (globalImageModal && globalImageModal.style.display === "flex") {
-          globalImageModal.style.display = "none";
-          var gVideo = document.getElementById("modalVideo");
-          if (gVideo) {
-            try {
-              gVideo.pause();
-            } catch (e) {}
-            try {
-              gVideo.removeAttribute("src");
-              gVideo.load();
-            } catch (e) {}
-            gVideo.style.display = "none";
-          }
-          document.body.classList.remove("modal-open");
-          document.body.style.top = "";
-          // Image modal uses inline overflow lock; restore it too
-          document.body.style.overflow = "";
-        }
-      } catch (e) {}
-
-      images = imgArray || [];
-      currentIndex = 0;
-      modalTitle.textContent = title || "";
-      modalDescription.textContent = description || "";
-      sourceBtn.style.display = sourceUrl ? "inline-flex" : "none";
-      if (sourceUrl) sourceBtn.href = sourceUrl;
-      demoBtn.style.display = demoUrl ? "inline-flex" : "none";
-      if (demoUrl) demoBtn.href = demoUrl;
-
-      if (repo) {
-        starsEl.style.display = "inline-flex";
-        starsEl.setAttribute("data-repo", repo);
-        fetchStarCount(repo, starsEl);
-      } else {
-        starsEl.style.display = "none";
-        clearRepoStatsOnElement(starsEl);
-      }
-
-      updateProjectModalImage();
-
-      prevBtn.style.display = images.length > 1 ? "flex" : "none";
-      nextBtn.style.display = images.length > 1 ? "flex" : "none";
-
-      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-      document.body.classList.add("modal-open");
-      document.body.style.top = -scrollPosition + "px";
-      projectModal.style.display = "flex";
-    }
-
-    // isi semua stars overlay di grid
+  function fillCardStats() {
     document.querySelectorAll(".github-stars").forEach(function (el) {
       var repo = el.getAttribute("data-repo");
-      if (repo) fetchStarCount(repo, el);
+      if (!repo) return;
+      getRepoStats(repo).then(function (stats) {
+        setRepoStatsOnElement(el, stats);
+      });
     });
-
-    function onDocumentClick(e) {
-      // kalau klik tombol Source/Demo -> biarin
-      if (e.target.closest("a.btn")) return;
-
-      // klik thumbnail dalam card
-      if (e.target.classList.contains("project-thumb-img")) {
-        var parentCard = e.target.closest(".project-item");
-        if (!parentCard) return;
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        var dataImages = parentCard.getAttribute("data-images");
-        var imgArr = [];
-        try {
-          imgArr = dataImages ? JSON.parse(dataImages) : [];
-        } catch (err) {}
-        imgArr = normalizeImages(imgArr);
-        if (imgArr.length === 0) {
-          var clickImg = parentCard.querySelector(".clickable-image");
-          if (clickImg) imgArr.push(clickImg.src);
-        }
-
-        var clickedSrc = e.target.getAttribute("data-thumb-src") || e.target.src;
-        var idx = imgArr.indexOf(clickedSrc);
-        if (idx === -1) idx = 0;
-
-        var title = parentCard.querySelector(".gallery-title")?.textContent || "";
-        var desc = parentCard.querySelector(".gallery-description")?.textContent || "";
-        var sourceLink = parentCard.getAttribute("data-source") || "";
-        var demoLink = parentCard.getAttribute("data-demo") || "";
-        var repo = parentCard.getAttribute("data-repo");
-
-        openProjectModal(imgArr, title, desc, sourceLink, demoLink, repo);
-        currentIndex = idx;
-        updateProjectModalImage();
-        return;
-      }
-
-      // klik gambar utama card
-      if (e.target.classList.contains("clickable-image")) {
-        var item = e.target.closest(".project-item");
-        if (!item) return;
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        var dataImages = item.getAttribute("data-images");
-        var imgArr = [];
-        try {
-          imgArr = dataImages ? JSON.parse(dataImages) : [];
-        } catch (err) {}
-        imgArr = normalizeImages(imgArr);
-        if (imgArr.length === 0) {
-          var clickImg = item.querySelector(".clickable-image");
-          if (clickImg) imgArr.push(clickImg.src);
-        }
-
-        var title = item.querySelector(".gallery-title")?.textContent || "";
-        var desc = item.querySelector(".gallery-description")?.textContent || "";
-        var sourceLink = item.getAttribute("data-source") || "";
-        var demoLink = item.getAttribute("data-demo") || "";
-        var repo = item.getAttribute("data-repo");
-
-        openProjectModal(imgArr, title, desc, sourceLink, demoLink, repo);
-        return;
-      }
-
-      // klik area kosong card -> no action
-    }
-
-    addListener(document, "click", onDocumentClick);
-
-    addListener(closeBtn, "click", function () {
-      closeProjectModal();
-    });
-    addListener(prevBtn, "click", function () {
-      showPrev();
-    });
-    addListener(nextBtn, "click", function () {
-      showNext();
-    });
-
-    addListener(projectModal, "click", function (e) {
-      if (e.target === projectModal) closeProjectModal();
-    });
-
-    addListener(document, "keydown", function (e) {
-      if (projectModal.style.display === "flex") {
-        if (e.key === "Escape") closeProjectModal();
-        if (e.key === "ArrowLeft") showPrev();
-        if (e.key === "ArrowRight") showNext();
-      }
-    });
-
-    // start loading JSON cache ASAP
-    loadRepoStatsFromProfileJson();
   }
 
-  document.addEventListener("DOMContentLoaded", initProjectsModal);
-  document.addEventListener("app:page-load", initProjectsModal);
+  function loadPhotoSwipe() {
+    if (!photoswipeModulePromise) {
+      photoswipeModulePromise = import(PHOTOSWIPE_URL);
+    }
+    return photoswipeModulePromise;
+  }
+
+  function normalizeImages(arr) {
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .map(function (i) {
+        if (!i) return "";
+        i = String(i).trim();
+        if (i.indexOf("http") === 0 || i.indexOf("/") === 0) return i;
+        if (i.indexOf(".") !== -1) return "/" + i;
+        return "";
+      })
+      .filter(Boolean);
+  }
+
+  function imagesFromProject(card) {
+    var images = [];
+    try {
+      images = JSON.parse(card.getAttribute("data-images") || "[]");
+    } catch (e) {
+      images = [];
+    }
+    images = normalizeImages(images);
+
+    if (!images.length) {
+      var img = card.querySelector(".clickable-image");
+      if (img) images.push(img.getAttribute("data-full-src") || img.currentSrc || img.src);
+    }
+
+    return images;
+  }
+
+  function imageSizeFromCard(card, index) {
+    var mainImg = card.querySelector(".clickable-image");
+    if (index === 0 && mainImg && mainImg.naturalWidth && mainImg.naturalHeight) {
+      return { width: mainImg.naturalWidth, height: mainImg.naturalHeight };
+    }
+    return { width: 1600, height: 1000 };
+  }
+
+  function escapeHtml(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function projectFooterHtml(meta) {
+    var source = meta.sourceUrl
+      ? '<a class="pswp-project-link" href="' + escapeHtml(meta.sourceUrl) + '" target="_blank" rel="noopener">Source</a>'
+      : "";
+    var demo = meta.demoUrl
+      ? '<a class="pswp-project-link pswp-project-link-primary" href="' + escapeHtml(meta.demoUrl) + '" target="_blank" rel="noopener">Demo</a>'
+      : "";
+    var stats = meta.stats ? '<span class="pswp-project-stats">' + escapeHtml(formatStats(meta.stats)) + "</span>" : "";
+
+    return (
+      '<div class="pswp-project-caption">' +
+      '<div class="pswp-project-copy">' +
+      '<div class="pswp-project-title">' +
+      escapeHtml(meta.title) +
+      "</div>" +
+      (meta.description ? '<div class="pswp-project-description">' + escapeHtml(meta.description) + "</div>" : "") +
+      "</div>" +
+      '<div class="pswp-project-actions">' +
+      stats +
+      source +
+      demo +
+      "</div>" +
+      "</div>"
+    );
+  }
+
+  function openProjectLightbox(card, clickedSrc) {
+    var images = imagesFromProject(card);
+    if (!images.length) return;
+
+    var index = images.indexOf(clickedSrc);
+    if (index < 0) index = 0;
+
+    var repo = card.getAttribute("data-repo") || "";
+    var meta = {
+      title: (card.querySelector(".gallery-title") || {}).textContent || "",
+      description: (card.querySelector(".gallery-description") || {}).textContent || "",
+      sourceUrl: card.getAttribute("data-source") || "",
+      demoUrl: card.getAttribute("data-demo") || "",
+      stats: null,
+    };
+
+    Promise.all([loadPhotoSwipe(), getRepoStats(repo)]).then(function (results) {
+      var PhotoSwipe = results[0].default;
+      meta.stats = results[1];
+
+      var pswp = new PhotoSwipe({
+        dataSource: images.map(function (src, i) {
+          var size = imageSizeFromCard(card, i);
+          return {
+            src: src,
+            width: size.width,
+            height: size.height,
+            alt: meta.title,
+          };
+        }),
+        index: index,
+        bgOpacity: 0.92,
+        padding: { top: 36, bottom: 108, left: 72, right: 72 },
+        showHideAnimationType: "fade",
+        wheelToZoom: true,
+        arrowPrevTitle: "Previous",
+        arrowNextTitle: "Next",
+        closeTitle: "Close",
+        zoomTitle: "Zoom",
+      });
+
+      pswp.on("uiRegister", function () {
+        pswp.ui.registerElement({
+          name: "project-caption",
+          order: 9,
+          isButton: false,
+          appendTo: "root",
+          html: projectFooterHtml(meta),
+        });
+      });
+
+      pswp.init();
+    });
+  }
+
+  function clickedProjectSrc(target, card) {
+    if (target.classList.contains("project-thumb-img")) {
+      return target.getAttribute("data-thumb-src") || target.getAttribute("src") || target.currentSrc || target.src;
+    }
+
+    var img = target.closest(".clickable-image");
+    if (img) {
+      var images = imagesFromProject(card);
+      return images[0] || img.getAttribute("data-full-src") || img.currentSrc || img.src;
+    }
+
+    return "";
+  }
+
+  function onDocumentClick(event) {
+    if (!event || !event.target || !event.target.closest) return;
+    if (event.target.closest("a.btn")) return;
+
+    var target = event.target;
+    var card = target.closest(".project-item");
+    if (!card) return;
+
+    if (!target.closest(".clickable-image") && !target.classList.contains("project-thumb-img")) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openProjectLightbox(card, clickedProjectSrc(target, card));
+  }
+
+  function initProjects() {
+    cleanupListeners();
+    controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    fillCardStats();
+    loadRepoStatsFromProfileJson();
+    addListener(document, "click", onDocumentClick, true);
+  }
+
+  document.addEventListener("DOMContentLoaded", initProjects);
+  document.addEventListener("app:page-load", initProjects);
 })();

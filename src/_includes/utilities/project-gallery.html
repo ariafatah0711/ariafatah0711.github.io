@@ -64,7 +64,7 @@ Displays project gallery grid from _data/projects.yml
             <div class="project-thumbs-row" aria-hidden="true">
               {% for thumb in img_list %}
                 {% assign thumb_trimmed = thumb | strip %}
-                <img class="project-thumb-img" src="{{ thumb_trimmed }}" alt="Thumbnail" loading="lazy"
+                <img class="project-thumb-img" src="{{ thumb_trimmed }}" data-thumb-src="{{ thumb_trimmed }}" alt="Thumbnail" loading="lazy"
                   onerror="this.style.display='none';">
               {% endfor %}
             </div>

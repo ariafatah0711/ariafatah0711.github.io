@@ -60,8 +60,8 @@ permalink: /gallery/
         >
         <div class="image-fallback" style="display:none;"></div>
         <div class="gallery-overlay">
-          <span class="gallery-title">{{ photo.title }}</span>
-          <span class="gallery-description">{{ photo.description }}</span>
+          <span class="gallery-title" data-i18n-en="{{ photo.title | escape }}" data-i18n-id="{{ photo.title_id | default: photo.title | escape }}">{{ photo.title }}</span>
+          <span class="gallery-description" data-i18n-en="{{ photo.description | escape }}" data-i18n-id="{{ photo.description_id | default: photo.description | escape }}">{{ photo.description }}</span>
         </div>
       </div>
     {% endfor %}

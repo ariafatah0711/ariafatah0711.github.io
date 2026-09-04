@@ -55,10 +55,57 @@ function bindThemeToggle() {
   });
 }
 
+function getCurrentLanguage() {
+  return localStorage.getItem("language") === "id" ? "id" : "en";
+}
+
+function applyLanguage() {
+  const lang = getCurrentLanguage();
+  document.documentElement.setAttribute("lang", lang === "id" ? "id-ID" : "en-US");
+  document.documentElement.setAttribute("data-language", lang);
+
+  document.querySelectorAll("[data-i18n-en]").forEach((el) => {
+    const value = el.getAttribute(lang === "id" ? "data-i18n-id" : "data-i18n-en");
+    if (value == null || value === "") return;
+    if (el.getAttribute("data-i18n-mode") === "html") {
+      el.innerHTML = value;
+    } else {
+      el.textContent = value;
+    }
+  });
+
+  document.querySelectorAll("[data-language-label]").forEach((el) => {
+    el.textContent = lang.toUpperCase();
+  });
+}
+
+function toggleLanguage() {
+  const nextLang = getCurrentLanguage() === "id" ? "en" : "id";
+  localStorage.setItem("language", nextLang);
+  applyLanguage();
+  document.dispatchEvent(new CustomEvent("app:language-change", { detail: { language: nextLang } }));
+}
+
+function bindLanguageToggle() {
+  const buttons = document.querySelectorAll('[data-action="toggle-language"]');
+  buttons.forEach((btn) => {
+    if (btn.dataset.boundLanguage === "true") return;
+    btn.dataset.boundLanguage = "true";
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      toggleLanguage();
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", initThemeIcon);
 document.addEventListener("app:page-load", initThemeIcon);
 document.addEventListener("DOMContentLoaded", bindThemeToggle);
 document.addEventListener("app:page-load", bindThemeToggle);
+document.addEventListener("DOMContentLoaded", applyLanguage);
+document.addEventListener("app:page-load", applyLanguage);
+document.addEventListener("DOMContentLoaded", bindLanguageToggle);
+document.addEventListener("app:page-load", bindLanguageToggle);
 
 // mencegah drag image
 document.addEventListener("dragstart", function (event) {

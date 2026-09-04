@@ -1,0 +1,28 @@
+.language-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 32px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-color);
+    color: var(--primary-font-color);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0;
+    transition: border-color var(--ui-dur-fast) var(--ui-ease), color var(--ui-dur-fast) var(--ui-ease), transform var(--ui-dur-fast) var(--ui-ease);
+}
+
+.language-toggle:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateY(-1px);
+}
+
+.language-toggle:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}

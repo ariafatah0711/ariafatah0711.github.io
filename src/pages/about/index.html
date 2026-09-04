@@ -4,23 +4,33 @@ title: "About Me"
 permalink: /about/
 ---
 
-<strong>Halo, saya Aria Fatah Anom</strong>, mahasiswa Teknik Informatika di STT Terpadu Nurul Fikri dengan fokus utama di bidang <strong>Cybersecurity</strong>, <strong>Networking</strong>, dan infrastructure engineering. Perjalanan saya di dunia IT dimulai dari front-end development pada 2023, kemudian berkembang ke keamanan jaringan, sistem, dan open-source tooling.
+<p data-i18n-mode="html" data-i18n-en="Hi, I am <strong>Aria Fatah Anom</strong>, an Informatics Engineering student at STT Terpadu Nurul Fikri with a main focus on <strong>Cybersecurity</strong>, <strong>Networking</strong>, and infrastructure engineering." data-i18n-id="Halo, saya <strong>Aria Fatah Anom</strong>, mahasiswa Teknik Informatika di STT Terpadu Nurul Fikri dengan fokus utama di bidang <strong>Cybersecurity</strong>, <strong>Networking</strong>, dan infrastructure engineering.">
+  Hi, I am <strong>Aria Fatah Anom</strong>, an Informatics Engineering student at STT Terpadu Nurul Fikri with a main focus on <strong>Cybersecurity</strong>, <strong>Networking</strong>, and infrastructure engineering.
+</p>
 
-Saat ini saya membangun <strong>NXCTF</strong> sebagai founder dan lead developer. Di luar pengembangan project, saya aktif mengikuti kompetisi CTF dan networking dari tingkat kota hingga internasional.
+<p data-i18n-en="My IT journey started with front-end development in 2023, then grew into network security, systems, and open-source tooling." data-i18n-id="Perjalanan saya di dunia IT dimulai dari front-end development pada 2023, kemudian berkembang ke keamanan jaringan, sistem, dan open-source tooling.">
+  My IT journey started with front-end development in 2023, then grew into network security, systems, and open-source tooling.
+</p>
 
-Bagi saya, teknologi bukan hanya kode atau perangkat keras, tetapi ekosistem yang harus aman, andal, dan bermanfaat. Saya terus belajar melalui kompetisi, komunitas, dan project yang menyelesaikan masalah nyata.
+<p data-i18n-mode="html" data-i18n-en="I am currently building <strong>NXCTF</strong> as founder and lead developer. Outside project development, I actively join CTF and networking competitions from city level to international level." data-i18n-id="Saat ini saya membangun <strong>NXCTF</strong> sebagai founder dan lead developer. Di luar pengembangan project, saya aktif mengikuti kompetisi CTF dan networking dari tingkat kota hingga internasional.">
+  I am currently building <strong>NXCTF</strong> as founder and lead developer. Outside project development, I actively join CTF and networking competitions from city level to international level.
+</p>
+
+<p data-i18n-en="For me, technology is not only code or hardware, but an ecosystem that should be secure, reliable, and useful. I keep learning through competitions, communities, and projects that solve real problems." data-i18n-id="Bagi saya, teknologi bukan hanya kode atau perangkat keras, tetapi ekosistem yang harus aman, andal, dan bermanfaat. Saya terus belajar melalui kompetisi, komunitas, dan project yang menyelesaikan masalah nyata.">
+  For me, technology is not only code or hardware, but an ecosystem that should be secure, reliable, and useful. I keep learning through competitions, communities, and projects that solve real problems.
+</p>
 
 <section class="about-achievements-preview" aria-labelledby="about-achievements-title">
   <div class="about-achievements-header">
     <h2 id="about-achievements-title">Competition Highlights</h2>
-    <a class="about-achievements-link" href="{{ '/achievements/' | relative_url }}">See all {{ achievements.items.size }} achievements</a>
+    <a class="about-achievements-link" href="{{ '/achievements/' | relative_url }}" data-i18n-en="See all {{ achievements.items.size }} achievements" data-i18n-id="Lihat semua {{ achievements.items.size }} pencapaian">See all {{ achievements.items.size }} achievements</a>
   </div>
   <ol class="about-achievements-list">
     {% for achievement in achievements.items %}
       {% if achievement.featured %}
         <li class="about-achievement-item">
           <time datetime="{{ achievement.datetime }}">{{ achievement.period }}</time>
-          <strong>{{ achievement.title }}</strong>
+          <strong data-i18n-en="{{ achievement.title | escape }}" data-i18n-id="{{ achievement.title_id | default: achievement.title | escape }}">{{ achievement.title }}</strong>
           <span class="about-achievement-result">{{ achievement.result }}</span>
         </li>
       {% endif %}

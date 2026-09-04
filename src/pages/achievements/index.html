@@ -28,17 +28,17 @@ description: Competition results and academic recognitions earned by Aria Fatah.
                     <span class="achievement-marker" data-result="{{ achievement.result_key }}" aria-hidden="true"></span>
                     <time class="achievement-date" datetime="{{ achievement.datetime }}">{{ achievement.period }}</time>
                     <span class="dot-sep" aria-hidden="true">•</span>
-                    <span class="achievement-stage-tag">{{ achievement.education_stage }}</span>
+                    <span class="achievement-stage-tag" data-i18n-en="{{ achievement.education_stage | escape }}" data-i18n-id="{{ achievement.education_stage_id | default: achievement.education_stage | escape }}">{{ achievement.education_stage }}</span>
                   </div>
                   <span class="achievement-result" data-result="{{ achievement.result_key }}">{{ achievement.result }}</span>
                 </div>
 
                 <div class="achievement-copy">
-                  <h3>{{ achievement.title }}</h3>
+                  <h3 data-i18n-en="{{ achievement.title | escape }}" data-i18n-id="{{ achievement.title_id | default: achievement.title | escape }}">{{ achievement.title }}</h3>
                   <p class="achievement-details">
-                    <span>{{ achievement.field }}</span>
+                    <span data-i18n-en="{{ achievement.field | escape }}" data-i18n-id="{{ achievement.field_id | default: achievement.field | escape }}">{{ achievement.field }}</span>
                     <span class="dot-sep" aria-hidden="true">•</span>
-                    <span>{{ achievement.scope }}</span>
+                    <span data-i18n-en="{{ achievement.scope | escape }}" data-i18n-id="{{ achievement.scope_id | default: achievement.scope | escape }}">{{ achievement.scope }}</span>
                   </p>
                 </div>
 
@@ -54,7 +54,7 @@ description: Competition results and academic recognitions earned by Aria Fatah.
                           loading="lazy"
                           decoding="async"
                         >
-                        <span class="achievement-photo-caption">{{ photo.caption }}</span>
+                        <span class="achievement-photo-caption" data-i18n-en="{{ photo.caption | escape }}" data-i18n-id="{{ photo.caption_id | default: photo.caption | escape }}">{{ photo.caption }}</span>
                       </div>
                     {% endfor %}
                   </div>
